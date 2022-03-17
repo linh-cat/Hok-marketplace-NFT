@@ -1,9 +1,12 @@
 import React from 'react'
+import { Spin } from 'antd';
 import "./index.scss"
 
 const index = () => {
     return (
-        <div className="footer">Footer component</div>
+        <div className="spin">
+            <Spin />
+        </div>
     )
 }
 

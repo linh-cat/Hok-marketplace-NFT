@@ -4,13 +4,13 @@ import MainContainer from '../containers/MainContainer'
 const appRoutes = [
     {
         exact: false,
-        path: "/main",
+        path: "/",
         component: MainContainer,
         routes: [
             {
                 exact: true,
                 path: "/main/content",
-                component: React.lazy(() => import("../containers/MainContainer"))
+                // component: React.lazy(() => import("../../containers/Main"))
             }
         ]
     },

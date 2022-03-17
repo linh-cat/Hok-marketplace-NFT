@@ -2,8 +2,9 @@ import React from 'react'
 
 const index = () => {
     return (
-        <div>index</div>
+        <div>Search</div>
     )
 }
+
 
 export default index

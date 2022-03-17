@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import './index.scss';
+
 
 const index = () => {
-    return (
-        <div>hearder component</div>
-    )
-}
+	return (
+		<div className="header">
+			hearder component
+		</div>
+	);
+};
 
-export default index
+export default index;

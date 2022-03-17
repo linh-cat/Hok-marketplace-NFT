@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import styled from "styled-components"
 import ErrorBoundary from './components/ErrorBoundary';
 
 import routes from "./routes"
@@ -18,22 +17,19 @@ function App() {
 
   return (
     <BrowserRouter>
-      <MainApp>
+      <div className='app'>
         <ErrorBoundary>
           <Suspense fallback={<div>Loading...</div>}>
-            hook
             {routes.map((route) => (
               <RouteWithSubRoutes {...route} key={route.path} />
             ))}
           </Suspense>
         </ErrorBoundary>
-      </MainApp>
+      </div>
     </BrowserRouter>
 
   );
 }
 
-const MainApp = styled.div`
-`
 
 export default App;
