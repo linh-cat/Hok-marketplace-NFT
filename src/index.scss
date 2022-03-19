@@ -2,10 +2,17 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Fredoka', sans-serif;
 }
 .ant-layout-header {
 	padding: 0 !important;
 }
 .ant-layout-footer {
 	padding: 0 !important;
+}
+.ant-layout-header {
+	background: unset !important;
+}
+.ant-layout-sider {
+	background: unset !important;
 }
