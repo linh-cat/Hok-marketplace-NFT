@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { BrowserRouter, Route } from "react-router-dom"
 import ErrorBoundary from './components/ErrorBoundary';
-
+import "./App.scss"
 import routes from "./routes"
-
 
 function App() {
 
@@ -17,7 +16,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className='app'>
+      <div className="app">
         <ErrorBoundary>
           <Suspense fallback={<div>Loading...</div>}>
             {routes.map((route) => (

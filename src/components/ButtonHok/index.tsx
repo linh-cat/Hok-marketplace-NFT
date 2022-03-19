@@ -15,13 +15,18 @@ type ButtonHokProps = {
     size?: "large" | "middle" | "small" | undefined,
     ghost?: boolean | undefined,
     href?: string | undefined,
-    onClick?: (event: MouseEvent) => void
+    onClick?: (event: MouseEvent) => void,
+    color?: string | undefined,
+    bold?: string | undefined,
+    border?: string | undefined,
+    radius?: string | undefined,
 }
 
-const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size }: ButtonHokProps) => {
+const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size, color, bold, border, radius }: ButtonHokProps) => {
     return (
-        <Button type={type} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size}>{text}</Button>
+        <Button type={type} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size} style={{ color: color, fontWeight: bold, border: border, borderRadius: radius }}>{text}</Button>
     )
+
 }
 
 export default index
