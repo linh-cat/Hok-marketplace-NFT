@@ -2,11 +2,14 @@ import React from 'react';
 import './index.scss';
 import ButtonHok from "../ButtonHok"
 
+import HokLogo from "../../assets/images/HOK-Logo-white.png"
+
 const index = () => {
 	return (
 		<div className="header">
 			<div className="header__icon">
-				<ButtonHok type="link" text="Hok Marketplace" bold='bold' danger />
+				<img src={HokLogo} alt="logo" />
+				<ButtonHok type="link" text="Hok Marketplace" bold='bold' color="#fff" />
 			</div>
 			<ul className="header__nav">
 				<li className="header__nav--item">
@@ -25,7 +28,7 @@ const index = () => {
 					<ButtonHok type="default" text="Connect Wallet" bold='bold' border='1px solid #000000' radius='5px' />
 				</li>
 			</ul>
-		</div>
+		</div >
 	);
 };
 
