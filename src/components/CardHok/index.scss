@@ -1,0 +1,37 @@
+.cardhok {
+	width: 100%;
+	height: 350px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+
+	.cardhok__head {
+		width: 100%;
+		height: 60%;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+	.cardhok__body {
+		padding: 10px;
+		margin-top: auto;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+
+		.cardhok__body--content {
+			display: flex;
+			justify-content: space-between;
+			font-weight: bold;
+		}
+
+		.cardhok__body--button {
+			border-top: 1px solid #eee;
+			margin-top: auto;
+		}
+	}
+}

@@ -3,11 +3,14 @@ import React, { useState } from 'react'
 import "./index.scss"
 
 // ant design 
-import { PoweroffOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
+
 
 // component
 import SpinHok from "../SpinHok"
 import ButtonHok from "../ButtonHok"
+import CardHok from "../CardHok"
 
 // images
 
@@ -42,9 +45,28 @@ const index = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                Ethereum is a developer’s blockchain, built by developers, for developers
-            </div>
+            Ethereum is a developer’s blockchain, built by developers, for developers
+
+            <Row gutter={[16, 16]}>
+                <Col span={4}>
+                    <CardHok />
+                </Col>
+                <Col span={4}>
+                    <CardHok />
+                </Col>
+                <Col span={4}>
+                    <CardHok />
+                </Col>
+                <Col span={4}>
+                    <CardHok />
+                </Col>
+                <Col span={4}>
+                    <CardHok />
+                </Col>
+                <Col span={4}>
+                    <CardHok />
+                </Col> 
+            </Row>
         </div>
     )
 }

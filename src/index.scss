@@ -4,9 +4,11 @@
 	box-sizing: border-box;
 	font-family: 'Fredoka', sans-serif;
 }
-ul{
+ul,
+p {
 	margin: unset !important;
 }
+
 .ant-layout-content {
 	padding: 10px;
 }

@@ -11,7 +11,7 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const index = () => {
     return (
-        <Layout style={{ height: "100vh" }}>
+        <Layout >
             <Header>
                 <HeaderComponent />
             </Header>
