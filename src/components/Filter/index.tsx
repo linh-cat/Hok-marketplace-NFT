@@ -8,10 +8,17 @@ const index = () => {
     const options = [{ value: "genx", name: "GenX" }]
 
     return (
-        <div className="fiter">
-            <ComboBoxHok options={options} width="150px" title='collection' />
-            <ComboBoxHok options={options} width="150px" title='Accessories' />
-
+        <div className="filter">
+            <ComboBoxHok options={options} width="180px" title='Collection' />
+            <ComboBoxHok options={options} width="180px" title='Accessories' />
+            <ComboBoxHok options={options} width="180px" title='Arms' />
+            <ComboBoxHok options={options} width="180px" title='Back' />
+            <ComboBoxHok options={options} width="180px" title='Body' />
+            <ComboBoxHok options={options} width="180px" title='Brain Shell' />
+            <ComboBoxHok options={options} width="180px" title='Deltoid' />
+            <ComboBoxHok options={options} width="180px" title='Energy' />
+            <ComboBoxHok options={options} width="180px" title='Accessories' />
+            <ComboBoxHok options={options} width="180px" title='Endoskeleton' />
         </div>
     )
 }

@@ -1,6 +1,10 @@
 .combobox {
-	.combobox__title {
-		font-weight: bold;
-		font-size: 16px;
+	margin-bottom: 10px;
+	.combobox__head {
+		.combobox__head--title {
+			font-weight: bold;
+			font-size: 16px;
+			margin-bottom: 5px;
+		}
 	}
 }

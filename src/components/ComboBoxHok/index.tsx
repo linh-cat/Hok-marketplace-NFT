@@ -19,7 +19,10 @@ const index = ({ options, onChangeValue, values, width, title }: ComboBoxProp) =
 
     return (
         <div className="combobox">
-            <div className="combobox__title">{title}</div>
+            <div className="combobox__head">
+                <div className="combobox__head--title">{title}</div>
+
+            </div>
             <Select defaultValue="lucy" style={{ width: width }} onChange={handleChange} allowClear >
                 {options.map((val) => {
                     return (<Option value={val.value}>{val.name}</Option>)
