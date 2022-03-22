@@ -5,6 +5,7 @@ import "./index.scss"
 import { TwitterSquareFilled, FacebookFilled, InstagramFilled, GithubFilled } from "@ant-design/icons"
 // component
 import ButtonHok from "../ButtonHok"
+import HokLogo from "../../assets/images/HOK-Logo-white.png"
 
 const index = () => {
     return (
@@ -21,14 +22,44 @@ const index = () => {
                 <div className="footer__top--right">
                     <div className="title">Join the community</div>
                     <div className="icons">
-                        <TwitterSquareFilled />
-                        <FacebookFilled />
-                        <InstagramFilled />
-                        <GithubFilled />
+                        <TwitterSquareFilled className="item twitter" />
+                        <FacebookFilled className="item facebook" />
+                        <InstagramFilled className="item instagram" />
+                        <GithubFilled className="item github" />
                     </div>
                 </div>
             </div>
-            <div className="footer__bottom"></div>
+            <div className="footer__bottom">
+                <div className="item label">
+                    <div className="logo">
+                        <img src={HokLogo} alt="Hok logo" />
+                    </div>
+                    <div>House of Kibaa</div>
+                    <div>House of Kibaa delivers superbHouse of Kibaa delivers superb 3D design assets and technical solutions.</div>
+                </div>
+                <div className="item about_us">
+                    <ul>
+                        <li>Contact</li>
+                        <li>company</li>
+                        <li>careers</li>
+                    </ul>
+                </div>
+                <div className="item products">
+                    <ul>
+                        <li>Hok-Main</li>
+                        <li>GenX</li>
+                        <li>GenHero</li>
+                    </ul>
+                </div>
+                <div className="item support">
+                    <ul>
+                        <li>FAQ</li>
+                        <li>Help center</li>
+                        <li>Feed back</li>
+                    </ul>
+                </div>
+
+            </div>
 
         </div>
     )
