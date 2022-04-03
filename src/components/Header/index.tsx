@@ -1,10 +1,38 @@
 import React from 'react';
 import './index.scss';
 import ButtonHok from "../ButtonHok"
-
 import HokLogo from "../../assets/images/HOK-Logo-white.png"
+import {useDispatch , useSelector} from 'react-redux'
+import web3 from '../../connection/web3';
+import { loadAccount } from '../../redux/actions/action-creators/actionCreators';
+import { account } from '../../redux/selector/selector';
 
-const index = () => {
+const Index = () => {
+	const Dispatch = useDispatch()
+	const accountWeb3 = useSelector(account)
+	const connectWalletHandler = async ()=>{
+		let accounts:any 
+        try{
+            await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        }catch(error) {
+            console.error(error);
+          }
+        // loadAccount(web3)
+		if(web3){
+			 accounts = await web3.eth.getAccounts();
+		} else
+		console.log('xxx')
+       
+        const account = accounts[0];
+        console.log(loadAccount(account))
+        // const balanced = await web3.fromWei(web3.eth.getBalance(account));
+        // console.log('balanced account:  ', balanced)
+        Dispatch(loadAccount(account))
+        console.log('dang nhap thanh cong')
+        // console.log(loadAccount(account))
+        
+    }
+	console.log('account from redux: ', accountWeb3)
 	return (
 		<div className="header">
 			<div className="header__icon">
@@ -25,11 +53,16 @@ const index = () => {
 					<ButtonHok type="link" text="About us" color="#000000" bold='bold' />
 				</li>
 				<li className="header__nav--item">
-					<ButtonHok type="default" text="Connect Wallet" bold='bold' border='1px solid #000000' radius='5px' />
+					{/* <ButtonHok  type="default" text="Connect Wallet" bold='bold' border='1px solid #000000' radius='5px' 
+						 onClick={connectWalletHandler}
+					/> */}
+				{accountWeb3 && <h5>tai khoan : {accountWeb3}</h5>}
+				{!accountWeb3 && <button onClick={connectWalletHandler}>Login</button>}
 				</li>
+			
 			</ul>
 		</div >
 	);
 };
 
-export default index;
+export default Index;
