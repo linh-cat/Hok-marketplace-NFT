@@ -15,7 +15,7 @@ type ButtonHokProps = {
     size?: "large" | "middle" | "small" | undefined,
     ghost?: boolean | undefined,
     href?: string | undefined,
-    onClick?: (event: MouseEvent) => void,
+    onClick?: () => any,
     color?: string | undefined,
     bold?: string | undefined,
     border?: string | undefined,
@@ -23,9 +23,9 @@ type ButtonHokProps = {
     backgroundColor?: string | undefined,
 }
 
-const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size, color, bold, border, radius, backgroundColor }: ButtonHokProps) => {
+const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size, color, bold, border, radius, backgroundColor, onClick }: ButtonHokProps) => {
     return (
-        <Button type={type} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size} style={{ color: color, fontWeight: bold, border: border, borderRadius: radius, backgroundColor: backgroundColor }}>{text}</Button>
+        <Button type={type} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size} style={{ color: color, fontWeight: bold, border: border, borderRadius: radius, backgroundColor: backgroundColor }} onClick={onClick}>{text}</Button>
     )
 
 }
