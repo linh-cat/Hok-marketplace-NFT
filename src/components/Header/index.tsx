@@ -17,22 +17,13 @@ const Index = () => {
         }catch(error) {
             console.error(error);
           }
-        // loadAccount(web3)
 		if(web3){
 			 accounts = await web3.eth.getAccounts();
 		} else
 		console.log('xxx')
-       
         const account = accounts[0];
-        console.log(loadAccount(account))
-        // const balanced = await web3.fromWei(web3.eth.getBalance(account));
-        // console.log('balanced account:  ', balanced)
-        Dispatch(loadAccount(account))
-        console.log('dang nhap thanh cong')
-        // console.log(loadAccount(account))
-        
+        Dispatch(loadAccount(account))      
     }
-	console.log('account from redux: ', accountWeb3)
 	return (
 		<div className="header">
 			<div className="header__icon">
@@ -56,7 +47,7 @@ const Index = () => {
 					{/* <ButtonHok  type="default" text="Connect Wallet" bold='bold' border='1px solid #000000' radius='5px' 
 						 onClick={connectWalletHandler}
 					/> */}
-				{accountWeb3 && <h5>tai khoan : {accountWeb3}</h5>}
+				{accountWeb3 && <h5> Address : {accountWeb3}</h5>}
 				{!accountWeb3 && <button onClick={connectWalletHandler}>Login</button>}
 				</li>
 			

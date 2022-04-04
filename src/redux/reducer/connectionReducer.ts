@@ -1,6 +1,4 @@
 import { Action } from './../actions/action-interfaces/action-interfaces';
-
-
 interface Iinitstate {
     account: string | null,
     networkId: string | null,
