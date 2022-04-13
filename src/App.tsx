@@ -6,147 +6,149 @@ import routes from "./routes"
 import NFTCollection from './abis/NFTCollection.json'
 import NFTMarketplace from './abis/NFTMarketplace.json'
 import web3 from './connection/web3';
-import { loadAccount,loadNetworkId ,
-         loadCollectionContractHandler,
-         loadTotalSupplyHandler,
-         loadCollectionHandler,
-         updateCollectionHandler,
-         setNftIsLoading,
-         loadMarketplaceContractHandler,
-         loadOfferCountHandler,
-         loadOffersHandler,
-         updateOfferHandler,
-         addOfferHandler,
-         loadUserFundsHandler,
-         setMktIsLoading,
-         updateOwnerHandler} from './redux/actions/action-creators/actionCreators';
-import { useDispatch, useSelector } from 'react-redux'
+import {
+  loadAccount, loadNetworkId,
+  loadCollectionContractHandler,
+  loadTotalSupplyHandler,
+  loadCollectionHandler,
+  updateCollectionHandler,
+  setNftIsLoading,
+  loadMarketplaceContractHandler,
+  loadOfferCountHandler,
+  loadOffersHandler,
+  updateOfferHandler,
+  addOfferHandler,
+  loadUserFundsHandler,
+  setMktIsLoading,
+  updateOwnerHandler
+} from './redux/actions/action-creators/actionCreators';
+import { useDispatch } from 'react-redux'
 
 function App() {
   const dispatch = useDispatch()
-  useEffect(()=>{
-         // Check if the user has Metamask active
-        if(!web3) {
-          window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-          return;
-        }
-        const loadBlockchainData = async () => {
-          try{
-            await (window as any).ethereum.request({ method: 'eth_requestAccounts' });  
-          } catch (error) {
-            console.log(error)
-          }
-          let networkID:any
-          if(web3){
-            //load ID network
-            networkID =await web3.eth.net.getId()
-            dispatch(loadNetworkId(networkID))
-            //load collection Contract
-            const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
-            const nftContract = nftDeployedNetwork ? new web3.eth.Contract((NFTCollection.abi as any), nftDeployedNetwork.address): '';
-            dispatch(loadCollectionContractHandler(nftContract))
-            
-            //load Marketplace Contracts
-            const mktDeployedNetwork = (NFTMarketplace as any).networks[networkID];
-            const mktcontract = mktDeployedNetwork ? new web3.eth.Contract((NFTMarketplace.abi as any), mktDeployedNetwork.address): ''; 
-            dispatch(loadMarketplaceContractHandler(mktcontract))
+  useEffect(() => {
+    // Check if the user has Metamask active
+    if (!web3) {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      return;
+    }
+    const loadBlockchainData = async () => {
+      try {
+        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+      } catch (error) {
+        console.log(error)
+      }
+      let networkID: any
+      if (web3) {
+        //load ID network
+        networkID = await web3.eth.net.getId()
+        dispatch(loadNetworkId(networkID))
+        //load collection Contract
+        const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
+        const nftContract = nftDeployedNetwork ? new web3.eth.Contract((NFTCollection.abi as any), nftDeployedNetwork.address) : '';
+        dispatch(loadCollectionContractHandler(nftContract))
 
-            if(nftContract) {
-              //load TotalSupply
-              const loadTotalSupply = await loadTotalSupplyHandler(nftContract)
-              console.log('loadTotalSupply:  ' ,loadTotalSupply)
-              dispatch(loadTotalSupply)
+        //load Marketplace Contracts
+        const mktDeployedNetwork = (NFTMarketplace as any).networks[networkID];
+        const mktcontract = mktDeployedNetwork ? new web3.eth.Contract((NFTMarketplace.abi as any), mktDeployedNetwork.address) : '';
+        dispatch(loadMarketplaceContractHandler(mktcontract))
 
-              //load Collection 
-              const totalSupply = loadTotalSupply.payload
-              const loadCollection = await loadCollectionHandler(nftContract,totalSupply)
-              console.log("loadCollection:  ", loadCollection)
-              dispatch(loadCollection)
+        if (nftContract) {
+          //load TotalSupply
+          const loadTotalSupply = await loadTotalSupplyHandler(nftContract)
+          console.log('loadTotalSupply:  ', loadTotalSupply)
+          dispatch(loadTotalSupply)
+
+          //load Collection 
+          const totalSupply = loadTotalSupply.payload
+          const loadCollection = await loadCollectionHandler(nftContract, totalSupply)
+          console.log("loadCollection:  ", loadCollection)
+          dispatch(loadCollection)
+          dispatch(setNftIsLoading(false))
+          nftContract.events.Transfer()
+            .on('data', async (event: any) => {
+              //update Collection when tranfer
+              const updateCollection = await updateCollectionHandler(nftContract, event.returnValues.tokenId, event.returnValues.to)
+              console.log("updateCollectionHandler", updateCollection)
+              dispatch(updateCollection)
+              //set nft is loading
               dispatch(setNftIsLoading(false))
-              nftContract.events.Transfer()
-              .on('data', async(event:any) => {
-                //update Collection when tranfer
-                const updateCollection= await updateCollectionHandler(nftContract,event.returnValues.tokenId, event.returnValues.to)
-                 console.log("updateCollectionHandler" ,updateCollection)
-                dispatch(updateCollection)
-                //set nft is loading
-                dispatch(setNftIsLoading(false))
-                
-              })
-              .on('error', (error:any) => {
-                console.log(error);
-              });
 
-            }else {
-              window.alert('NFTCollection contract not deployed to detected network.')
-            }
-            
-            if (mktcontract) {
-              // load offer count
-              const offerCount = await loadOfferCountHandler(mktcontract)
-              dispatch(offerCount)
-              // load offer 
-              const loadOffer  = await loadOffersHandler(mktcontract,offerCount.payload)
-              dispatch(loadOffer)
-
-              // Event OfferFilled subscription , khi click mua nft se doi owner moi
-              mktcontract.events.OfferFilled()
-              .on('data', (event:any) => {
-                setMktIsLoading(false);
-                dispatch(updateOfferHandler(event.returnValues.offerId))
-                dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner))
-                dispatch(setMktIsLoading(false))
-              })
-              .on('error', (error:any) => {
-                console.log(error);
-              });
-
-              // Event Offer subscription  , su kien dang ban NFT
-              mktcontract.events.Offer()
-              .on('data', (event:any) => {
-                dispatch(addOfferHandler(event.returnValues))
-                console.log('event:  ' ,event.returnValues)
-                dispatch(setMktIsLoading(false))
-              })
-              .on('error', (error:any) => {
-                console.log(error);
-              });
-
-              // Event offerCancelled subscription 
-              mktcontract.events.OfferCancelled()
-              .on('data', (event:any) => {
-                dispatch(updateOfferHandler(event.returnValues.offerId))
-                dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.owner))
-                dispatch( setMktIsLoading(false))
-              })
-              .on('error', (error:any) => {
-                console.log(error);
-              });
-
-            }else {
-              window.alert('NFTCollection contract not deployed to detected network.')
-            }
-
-                  // Metamask Event Subscription - Account changed
-            (window as any).ethereum.on('accountsChanged', (accounts:string) => {
-              if(web3){
-                dispatch(loadAccount(accounts[0]))
-                accounts[0] && dispatch(loadUserFundsHandler(mktcontract, accounts[0]))
-              }
-             
+            })
+            .on('error', (error: any) => {
+              console.log(error);
             });
 
-            // Metamask Event Subscription - Network changed
-            (window as any).ethereum.on('chainChanged', (chainId:string) => {
-              window.location.reload();
-            });
-          
-          } else
-          console.log('No account')
+        } else {
+          window.alert('NFTCollection contract not deployed to detected network.')
         }
-        loadBlockchainData()
 
-  },[])
+        if (mktcontract) {
+          // load offer count
+          const offerCount = await loadOfferCountHandler(mktcontract)
+          dispatch(offerCount)
+          // load offer 
+          const loadOffer = await loadOffersHandler(mktcontract, offerCount.payload)
+          dispatch(loadOffer)
+
+          // Event OfferFilled subscription , khi click mua nft se doi owner moi
+          mktcontract.events.OfferFilled()
+            .on('data', (event: any) => {
+              setMktIsLoading(false);
+              dispatch(updateOfferHandler(event.returnValues.offerId))
+              dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner))
+              dispatch(setMktIsLoading(false))
+            })
+            .on('error', (error: any) => {
+              console.log(error);
+            });
+
+          // Event Offer subscription  , su kien dang ban NFT
+          mktcontract.events.Offer()
+            .on('data', (event: any) => {
+              dispatch(addOfferHandler(event.returnValues))
+              console.log('event:  ', event.returnValues)
+              dispatch(setMktIsLoading(false))
+            })
+            .on('error', (error: any) => {
+              console.log(error);
+            });
+
+          // Event offerCancelled subscription 
+          mktcontract.events.OfferCancelled()
+            .on('data', (event: any) => {
+              dispatch(updateOfferHandler(event.returnValues.offerId))
+              dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.owner))
+              dispatch(setMktIsLoading(false))
+            })
+            .on('error', (error: any) => {
+              console.log(error);
+            });
+
+        } else {
+          window.alert('NFTCollection contract not deployed to detected network.')
+        }
+
+        // Metamask Event Subscription - Account changed
+        (window as any).ethereum.on('accountsChanged', (accounts: string) => {
+          if (web3) {
+            dispatch(loadAccount(accounts[0]))
+            accounts[0] && dispatch(loadUserFundsHandler(mktcontract, accounts[0]))
+          }
+
+        });
+
+        // Metamask Event Subscription - Network changed
+        (window as any).ethereum.on('chainChanged', (chainId: string) => {
+          window.location.reload();
+        });
+
+      } else
+        console.log('No account')
+    }
+    loadBlockchainData()
+
+  }, [])
   function RouteWithSubRoutes(route: any) {
     return (
       <Route path={route.path} exact={route.exact}>
