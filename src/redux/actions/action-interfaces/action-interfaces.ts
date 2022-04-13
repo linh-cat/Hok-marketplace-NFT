@@ -1,4 +1,3 @@
-
 interface loadAccount {
     type : 'connection/account'
     payload : string
@@ -9,7 +8,7 @@ interface loadNetworkId{
 }
 // NFT collection
 interface loadCollectionContractHandler {
-    type: 'collection/loadcontract',
+    type: "collection/loadContract",
     payload : any
 }
 interface loadTotalSupplyHandler {
@@ -41,7 +40,7 @@ interface loadOfferCountHandler {
     type : 'marketplace/loadOfferCount',
     payload : number
 }
-interface loadOffersHandler{
+interface loadOffersHandler {
     type: 'marketplace/loadOffer',
     payload : {}[]
 }
@@ -49,7 +48,7 @@ interface updateOfferHandler {
     type : 'marketplace/updateOffer'
     payload : number
 }
-interface addOfferHandler {
+interface addOfferHandler {     
     type : 'marketplace/addOffer',
     payload : {offerId:number ,id:number, user:string , 
         price:number , fulfilled:boolean ,cancelled:boolean }

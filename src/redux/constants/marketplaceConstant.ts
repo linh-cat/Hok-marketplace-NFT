@@ -1,6 +1,7 @@
-export const loadContract = "marketplace/loadContract";
-export const loadOffer = "marketplace/loadOffer";
-export const updateOffer = "marketplace/updateOffer";
-export const addOffer = "marketplace/addOffer";
-export const loadFunds = "marketplace/loadFunds";
-export const loading = "marketplace/loading";
+export const loadContract_type = "marketplace/loadContract";
+export const loadOffer_type = "marketplace/loadOffer";
+export const updateOffer_type = "marketplace/updateOffer";
+export const addOffer_type = "marketplace/addOffer";
+export const loadOfferCount = "marketplace/loadOfferCount";
+export const loadFunds_type = "marketplace/loadFunds";
+export const loading_type = "marketplace/loading";

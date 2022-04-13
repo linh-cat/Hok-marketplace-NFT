@@ -1,6 +1,6 @@
-export const loadProduct = "collection/loadContract";
-export const loadSuplly = "collection/loadSuplly";
-export const loadCollection = "collection/loadCollection";
-export const updateCollection = "collection/updateCollection";
-export const updateOwner = "collection/updateOwner";
-export const loading = "collection/loading";
+export const loadProduct_type = "collection/loadContract";
+export const loadSuplly_type = "collection/loadSuplly";
+export const loadCollection_type = "collection/loadCollection";
+export const updateCollection_type = "collection/updateCollection";
+export const updateOwner_type = "collection/updateOwner";
+export const loading_type = "collection/loading";

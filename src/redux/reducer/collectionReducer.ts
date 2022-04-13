@@ -1,4 +1,5 @@
 import { Action } from './../actions/action-interfaces/action-interfaces';
+import {loadProduct_type, loadCollection_type, loadSuplly_type, loading_type, updateCollection_type, updateOwner_type} from "../constants/collectionConstant"
 interface Iinitstate {
     contract : any , 
     totalSupply : number | null ,
@@ -17,22 +18,22 @@ const initstate = {
 
 const collectionReducer = (state:Iinitstate = initstate , action:Action ) => {
     switch ( action.type ) {
-        case 'collection/loadcontract' :
+        case loadProduct_type:
             return {
                 ...state , 
                 contract :action.payload
             }
-        case 'collection/loadSuplly' : 
+        case loadSuplly_type: 
             return {
                 ...state ,
                 totalSupply : action.payload
             }
-        case 'collection/loadCollection' :
+        case loadCollection_type:
             return {
                 ...state , 
                 collection : action.payload
             }
-        case 'collection/updateCollection' : 
+        case updateCollection_type: 
             {
                 const index = state.collection.findIndex((NFT) => NFT.id === action.payload.id);
                 let collection = [];
@@ -46,7 +47,7 @@ const collectionReducer = (state:Iinitstate = initstate , action:Action ) => {
                     collection : collection
                 } 
             }
-        case 'collection/updateOwner' : 
+        case updateOwner_type: 
             {
                 const index = state.collection.findIndex((NFT) => NFT.id === action.payload.id);
                 let collection = [...state.collection];
@@ -56,7 +57,7 @@ const collectionReducer = (state:Iinitstate = initstate , action:Action ) => {
                     collection : collection
                 }
             }
-        case 'collection/loading' :
+        case loading_type:
             return {
                 ...state , 
                 nftIsLoading :action.payload

@@ -1,13 +1,16 @@
-import { account } from './../../selector/selector';
+import {loadProduct_type, loadCollection_type, updateCollection_type, loadSuplly_type, updateOwner_type} from "../../constants/collectionConstant";
+import {account_type, networkId_type} from "../../constants/connectionConstant";
+import {addOffer_type, loadContract_type, loadFunds_type, loadOffer_type, loading_type, updateOffer_type, loadOfferCount } from "../../constants/marketplaceConstant"
+
 export const loadAccount = (account : string) =>{
     return{
-        type :'connection/account',
+        type : account_type,
         payload : account
     }
 }
 export const loadNetworkId = (networkId : string) =>{
     return {
-        type : 'connection/networkId',
+        type : networkId_type,
         payload : networkId
     }
 }
@@ -15,14 +18,14 @@ export const loadNetworkId = (networkId : string) =>{
 // NFT collection
 export const loadCollectionContractHandler = (contract: any) =>{
     return {
-        type : 'collection/loadcontract',
+        type : loadProduct_type,
         payload : contract
     }
 }
 export const loadTotalSupplyHandler = async (contract: any) => {
     const totalSupply:number = await contract.methods.totalSupply().call();
     return {
-        type: 'collection/loadSuplly',
+        type: loadSuplly_type,
         payload : totalSupply
     }
 }
@@ -57,7 +60,7 @@ export const loadCollectionHandler = async (contract: any , totalSupply : number
         }
     }
     return {
-        type : 'collection/loadCollection',
+        type : loadCollection_type,
         payload : collection
     }
 }
@@ -87,19 +90,19 @@ export const updateCollectionHandler = async (contract: any , id:number , owner:
         console.error('Something went wrong');
     }
     return {
-        type : 'collection/updateCollection',
+        type : updateCollection_type,
         payload : NFT
     }
 }
 export const updateOwnerHandler = (id: number , newOwner : string) => {
     return({
-        type: 'collection/updateOwner',
+        type: updateOwner_type,
         payload : { id : id , newOwner : newOwner } 
         })
 }
 export const setNftIsLoading = (loading : boolean) =>{
     return { 
-        type : 'collection/loading',
+        type : loading,
         payload : loading
     }
 }
@@ -107,14 +110,14 @@ export const setNftIsLoading = (loading : boolean) =>{
 //Marketplace 
 export const loadMarketplaceContractHandler = (contract :any) => {
     return {
-        type: 'marketplace/loadContract' ,
+        type: loadContract_type,
         payload : contract
     }
 }
 export const loadOfferCountHandler = async(contract:any) => {
     const offerCount = await contract.methods.offerCount().call();
     return {
-        type : 'marketplace/loadOfferCount' , 
+        type : loadOfferCount, 
         payload : offerCount
     }
 }
@@ -134,18 +137,18 @@ export const loadOffersHandler = async (contract:any , offerCount: number) => {
     .filter(offer => offer.fulfilled === false && offer.cancelled === false); 
     // dispatchMarketplaceAction({type: 'LOADOFFERS', offers: offers});
     // console.log("total offer NFT:  " , offers) // tong sl nft đã đăng bán
-    return({type: 'marketplace/loadOffer', payload: offers})
+    return({type: loadOffer_type, payload: offers})
 }
 export const updateOfferHandler = (offerId:number) => {
-    return({type: 'marketplace/updateOffer', payload: offerId}); 
+    return({type: updateOffer_type, payload: offerId}); 
 }
 export const addOfferHandler = (offer:{}) => {
-    return{type: 'marketplace/addOffer', payload: offer};   
+    return{type: addOffer_type, payload: offer};   
 }
 export const loadUserFundsHandler = async(contract:any ,account:string) => {
     const userFunds = await contract.methods.userFunds(account).call();
-    return({type: 'marketplace/loadFunds', payload: userFunds});
+    return({type: loadFunds_type, payload: userFunds});
 }
 export const setMktIsLoading = (loading:boolean) => {
-    return({type: 'marketplace/loading', payload: loading});
+    return({type: loading_type, payload: loading});
 }
