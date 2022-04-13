@@ -47,18 +47,18 @@ const marketplaceReducer = (state: Iinitstate = initstate, action: Action) => {
 				offers: action.payload,
 			};
 		case updateOffer_type: {
-			const OFFERS = state.offers.filter((offer) => offer.offerId !== action.payload);
+			let destinationOffers = state.offers.filter((offer) => offer.offerId !== action.payload);
 			return {
 				...state,
-				offers: OFFERS,
+				offers: destinationOffers,
 			};
 		}
 		case addOffer_type: {
 			const index = state.offers.findIndex((offer) => offer.offerId === action.payload.offerId);
-			let OFFERS = [];
+			let destinationOffers = [];
 
 			if (index === -1) {
-				OFFERS = [
+				destinationOffers = [
 					...state.offers,
 					{
 						offerId: action.payload.offerId,
@@ -70,11 +70,11 @@ const marketplaceReducer = (state: Iinitstate = initstate, action: Action) => {
 					},
 				];
 			} else {
-				OFFERS = [...state.offers];
+				destinationOffers = [...state.offers];
 			}
 			return {
 				...state,
-				offers: OFFERS,
+				offers: destinationOffers,
 			};
 		}
 		case loadFunds_type:

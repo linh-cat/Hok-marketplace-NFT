@@ -16,11 +16,11 @@ const initstate = {
     nftIsLoading: true
 }
 
-const collectionReducer = (state:Iinitstate = initstate , action:Action ) => {
+const collectionReducer = (state:Iinitstate = initstate , action: Action ) => {
     switch ( action.type ) {
         case loadProduct_type:
             return {
-                ...state , 
+                ...state, 
                 contract :action.payload
             }
         case loadSuplly_type: 

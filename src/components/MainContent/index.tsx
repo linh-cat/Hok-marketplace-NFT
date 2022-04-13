@@ -20,19 +20,7 @@ const index = () => {
 
     return (
         <div className="main__content">
-            <ToastHok
-                toastList={[
-                    {
-                        id: 1,
-                        title: 'Successfully',
-                        description: 'This is danger toast component',
-                    }
-                ]}
-                position={'top-left'}
-                show={true}
-                label={'success'}
-                timeShow={5000}
-            />
+
             <div className="search">
                 <ul className="search_menu">
                     <li className="search_menu--item">

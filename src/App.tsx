@@ -28,10 +28,6 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     // Check if the user has Metamask active
-    if (!web3) {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-      return;
-    }
     const loadBlockchainData = async () => {
       try {
         await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
@@ -39,26 +35,30 @@ function App() {
         console.log(error)
       }
       let networkID: any
+
       if (web3) {
         //load ID network
         networkID = await web3.eth.net.getId()
+
         dispatch(loadNetworkId(networkID))
+
         //load collection Contract
         const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
         const nftContract = nftDeployedNetwork ? new web3.eth.Contract((NFTCollection.abi as any), nftDeployedNetwork.address) : '';
+
         dispatch(loadCollectionContractHandler(nftContract))
 
         //load Marketplace Contracts
         const mktDeployedNetwork = (NFTMarketplace as any).networks[networkID];
         const mktcontract = mktDeployedNetwork ? new web3.eth.Contract((NFTMarketplace.abi as any), mktDeployedNetwork.address) : '';
+
         dispatch(loadMarketplaceContractHandler(mktcontract))
 
         if (nftContract) {
           //load TotalSupply
           const loadTotalSupply = await loadTotalSupplyHandler(nftContract)
-          console.log('loadTotalSupply:  ', loadTotalSupply)
-          dispatch(loadTotalSupply)
 
+          dispatch(loadTotalSupply)
           //load Collection 
           const totalSupply = loadTotalSupply.payload
           const loadCollection = await loadCollectionHandler(nftContract, totalSupply)
@@ -73,14 +73,13 @@ function App() {
               dispatch(updateCollection)
               //set nft is loading
               dispatch(setNftIsLoading(false))
-
             })
             .on('error', (error: any) => {
               console.log(error);
             });
 
         } else {
-          window.alert('NFTCollection contract not deployed to detected network.')
+          // window.alert('NFTCollection contract not deployed to detected network.')
         }
 
         if (mktcontract) {
@@ -126,7 +125,7 @@ function App() {
             });
 
         } else {
-          window.alert('NFTCollection contract not deployed to detected network.')
+          // window.alert('NFTCollection contract not deployed to detected network.')
         }
 
         // Metamask Event Subscription - Account changed
@@ -135,20 +134,18 @@ function App() {
             dispatch(loadAccount(accounts[0]))
             accounts[0] && dispatch(loadUserFundsHandler(mktcontract, accounts[0]))
           }
-
         });
-
         // Metamask Event Subscription - Network changed
         (window as any).ethereum.on('chainChanged', (chainId: string) => {
           window.location.reload();
         });
-
       } else
         console.log('No account')
     }
-    loadBlockchainData()
 
-  }, [])
+    loadBlockchainData()
+  }, [dispatch])
+
   function RouteWithSubRoutes(route: any) {
     return (
       <Route path={route.path} exact={route.exact}>
