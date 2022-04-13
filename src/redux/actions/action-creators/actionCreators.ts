@@ -11,6 +11,7 @@ export const loadNetworkId = (networkId : string) =>{
         payload : networkId
     }
 }
+
 // NFT collection
 export const loadCollectionContractHandler = (contract: any) =>{
     return {
