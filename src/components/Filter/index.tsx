@@ -5,7 +5,7 @@ import ComboBoxHok from "../ComboBoxHok"
 
 const index = () => {
 
-    const options = [{ value: "genx", name: "GenX" }]
+    const options = [{ value: "genx", name: "GenX" }, { value: "GenY", name: "GenY" }, { value: "GenZ", name: "GenZ" }]
 
     return (
         <div className="filter">
