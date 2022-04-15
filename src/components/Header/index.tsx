@@ -6,7 +6,8 @@ import ToastHok, { Label, ToastList } from "../ToastHok"
 import HokLogo from "../../assets/images/HOK-Logo-white.png"
 import { useDispatch, useSelector } from 'react-redux'
 import web3 from '../../connection/web3';
-import { loadAccount } from '../../redux/actions/action-creators/actionCreators';
+import { loadAccount} from '../../redux/actions/action-creators/connectionAction'
+
 import { account } from '../../redux/selector/selector';
 
 const Index = () => {

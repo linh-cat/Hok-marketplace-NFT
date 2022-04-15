@@ -1,4 +1,4 @@
-import { Action } from './../actions/action-interfaces/action-interfaces';
+import { Action } from './../actions/action-interfaces/connectionActionInterface';
 import { account_type, networkId_type } from '../constants/connectionConstant';
 interface Iinitstate {
 	account: string | null;

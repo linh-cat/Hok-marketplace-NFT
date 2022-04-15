@@ -7,12 +7,6 @@ import NFTCollection from './abis/NFTCollection.json'
 import NFTMarketplace from './abis/NFTMarketplace.json'
 import web3 from './connection/web3';
 import {
-  loadAccount, loadNetworkId,
-  loadCollectionContractHandler,
-  loadTotalSupplyHandler,
-  loadCollectionHandler,
-  updateCollectionHandler,
-  setNftIsLoading,
   loadMarketplaceContractHandler,
   loadOfferCountHandler,
   loadOffersHandler,
@@ -20,8 +14,16 @@ import {
   addOfferHandler,
   loadUserFundsHandler,
   setMktIsLoading,
+} from './redux/actions/action-creators/marketplaceAction';
+import { loadAccount, loadNetworkId} from './redux/actions/action-creators/connectionAction'
+import {
+  loadCollectionContractHandler,
+  loadTotalSupplyHandler,
+  loadCollectionHandler,
+  updateCollectionHandler,
+  setNftIsLoading,
   updateOwnerHandler
-} from './redux/actions/action-creators/actionCreators';
+} from './redux/actions/action-creators/collectionAction'
 import { useDispatch } from 'react-redux'
 
 function App() {
