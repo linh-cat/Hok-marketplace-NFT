@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './index.scss';
 import ButtonHok from "../ButtonHok"
-import ToastHok from "../ToastHok"
+import ToastHok, { Label, ToastList } from "../ToastHok"
 import HokLogo from "../../assets/images/HOK-Logo-white.png"
 import { useDispatch, useSelector } from 'react-redux'
 import web3 from '../../connection/web3';
@@ -33,6 +33,7 @@ const Index = () => {
 			accounts = await web3.eth.getAccounts();
 			const account = accounts[0];
 			dispatch(loadAccount(account))
+
 		}
 	}
 
@@ -46,22 +47,9 @@ const Index = () => {
 
 	return (
 		<>
-			<ToastHok
-				toastList={[
-					{
-						id: 1,
-						title: 'Success',
-						description: 'Connect meta successfully!',
-					}
-				]}
-				position={'top-left'}
-				show={isLogin}
-				label={'success'}
-				timeShow={3000}
-			/>
+			<ToastHok label={Label.SUCCESS} toastList={[{ id: 1, title: "SUCCESS", description: "This is success" }]} position="top-right" show={true} timeShow={3000} />
 
 			<div className="header">
-
 				<div className="header__icon">
 					<img src={HokLogo} alt="logo" />
 					<ButtonHok type="link" text="Hok Marketplace" bold='bold' color="#fff" />

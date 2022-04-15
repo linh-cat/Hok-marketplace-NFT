@@ -1,25 +1,29 @@
+/* eslint-disable no-self-assign */
 import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircleFilled, WarningFilled, InfoCircleFilled, ExclamationCircleFilled, CloseSquareFilled } from "@ant-design/icons"
 import "./index.scss"
 
-type typeProps = {
-    toastList: any[],
+type PropsToast = {
+    toastList: any[]
     position: string,
-    label: 'success' | 'warning' | 'danger' | 'info',
-    show: boolean,
+    label: Label,
     timeShow: number,
+    show: boolean,
 }
 
-const Index = ({ toastList, position, label, show, timeShow }: typeProps) => {
-    const [list, setList] = useState<any[]>([]);
+export type ToastList = {
+    id: number,
+    title: string,
+    description: string
+}
+
+export enum Label {
+    SUCCESS = 'success', WARING = 'warning', DANGER = 'danger', INFO = 'info'
+}
+
+const Index = ({ position, label, timeShow, show, toastList }: PropsToast) => {
     const [isShow, setIsShow] = useState<boolean>(show)
-
-
-    useEffect(() => {
-        setList(toastList);
-        setIsShow(show);
-    }, [toastList, list, show]);
-
+    const [list, setList] = useState<ToastList[]>(toastList);
 
     useEffect(() => {
         const timeoutShow = setTimeout(() => {
@@ -28,8 +32,11 @@ const Index = ({ toastList, position, label, show, timeShow }: typeProps) => {
         return () => {
             clearTimeout(timeoutShow)
         }
-    }, [show, timeShow])
+    }, [timeShow])
 
+    useEffect(() => {
+        setList(toastList)
+    }, [toastList])
 
     return (
         <div className={isShow ? `notification-container ${position} ${label}` : "none"}>
@@ -38,10 +45,10 @@ const Index = ({ toastList, position, label, show, timeShow }: typeProps) => {
                     <>
                         <div className={`toast-item ${label}`} key={toast.id}>
                             <div className="notification-icon" >
-                                {label === "success" && <CheckCircleFilled style={{ fontSize: "18px" }} />}
-                                {label === "warning" && <WarningFilled style={{ fontSize: "18px" }} />}
-                                {label === "info" && <InfoCircleFilled style={{ fontSize: "18px" }} />}
-                                {label === "danger" && <ExclamationCircleFilled style={{ fontSize: "18px" }} />}
+                                {label === Label.SUCCESS && <CheckCircleFilled style={{ fontSize: "18px" }} />}
+                                {label === Label.WARING && <WarningFilled style={{ fontSize: "18px" }} />}
+                                {label === Label.INFO && <InfoCircleFilled style={{ fontSize: "18px" }} />}
+                                {label === Label.DANGER && <ExclamationCircleFilled style={{ fontSize: "18px" }} />}
                             </div>
 
                             <div>
