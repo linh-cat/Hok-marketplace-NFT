@@ -6,9 +6,10 @@ import ToastHok, { Label, ToastList } from "../ToastHok"
 import HokLogo from "../../assets/images/HOK-Logo-white.png"
 import { useDispatch, useSelector } from 'react-redux'
 import web3 from '../../connection/web3';
-import { loadAccount} from '../../redux/actions/action-creators/connectionAction'
+import { loadAccount } from '../../redux/actions/action-creators/connectionAction'
 
 import { account } from '../../redux/selector/selector';
+import { useHistory } from 'react-router-dom';
 
 const Index = () => {
 
@@ -16,6 +17,8 @@ const Index = () => {
 	const dispatch = useDispatch()
 	const accountWeb3 = useSelector(account)
 	const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
+
+	let history = useHistory()
 
 	const commonModal: {
 		title: string,
@@ -84,16 +87,19 @@ const Index = () => {
 		<>
 			<ModalHok title={modalVisible.modal.title} modalText={modalVisible.modal.modalText} visible={modalVisible.visible} handleOk={modalVisible.modal.handleOk} handleCancel={modalVisible.modal.handleCancel} />
 
-			<ToastHok label={Label.SUCCESS} toastList={[{ id: 1, title: "SUCCESS", description: "This is success" }]} position="top-right" show={true} timeShow={3000} />
+			{/* <ToastHok label={Label.SUCCESS} toastList={[{ id: 1, title: "SUCCESS", description: "This is success............" }]} position="top-right" show={true} timeShow={3000} /> */}
 
 			<div className="header">
 				<div className="header__icon">
 					<img src={HokLogo} alt="logo" />
-					<ButtonHok type="link" text="Hok Marketplace" bold='bold' color="#fff" />
+					<ButtonHok type="link" text="Hok Marketplace" bold='bold' color="#fff" onClick={() => history.push("/")} />
 				</div>
 				<ul className="header__nav">
 					<li className="header__nav--item">
 						<ButtonHok type="link" text="Show modal" color="#6FA8DC" bold='bold' onClick={openModal} />
+					</li>
+					<li className="header__nav--item">
+						<ButtonHok type="link" text="New NFT" color="#6FA8DC" bold='bold' onClick={() => history.push("/new")} />
 					</li>
 					<li className="header__nav--item">
 						<ButtonHok type="link" text="Home" color="#6FA8DC" bold='bold' />

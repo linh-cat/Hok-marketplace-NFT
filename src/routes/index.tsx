@@ -1,5 +1,5 @@
 import React from 'react';
-import MainContainer from '../containers/MainContainer'
+import MainContainer from '../pages/MainContainer'
 
 const appRoutes = [
     {
@@ -9,15 +9,15 @@ const appRoutes = [
         routes: [
             {
                 exact: true,
-                path: "/main/content",
-                // component: React.lazy(() => import("../../containers/Main"))
+                path: "/",
+                component: React.lazy(() => import("../components/MainContent"))
+            },
+            {
+                exact: true,
+                path: "/new",
+                component: React.lazy(() => import("../pages/MainContainer/New"))
             }
         ]
     },
-    {
-        exact: false,
-        path: "/authentication",
-        component: MainContainer
-    }
 ]
 export default appRoutes;
