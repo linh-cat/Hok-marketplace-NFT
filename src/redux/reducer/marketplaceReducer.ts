@@ -1,4 +1,4 @@
-import { Action } from './../actions/action-interfaces/action-interfaces';
+import { Action } from '../actions/action-interfaces/marketplaceActionInterface';
 import {
 	addOffer_type,
 	loadContract_type,

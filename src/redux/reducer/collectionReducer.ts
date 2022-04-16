@@ -1,4 +1,4 @@
-import { Action } from './../actions/action-interfaces/action-interfaces';
+import { Action } from './../actions/action-interfaces/collectionActionInterface';
 import {loadProduct_type, loadCollection_type, loadSuplly_type, loading_type, updateCollection_type, updateOwner_type} from "../constants/collectionConstant"
 interface Iinitstate {
     contract : any , 
