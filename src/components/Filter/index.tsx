@@ -2,11 +2,9 @@ import React from 'react'
 import "./index.scss"
 
 import ComboBoxHok from "../ComboBoxHok"
-
+import { accessories } from './List'
 const index = () => {
-
     const options = [{ value: "genx", name: "GenX" }, { value: "GenY", name: "GenY" }, { value: "GenZ", name: "GenZ" }]
-
     return (
         <div className="filter">
             <div className='title'>Filter</div>
