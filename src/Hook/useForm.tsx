@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
+interface Props {
+    initialState: any, callBack: any
+}
 
-
-export const useForm = ({ initialState, callBack }: { initialState: any, callBack: any }) => {
-
+export const useForm = (callBack: any, initialState = {}) => {
 
     const [values, setValues] = useState(initialState)
     // onChange
