@@ -15,7 +15,6 @@ type Props = {
 }
 
 const index = ({ routes }: Props) => {
-    console.log("routes", routes)
 
     return (
         <Layout >
