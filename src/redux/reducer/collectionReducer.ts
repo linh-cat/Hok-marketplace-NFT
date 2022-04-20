@@ -3,9 +3,20 @@ import {loadProduct_type, loadCollection_type, loadSuplly_type, loading_type, up
 interface Iinitstate {
     contract : any , 
     totalSupply : number | null ,
-    collection :{id : number , img :string , 
-        arms : string ,accessories:string ,  back:string,body:string ,endo:string,
-        energy:string ,  deltoid:string ,owner:string } [] ,
+    collection :{
+        id?: number;
+        type?: string;
+        img?: string;
+        arms?: string;
+        accessories?: string;
+        back?: string;
+        body?: string;
+        brain?: string;
+        endo?: string;
+        energy?: string;
+        deltoid?: string;
+        owner?: string;
+    }[] ,
     nftIsLoading : boolean
 }
 
@@ -29,9 +40,23 @@ const collectionReducer = (state:Iinitstate = initstate , action: Action ) => {
                 totalSupply : action.payload
             }
         case loadCollection_type:
+            const collectionFromAction = action.payload as {
+                id: number;
+                type: string;
+                img: string;
+                arms: string;
+                accessories: string;
+                back: string;
+                body: string;
+                brain: string;
+                endo: string;
+                energy: string;
+                deltoid: string;
+                owner: string;
+            }[]
             return {
                 ...state , 
-                collection : action.payload
+                collection : collectionFromAction
             }
         case updateCollection_type: 
             {
