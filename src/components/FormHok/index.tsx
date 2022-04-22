@@ -1,26 +1,23 @@
 import { Form, Input, Button, Checkbox } from 'antd';
-import React, { FunctionComponent } from "react";
+import React from "react";
+import "./index.scss"
 
 type FormProps = {
-    onFinish?: () => void,
-    onFinishFailed?: () => void,
-    children?: React.ReactNode;
+    title: string,
+    initialValues?: any,
+    onFinish?: any,
+    onFinishFailed?: any,
+    onValuesChange?: any
 }
 
 
-const Demo: FunctionComponent<FormProps> = (props) => {
-    const { children } = props
-
+const Demo: React.FC<FormProps> = (props) => {
+    const { children, title, onValuesChange, onFinish, onFinishFailed } = props
 
     return (
-        <Form
-            name="basic"
-            initialValues={{ remember: true }}
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
-            autoComplete="off"
-        >
-            {/* {...children} */}
+        <Form onValuesChange={onValuesChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <h1 className='form__title'>{title}</h1>
+            {children}
         </Form>
     );
 };

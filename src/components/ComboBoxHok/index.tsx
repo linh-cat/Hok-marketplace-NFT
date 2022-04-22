@@ -10,10 +10,11 @@ type ComboBoxProp = {
     values?: string,
     width?: string | undefined,
     title?: string | undefined,
-    defaultValue?: string
+    defaultValue?: string,
+    defaultActiveFirstOption?: boolean
 }
 
-const index = ({ options, onChangeValue, values, width, title, defaultValue }: ComboBoxProp) => {
+const index = ({ options, onChangeValue, values, width, title, defaultValue, defaultActiveFirstOption }: ComboBoxProp) => {
 
     function handleSearch(value: any) {
         // console.log(`selected ${value}`);
@@ -24,7 +25,7 @@ const index = ({ options, onChangeValue, values, width, title, defaultValue }: C
             <div className="combobox__head">
                 <div className="combobox__head--title">{title}</div>
             </div>
-            <Select defaultValue={defaultValue} style={{ width: width }} onChange={onChangeValue} onSearch={handleSearch} allowClear showSearch value={values}>
+            <Select defaultValue={defaultValue} style={{ width: width }} onChange={onChangeValue} onSearch={handleSearch} allowClear showSearch value={values} defaultActiveFirstOption={defaultActiveFirstOption}>
                 {options.map((val) => {
                     return (<Option value={val.value} key={val.value}>{val.name}</Option>)
                 })}
