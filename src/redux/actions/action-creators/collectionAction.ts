@@ -13,7 +13,9 @@ export const loadTotalSupplyHandler = async (contract: any) => {
     }
 }
 export const loadCollectionHandler = async (contract: any , totalSupply : number) => {
-    let collection: {}[] = [];
+    let collection: {id : number, type:string , img :string , 
+      arms : string ,accessories:string ,  back:string,body:string,brain:string ,endo:string,
+      energy:string ,  deltoid:string ,owner:string }[] = [];
     
     for(let i = 0; i < totalSupply; i++) {
       const hash = await contract.methods.tokenURIs(i).call();
@@ -22,17 +24,17 @@ export const loadCollectionHandler = async (contract: any , totalSupply : number
         if(!response.ok) {
           throw new Error('Something went wrong');
         }
-
         const metadata = await response.json();
         const owner = await contract.methods.ownerOf(i + 1).call();
-
         collection = [{
           id: i + 1,
+          type : metadata.properties.type.description,
           img: metadata.properties.image.description,
           arms : metadata.properties.arms.description,
           accessories : metadata.properties.accessories.description,
           back : metadata.properties.back.description,
           body : metadata.properties.body.description,
+          brain : metadata.properties.brain.description,
           endo : metadata.properties.endo.description,
           energy : metadata.properties.energy.description,
           deltoid : metadata.properties.deltoid.description,
@@ -48,7 +50,7 @@ export const loadCollectionHandler = async (contract: any , totalSupply : number
     }
 }
 export const updateCollectionHandler = async (contract: any , id:number , owner:string) => {
-    let NFT:{} = {id:Number};
+    let NFT:{} = {};
     const hash = await contract.methods.tokenURI(id).call();
     try {
       const response = await fetch(`https://ipfs.infura.io/ipfs/${hash}?clear`);
@@ -59,11 +61,13 @@ export const updateCollectionHandler = async (contract: any , id:number , owner:
 
       NFT = {
         id: id,
+        type : metadata.properties.type.description,
         img: metadata.properties.image.description,
         arms : metadata.properties.arms.description,
         accessories : metadata.properties.accessories.description,
         back : metadata.properties.back.description,
         body : metadata.properties.body.description,
+        brain : metadata.properties.brain.description,
         endo : metadata.properties.endo.description,
         energy : metadata.properties.energy.description,
         deltoid : metadata.properties.deltoid.description,
