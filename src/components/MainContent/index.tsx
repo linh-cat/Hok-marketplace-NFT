@@ -33,27 +33,22 @@ const index = () => {
         if(!web3) {
             return
         }
-        const enteredPrice = web3.utils.toWei('0,1', 'ether');
+        const enteredPrice = web3.utils.toWei('0.0001', 'ether');
         console.log("enteredPrice: " , enteredPrice)
         CollectionContract.methods.approve(MarketContract.options.address, id).send({ from: Account })
         .on('transactionHash', (hash: any) => {
+            window.alert('dang ban thanh cong')
         })
         .on('receipt', (receipt:any) => {      
             MarketContract.methods.makeOffer(id, enteredPrice).send({ from:Account })
-          .on('error', (error:any) => {
+        .on('error', (error:any) => {
             window.alert('Something went wrong when pushing to the blockchain');
           }); 
         });
         setReload('')
       };
 
-    const handle = () => {
-    if(!web3) {
-        return
-    }
-    const enteredPrice = web3.utils.toWei('1', 'ether');
-    console.log('towei: ' , enteredPrice)
-    }
+
     return (
         <div className="main__content">
 
@@ -86,11 +81,11 @@ const index = () => {
             Ethereum is a developer’s blockchain, built by developers, for developers
             <Row gutter={[16, 16]}>
                 {Collection.map((NFT: any , key)=> {
-                    console.log('NFT:  ' ,NFT.img)
+                   
                         return (
                             <>
-                            <Col span={4}>
-                                <button onClick={handle}>XXX</button>
+                            <Col span={4} key={key}>
+                                {/* <button onClick={(e)=>makeOfferHandler(e,NFT.id, key)}>xxx</button> */}
                                 <CardHok name='GenX' id={NFT.id} price={2} cardImage= {`https://ipfs.infura.io/ipfs/${NFT.img}`}/> 
                             </Col>
                             </>
