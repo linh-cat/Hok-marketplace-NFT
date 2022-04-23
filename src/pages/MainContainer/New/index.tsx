@@ -158,6 +158,47 @@ const Index = () => {
             console.log('error :' , error)
         }
     }
+    // const mintHandler = async () => {
+    //     // const fileAdded = await ipfs.add(capturedFileBuffer);
+    //     // if(!fileAdded) {
+    //     //     console.error('Something went wrong when updloading the file');
+    //     //     return;
+    //     //     }
+    //     // console.log('file ::' , fileAdded.path)
+    //     //QmPunDCk6Jrq4mBhWg7qUvE5Nhf4vs7SQP7Rk2pycmn3B7
+    //     const metadata =  {
+    //                         title: "Asset Metadata",
+    //                         type: "object",
+    //                         properties: {
+    //                             type :{
+    //                                 type: "string",
+    //                                 description: 'HOK-main'
+    //                                 },
+    //                             image: {
+    //                                 type: "string",
+    //                                 description: 'QmPunDCk6Jrq4mBhWg7qUvE5Nhf4vs7SQP7Rk2pycmn3B7'
+    //                             },
+    //                             attribute: {
+    //                                 type: "string",
+    //                                 description: 'HOK legs'
+    //                             },
+                               
+    //                         }
+    //                     };
+    //     const metadataAdded = await ipfs.add(JSON.stringify(metadata));
+    //     console.log(metadataAdded)
+    //     if(!metadataAdded) {
+    //     console.error('Something went wrong when updloading the file');
+    //         return;
+    //     }
+    //     CollectionContract.methods.safeMint(metadataAdded.path).send({ from: Account })
+    //         .on('transactionHash', (hash:any) => {
+    //          window.alert('Mint Successfully')     
+    //         })
+    //         .on('error', (e:any) =>{
+    //             window.alert('Something went wrong when pushing to the blockchain'); 
+    //         })   
+    // }
     useEffect(() => {
         // setTest1()
     }, [])

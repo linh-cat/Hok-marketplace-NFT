@@ -15,14 +15,14 @@ import ToastHok from "../ToastHok"
 
 // 
 import { useDispatch, useSelector } from 'react-redux'
-import { account , collection ,collectionContract , marketplaceContract } from '../../redux/selector/selector';
+import { account , collection ,collectionContract , marketplaceContract , collectionGenx} from '../../redux/selector/selector';
 import web3 from '../../connection/web3';
 
 const index = () => {
     const [seearchValue, setSearchValue] = useState("")
     const [reload ,setReload] = useState('')
     const dispatch = useDispatch() 
-    const Collection = useSelector(collection)
+    const Collection = useSelector(collectionGenx)
     const Account = useSelector(account)
     const CollectionContract = useSelector(collectionContract)
     const MarketContract = useSelector(marketplaceContract)
@@ -47,7 +47,7 @@ const index = () => {
         });
         setReload('')
       };
-
+      
 
     return (
         <div className="main__content">

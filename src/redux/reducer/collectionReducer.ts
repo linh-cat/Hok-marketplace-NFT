@@ -16,7 +16,10 @@ interface Iinitstate {
         energy?: string;
         deltoid?: string;
         owner?: string;
-    }[] ,
+        //
+        vid ? : string ;
+        attribute ?: string
+    } [],
     nftIsLoading : boolean
 }
 
@@ -53,6 +56,8 @@ const collectionReducer = (state:Iinitstate = initstate , action: Action ) => {
                 energy: string;
                 deltoid: string;
                 owner: string;
+                vid  : string ;
+                attribute : string
             }[]
             return {
                 ...state , 
