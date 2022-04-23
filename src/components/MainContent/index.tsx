@@ -88,6 +88,7 @@ const index = () => {
                                 {/* <button onClick={(e)=>makeOfferHandler(e,NFT.id, key)}>xxx</button> */}
                                 <CardHok name='GenX' id={NFT.id} price={2} cardImage= {`https://ipfs.infura.io/ipfs/${NFT.img}`}/> 
                             </Col>
+                            
                             </>
                         ) 
                 })}
