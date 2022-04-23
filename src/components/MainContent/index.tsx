@@ -13,11 +13,47 @@ import ButtonHok from "../ButtonHok"
 import CardHok from "../CardHok"
 import ToastHok from "../ToastHok"
 
-// images
+// 
+import { useDispatch, useSelector } from 'react-redux'
+import { account , collection ,collectionContract , marketplaceContract } from '../../redux/selector/selector';
+import web3 from '../../connection/web3';
 
 const index = () => {
     const [seearchValue, setSearchValue] = useState("")
+    const [reload ,setReload] = useState('')
+    const dispatch = useDispatch() 
+    const Collection = useSelector(collection)
+    const Account = useSelector(account)
+    const CollectionContract = useSelector(collectionContract)
+    const MarketContract = useSelector(marketplaceContract)
+    const makeOfferHandler = (event: any, id:any, key:any) => {
+        event.preventDefault();
+        console.log('id in func:  ' , id)
+        console.log('key in func:  ', key)
+        if(!web3) {
+            return
+        }
+        const enteredPrice = web3.utils.toWei('0,1', 'ether');
+        console.log("enteredPrice: " , enteredPrice)
+        CollectionContract.methods.approve(MarketContract.options.address, id).send({ from: Account })
+        .on('transactionHash', (hash: any) => {
+        })
+        .on('receipt', (receipt:any) => {      
+            MarketContract.methods.makeOffer(id, enteredPrice).send({ from:Account })
+          .on('error', (error:any) => {
+            window.alert('Something went wrong when pushing to the blockchain');
+          }); 
+        });
+        setReload('')
+      };
 
+    const handle = () => {
+    if(!web3) {
+        return
+    }
+    const enteredPrice = web3.utils.toWei('1', 'ether');
+    console.log('towei: ' , enteredPrice)
+    }
     return (
         <div className="main__content">
 
@@ -48,29 +84,19 @@ const index = () => {
                 </div>
             </div>
             Ethereum is a developer’s blockchain, built by developers, for developers
-
             <Row gutter={[16, 16]}>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
-                <Col span={4}>
-                    <CardHok />
-                </Col>
+                {Collection.map((NFT: any , key)=> {
+                    console.log('NFT:  ' ,NFT.img)
+                        return (
+                            <>
+                            <Col span={4}>
+                                <button onClick={handle}>XXX</button>
+                                <CardHok name='GenX' id={NFT.id} price={2} cardImage= {`https://ipfs.infura.io/ipfs/${NFT.img}`}/> 
+                            </Col>
+                            </>
+                        ) 
+                })}
             </Row>
-
-
         </div>
     )
 }
