@@ -74,7 +74,6 @@ const Index = () => {
             <ComboBoxHok options={deltoid} width="180px" title='Deltoid' defaultValue='ALL' onChangeValue={enteredDeltoid}/>
             <ComboBoxHok options={energy} width="180px" title='Energy' defaultValue='ALL' onChangeValue={enteredEnergy}/>
             <ComboBoxHok options={endoskeletion} width="180px" title='Endoskeleton' defaultValue='ALL' onChangeValue={enteredEndo}/>
-            
         </div>
     )
 }

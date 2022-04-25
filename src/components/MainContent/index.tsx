@@ -15,17 +15,30 @@ import ToastHok from "../ToastHok"
 
 // 
 import { useDispatch, useSelector } from 'react-redux'
-import { account , collection ,collectionContract , marketplaceContract , collectionGenx} from '../../redux/selector/selector';
+import { account , collection ,collectionContract , marketplaceContract , collectionGenx, pageGenx} from '../../redux/selector/selector';
+import { loadSortHandler , loadPaginate} from '../../redux/actions/action-creators/filterAction'
 import web3 from '../../connection/web3';
 
 const index = () => {
     const [seearchValue, setSearchValue] = useState("")
+    const [ sort , setSort] = useState('')
     const [reload ,setReload] = useState('')
     const dispatch = useDispatch() 
     const Collection = useSelector(collectionGenx)
     const Account = useSelector(account)
     const CollectionContract = useSelector(collectionContract)
     const MarketContract = useSelector(marketplaceContract)
+    const Page = useSelector(pageGenx)
+    const ChangeSortHandler = () => {
+        // console.log('xxx')
+        // setSort(value)
+        // dispatch(loadSortHandler(value))
+
+    }
+    const seeMoreHandler = ( ) => {
+        dispatch(loadPaginate(12))
+        console.log('page:  ',Page )
+    }
     const makeOfferHandler = (event: any, id:any, key:any) => {
         event.preventDefault();
         console.log('id in func:  ' , id)
@@ -55,7 +68,7 @@ const index = () => {
             <div className="search">
                 <ul className="search_menu">
                     <li className="search_menu--item">
-                        <ButtonHok type="default" text="Newest" backgroundColor="#999999" color="#fff" radius="5px" bold="bold" />
+                        <ButtonHok type="default" text="Newest" backgroundColor="#999999" color="#fff" radius="5px" bold="bold" onClick={ChangeSortHandler}/>
                     </li>
                     <li className="search_menu--item">
                         <ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
@@ -93,6 +106,7 @@ const index = () => {
                         ) 
                 })}
             </Row>
+            <ButtonHok type="default" text="See more" radius="5px" bold="bold" onClick={seeMoreHandler}/>
         </div>
     )
 }

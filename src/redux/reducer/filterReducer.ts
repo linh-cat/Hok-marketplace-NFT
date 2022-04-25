@@ -1,7 +1,7 @@
 import { arms, deltoid, accessories } from './../../components/Filter/List';
 
 import { Action } from './../actions/action-interfaces/filterActionInterface';
-import { accessories_type, arms_type , back_type , body_type , brain_type , endo_type , energy_type , deltoid_type} from '../constants/filterConstant'
+import { accessories_type, arms_type , back_type , body_type , brain_type , endo_type , energy_type , deltoid_type, sort_type, paginate_type} from '../constants/filterConstant'
 interface Iinitstate {
     Genx: {
         accessories:string,
@@ -12,6 +12,8 @@ interface Iinitstate {
         endo:string,
         energy:string,
         deltoid:string,
+        sort : string,
+        page : number
     }
     Main: {
         search: string
@@ -28,6 +30,8 @@ const initState = {
         endo : '',
         energy: '',
         deltoid :'',
+        sort : '' ,
+        page : 12
     },
     Main : {
         search : ''
@@ -76,7 +80,18 @@ const filterReducer = (state:Iinitstate = initState , action:Action) => {
             return{
                 ...state,
                 Genx : {...state.Genx , deltoid : action.payload}
-            }           
+            }  
+        case sort_type :
+            return { 
+                ...state , 
+                Genx : {...state.Genx , sort : action.payload}
+            }      
+        case paginate_type :
+            
+            return {
+                ...state,
+                Genx : { ...state.Genx , page : state.Genx.page + 12}
+            }
         default:
                 return state
     }
