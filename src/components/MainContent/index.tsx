@@ -43,7 +43,7 @@ const index = () => {
             dispatch(loadPaginate(1))
             console.log('page:  ',Page )
             setLoadingBtn(false)
-        },500)
+        },1000)
         setLoadingBtn(true)
     }
     const makeOfferHandler = (event: any, id:any, key:any) => {

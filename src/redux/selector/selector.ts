@@ -1,5 +1,3 @@
-
-
 import { State } from './../reducer/index';
 import { createSelector } from "reselect";
 export const account = (state:State) =>state.connection.account
