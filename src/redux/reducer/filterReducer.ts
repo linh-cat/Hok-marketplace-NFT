@@ -31,7 +31,7 @@ const initState = {
         energy: '',
         deltoid :'',
         sort : '' ,
-        page : 12
+        page : 1
     },
     Main : {
         search : ''
@@ -87,10 +87,17 @@ const filterReducer = (state:Iinitstate = initState , action:Action) => {
                 Genx : {...state.Genx , sort : action.payload}
             }      
         case paginate_type :
-            
-            return {
-                ...state,
-                Genx : { ...state.Genx , page : state.Genx.page + 12}
+            {
+                if(action.payload === -1){
+                    return{
+                        ...state,
+                        Genx : { ...state.Genx , page : 1}
+                    }
+                } else
+                    return {
+                        ...state,
+                        Genx : { ...state.Genx , page : state.Genx.page + action.payload}
+                    }
             }
         default:
                 return state

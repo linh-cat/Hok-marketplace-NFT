@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import "./index.scss"
 
 // ant design 
 import { SearchOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 // component
@@ -23,12 +24,14 @@ const index = () => {
     const [seearchValue, setSearchValue] = useState("")
     const [ sort , setSort] = useState('')
     const [reload ,setReload] = useState('')
+    const [loadingBtn , setLoadingBtn] = useState(false)
     const dispatch = useDispatch() 
     const Collection = useSelector(collectionGenx)
     const Account = useSelector(account)
     const CollectionContract = useSelector(collectionContract)
     const MarketContract = useSelector(marketplaceContract)
-    const Page = useSelector(pageGenx)
+    const Page = useSelector(pageGenx) 
+
     const ChangeSortHandler = () => {
         // console.log('xxx')
         // setSort(value)
@@ -36,8 +39,12 @@ const index = () => {
 
     }
     const seeMoreHandler = ( ) => {
-        dispatch(loadPaginate(12))
-        console.log('page:  ',Page )
+        setTimeout(()=>{
+            dispatch(loadPaginate(1))
+            console.log('page:  ',Page )
+            setLoadingBtn(false)
+        },500)
+        setLoadingBtn(true)
     }
     const makeOfferHandler = (event: any, id:any, key:any) => {
         event.preventDefault();
@@ -60,8 +67,6 @@ const index = () => {
         });
         setReload('')
       };
-      
-
     return (
         <div className="main__content">
 
@@ -91,9 +96,11 @@ const index = () => {
                     </div>
                 </div>
             </div>
-            Ethereum is a developer’s blockchain, built by developers, for developers
-            <Row gutter={[16, 16]}>
-                {Collection.map((NFT: any , key)=> {
+            {Collection.length} Items
+             <Row gutter={[16, 16]}>
+                {Collection
+                    .slice(0, Page)
+                    .map((NFT: any , key)=> {
                    
                         return (
                             <>
@@ -105,8 +112,10 @@ const index = () => {
                             </>
                         ) 
                 })}
-            </Row>
-            <ButtonHok type="default" text="See more" radius="5px" bold="bold" onClick={seeMoreHandler}/>
+              </Row>
+            
+            <ButtonHok loading={loadingBtn} type="default" text="See more" radius="5px" bold="bold" onClick={seeMoreHandler}/>
+
         </div>
     )
 }

@@ -31,7 +31,8 @@ export const collectionGenx = createSelector (
     endo,
     energy,
     deltoid,
-    (collection , accessories , arms , back , body, brain, endo, energy, deltoid) => {
+    pageGenx,
+    (collection , accessories , arms , back , body, brain, endo, energy, deltoid , pageGenx) => {
        return collection.filter((nft:any)=>{
             if(nft.type === 'Genx')
             return nft.accessories.includes(accessories) 
@@ -43,5 +44,6 @@ export const collectionGenx = createSelector (
                    && nft.energy.includes(energy)
                    && nft.deltoid.includes(deltoid)
         })
+        // .slice(0, pageGenx)
     }
 )
