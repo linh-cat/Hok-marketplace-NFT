@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import "./index.scss"
 
 // ant design 
 import { SearchOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 // component
@@ -15,17 +16,36 @@ import ToastHok from "../ToastHok"
 
 // 
 import { useDispatch, useSelector } from 'react-redux'
-import { account , collection ,collectionContract , marketplaceContract , collectionGenx} from '../../redux/selector/selector';
+import { account , collection ,collectionContract , marketplaceContract , collectionGenx, pageGenx} from '../../redux/selector/selector';
+import { loadSortHandler , loadPaginate} from '../../redux/actions/action-creators/filterAction'
 import web3 from '../../connection/web3';
 
 const index = () => {
     const [seearchValue, setSearchValue] = useState("")
+    const [ sort , setSort] = useState('')
     const [reload ,setReload] = useState('')
+    const [loadingBtn , setLoadingBtn] = useState(false)
     const dispatch = useDispatch() 
     const Collection = useSelector(collectionGenx)
     const Account = useSelector(account)
     const CollectionContract = useSelector(collectionContract)
     const MarketContract = useSelector(marketplaceContract)
+    const Page = useSelector(pageGenx) 
+
+    const ChangeSortHandler = () => {
+        // console.log('xxx')
+        // setSort(value)
+        // dispatch(loadSortHandler(value))
+
+    }
+    const seeMoreHandler = ( ) => {
+        setTimeout(()=>{
+            dispatch(loadPaginate(1))
+            console.log('page:  ',Page )
+            setLoadingBtn(false)
+        },1000)
+        setLoadingBtn(true)
+    }
     const makeOfferHandler = (event: any, id:any, key:any) => {
         event.preventDefault();
         console.log('id in func:  ' , id)
@@ -47,15 +67,13 @@ const index = () => {
         });
         setReload('')
       };
-      
-
     return (
         <div className="main__content">
 
             <div className="search">
                 <ul className="search_menu">
                     <li className="search_menu--item">
-                        <ButtonHok type="default" text="Newest" backgroundColor="#999999" color="#fff" radius="5px" bold="bold" />
+                        <ButtonHok type="default" text="Newest" backgroundColor="#999999" color="#fff" radius="5px" bold="bold" onClick={ChangeSortHandler}/>
                     </li>
                     <li className="search_menu--item">
                         <ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
@@ -78,9 +96,11 @@ const index = () => {
                     </div>
                 </div>
             </div>
-            Ethereum is a developer’s blockchain, built by developers, for developers
-            <Row gutter={[16, 16]}>
-                {Collection.map((NFT: any , key)=> {
+            {Collection.length} Items
+             <Row gutter={[16, 16]}>
+                {Collection
+                    .slice(0, Page)
+                    .map((NFT: any , key)=> {
                    
                         return (
                             <>
@@ -92,7 +112,10 @@ const index = () => {
                             </>
                         ) 
                 })}
-            </Row>
+              </Row>
+            
+            <ButtonHok loading={loadingBtn} type="default" text="See more" radius="5px" bold="bold" onClick={seeMoreHandler}/>
+
         </div>
     )
 }
