@@ -12,12 +12,12 @@ interface Iinitstate {
 	contract: any | null;
 	offerCount: number | null;
 	offers: {
-		offerId: number;
-		id: number;
-		user: string;
-		price: number;
-		fulfilled: boolean;
-		cancelled: boolean;
+		offerId?: number;
+		id?: number;
+		user?: string;
+		price?: number;
+		fulfilled?: boolean;
+		cancelled?: boolean;
 	}[];
 	userFunds: number | null;
 	mktIsLoading: boolean;

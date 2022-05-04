@@ -1,0 +1,1 @@
+export const accessories_type = "filter/Genx/accessories"
