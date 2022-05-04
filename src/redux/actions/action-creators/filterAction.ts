@@ -1,6 +1,6 @@
 
 
-import { accessories_type , arms_type , back_type , body_type , brain_type , endo_type , energy_type , deltoid_type} from "../../constants/filterConstant";
+import { accessories_type , arms_type , back_type , body_type , brain_type , endo_type , energy_type , deltoid_type, sort_type, paginate_type} from "../../constants/filterConstant";
 export const loadAccessoriesHandler = (accessories: string) => {
     return {
         type : accessories_type,
@@ -47,5 +47,17 @@ export const loadDeltoidHandler = (deltoid :string) => {
     return {
         type: deltoid_type ,
         payload : deltoid
+    }
+}
+export const loadSortHandler = (sort : string) => {
+    return {
+        type : sort_type ,
+        payload : sort
+    }
+}
+export const loadPaginate = (page : number)=> {
+    return {
+        type : paginate_type ,
+        payload : page
     }
 }

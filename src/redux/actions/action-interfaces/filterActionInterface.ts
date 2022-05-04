@@ -31,4 +31,12 @@ interface loadDeltoid {
     type: "filter/Genx/deltoid"
     payload: string
 }
-export type Action = loadAccesories | loadArms | loadBack | loadBody | loadBrain | loadDeltoid | loadEndo | loadEnergy
+interface loadSortGenx {
+    type : "filter/Genx/sort"
+    payload : string
+}
+interface loadPageGenx {
+    type : "filter/Genx/page"
+    payload : number
+}
+export type Action = loadAccesories | loadArms | loadBack | loadBody | loadBrain | loadDeltoid | loadEndo | loadEnergy | loadSortGenx | loadPageGenx
