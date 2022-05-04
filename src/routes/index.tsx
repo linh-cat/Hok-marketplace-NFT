@@ -15,7 +15,7 @@ const appRoutes = [
             {
                 exact: true,
                 path: "/new",
-                component: React.lazy(() => import("../pages/MainContainer/New"))
+                // component: React.lazy(() => import("../pages/MainContainer/New"))
             }
         ]
     },

@@ -12,7 +12,8 @@ export const offerCount = (state:State) => state.marketplace.offerCount
 export const collectionGenx = createSelector (
     collection ,
     (collection) => {
-       return collection.filter((nft:any)=>{
+       // eslint-disable-next-line array-callback-return
+       return collection.filter((nft:any) => {
             if(nft.type === 'Genx')
             return nft  
         })

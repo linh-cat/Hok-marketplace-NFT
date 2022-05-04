@@ -184,7 +184,7 @@ const Index = () => {
     //                                 type: "string",
     //                                 description: 'HOK legs'
     //                             },
-                               
+
     //                         }
     //                     };
     //     const metadataAdded = await ipfs.add(JSON.stringify(metadata));
@@ -234,8 +234,7 @@ const Index = () => {
                     Submit
                 </Button>
             </Form.Item>
-        </FormHok> * /}
-        </div >
+        </div>
     );
 };
 
