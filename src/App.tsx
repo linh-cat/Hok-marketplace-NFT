@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Route } from "react-router-dom"
-import ErrorBoundary from './components/ErrorBoundary';
 import "./App.scss"
 import routes from "./routes"
 import NFTCollection from './abis/NFTCollection.json'
@@ -15,7 +14,7 @@ import {
   loadUserFundsHandler,
   setMktIsLoading,
 } from './redux/actions/action-creators/marketplaceAction';
-import { loadAccount, loadNetworkId} from './redux/actions/action-creators/connectionAction'
+import { loadAccount, loadNetworkId } from './redux/actions/action-creators/connectionAction'
 import {
   loadCollectionContractHandler,
   loadTotalSupplyHandler,
@@ -159,13 +158,11 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <ErrorBoundary>
-          <Suspense fallback={<div>Loading...</div>}>
-            {routes.map((route) => (
-              <RouteWithSubRoutes {...route} key={route.path} />
-            ))}
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={<div>Loading...</div>}>
+          {routes.map((route) => (
+            <RouteWithSubRoutes {...route} key={route.path} />
+          ))}
+        </Suspense>
       </div>
     </BrowserRouter>
 
