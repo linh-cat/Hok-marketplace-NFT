@@ -16,7 +16,13 @@ const appRoutes = [
                 exact: true,
                 path: "/new",
                 // component: React.lazy(() => import("../pages/MainContainer/New"))
-            }
+            },
+            {
+                exact: true,
+                path: "/mynft",
+                component: React.lazy(() => import("../pages/MainContainer/MyNFT"))
+            },
+
         ]
     },
 ]

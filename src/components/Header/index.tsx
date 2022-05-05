@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './index.scss';
 import ButtonHok from "../ButtonHok"
 import ModalHok from "../ModalHok"
-import ToastHok, { Label, ToastList } from "../ToastHok"
+import { toast } from "react-toastify"
 import HokLogo from "../../assets/images/HOK-Logo-white.png"
 import { useDispatch, useSelector } from 'react-redux'
 import web3 from '../../connection/web3';
@@ -83,12 +83,21 @@ const Index = () => {
 		setModalVisible({ visible: true, modal: modalHeader })
 	}
 
+	const showToast = () => {
+		toast.success('🦄 Wow so easy!', {
+			position: "top-center",
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined
+		})
+	}
+
 	return (
 		<>
 			<ModalHok title={modalVisible.modal.title} modalText={modalVisible.modal.modalText} visible={modalVisible.visible} handleOk={modalVisible.modal.handleOk} handleCancel={modalVisible.modal.handleCancel} />
-
-			{/* <ToastHok label={Label.SUCCESS} toastList={[{ id: 1, title: "SUCCESS", description: "This is success............" }]} position="top-right" show={true} timeShow={3000} /> */}
-
 			<div className="header">
 				<div className="header__icon">
 					<img src={HokLogo} alt="logo" />
@@ -97,6 +106,9 @@ const Index = () => {
 				<ul className="header__nav">
 					<li className="header__nav--item">
 						<ButtonHok type="link" text="Show modal" color="#6FA8DC" bold='bold' onClick={openModal} />
+					</li>
+					<li className="header__nav--item">
+						<ButtonHok type="default" text="Show toast" color="#6FA8DC" bold='bold' onClick={showToast} />
 					</li>
 					<li className="header__nav--item">
 						<ButtonHok type="link" text="New NFT" color="#6FA8DC" bold='bold' onClick={() => history.push("/new")} />

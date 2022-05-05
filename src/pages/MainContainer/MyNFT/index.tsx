@@ -3,7 +3,9 @@ import "./index.scss"
 
 const index = () => {
     return (
-        <div>index</div>
+        <div className='your__item'>
+            <div className='your__item--title'>Your NFT Item </div>
+        </div>
     )
 }
 

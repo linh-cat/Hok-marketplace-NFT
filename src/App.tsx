@@ -24,6 +24,7 @@ import {
   updateOwnerHandler
 } from './redux/actions/action-creators/collectionAction'
 import { useDispatch } from 'react-redux'
+import { ToastContainer } from "react-toastify"
 
 function App() {
   const dispatch = useDispatch()
@@ -80,7 +81,7 @@ function App() {
             });
 
         } else {
-          // window.alert('NFTCollection contract not deployed to detected network.')
+          window.alert('NFTCollection contract not deployed to detected network.')
         }
 
         if (mktcontract) {
@@ -158,6 +159,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
+        <ToastContainer />
         <Suspense fallback={<div>Loading...</div>}>
           {routes.map((route) => (
             <RouteWithSubRoutes {...route} key={route.path} />
