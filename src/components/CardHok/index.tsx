@@ -3,17 +3,20 @@ import React from 'react'
 import "./index.scss"
 
 // component
-import CardImage from "../../assets/images/cardimage.png"
 import ButtonHok from "../ButtonHok"
 
 type CardHokProp = {
-    id? : number ,
-    price? : number ,
-    cardImage? : string ,
-    name : string
+    id?: number,
+    price?: number,
+    cardImage?: string,
+    name?: string,
+    isMyNFT?: boolean,
+    isMain?: boolean,
+    isCancel?: boolean
 }
 
-const index = ({id , price , cardImage , name } : CardHokProp) => {
+const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHokProp) => {
+
     return (
         <div className="cardhok">
             <div className="cardhok__head">
@@ -31,9 +34,17 @@ const index = ({id , price , cardImage , name } : CardHokProp) => {
                         <p>(~75,24 USD)</p>
                     </div>
                 </div>
-                <div className="cardhok__body--button">
+                {isMain === true && <div className="cardhok__body--button">
                     <ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold" />
-                </div>
+                </div>}
+                {isMyNFT === true && <div className="cardhok__body--button">
+                    {isCancel === true && <ButtonHok type="link" text="Cancel" color="#E06666" bold="bold" />}
+                    {isCancel === false && <form>
+                        <input type="number" className='offer__input' placeholder='Offer price' />
+                        <ButtonHok type="link" text="Offer" color="#009E0F" bold="bold" className='offer__btn' />
+                    </form>}
+                </div>}
+
             </div>
         </div>
     )

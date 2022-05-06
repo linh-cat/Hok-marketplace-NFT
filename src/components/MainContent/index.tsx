@@ -103,7 +103,7 @@ const index = () => {
                             <>
                                 <Col span={4} key={key}>
                                     {/* <button onClick={(e)=>makeOfferHandler(e,NFT.id, key)}>xxx</button> */}
-                                    <CardHok name='GenX' id={NFT.id} price={2} cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} />
+                                    <CardHok name='GenX' id={NFT.id} price={2} cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} isMain={true} />
                                 </Col>
 
                             </>
