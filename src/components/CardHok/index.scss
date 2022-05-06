@@ -32,6 +32,21 @@
 		.cardhok__body--button {
 			border-top: 1px solid #eee;
 			margin-top: auto;
+			padding-top: 5px;
+
+			form{
+				display: flex;
+				.offer__input{
+					width: 70%;
+					border: 0.5px solid #eee;
+					outline: none;
+					padding: 3px;
+				}
+				.offer__btn{
+					flex: 1;
+				}
+
+			}
 		}
 	}
 }

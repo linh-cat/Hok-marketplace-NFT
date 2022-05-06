@@ -21,12 +21,13 @@ type ButtonHokProps = {
     border?: string | undefined,
     radius?: string | undefined,
     backgroundColor?: string | undefined,
-    target? : string
+    target?: string,
+    className?: string
 }
 
-const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size, color, bold, border, radius, backgroundColor,target, onClick }: ButtonHokProps) => {
+const index = ({ type, loading, text, disabled, danger, shape, icon, ghost, href, size, color, bold, border, radius, backgroundColor, target, onClick, className }: ButtonHokProps) => {
     return (
-        <Button type={type} target={target} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size} style={{ color: color, fontWeight: bold, border: border, borderRadius: radius, backgroundColor: backgroundColor }} onClick={onClick}>{text}</Button>
+        <Button type={type} target={target} disabled={disabled} danger={danger} loading={loading} shape={shape} icon={icon} ghost={ghost} href={href} size={size} style={{ color: color, fontWeight: bold, border: border, borderRadius: radius, backgroundColor: backgroundColor }} onClick={onClick} className={className}>{text}</Button>
     )
 
 }
