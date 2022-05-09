@@ -12,7 +12,7 @@ const index = () => {
             <div className='your__item--body'>
                 <Row gutter={[16, 16]}>
                     <Col span={4} >
-                        <CardHok name='linh' cardImage={CardImage} isMyNFT={true} isCancel={false} />
+                        <CardHok name='linh' cardImage={CardImage} isMyNFT={true} isCancel={true} />
                     </Col>
                     <Col span={4} >
                         <CardHok name='linh' cardImage={CardImage} isMyNFT={true} isCancel={true} />
