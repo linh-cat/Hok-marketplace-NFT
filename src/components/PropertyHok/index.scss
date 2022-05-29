@@ -1,0 +1,15 @@
+.property__item {
+	margin: 10px;
+	.button {
+		padding: unset;
+	}
+	.value {
+		display: flex;
+		align-items: center;
+		column-gap: 5px;
+		img {
+			width: 15px;
+			height: 15px;
+		}
+	}
+}
