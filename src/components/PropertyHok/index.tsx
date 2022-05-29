@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonHok from '../ButtonHok';
+import ButtonHok from 'components/ButtonHok';
 import './index.scss';
 import { Typography } from 'antd';
 
@@ -13,7 +13,7 @@ type Props = {
 	color: string;
 };
 
-const index: React.FC<Props> = ({ text, icon, link, color, values }) => {
+const index: React.FC<Props> = ({ text, icon, color, values }) => {
 	return (
 		<div className="property__item">
 			<ButtonHok text={text} color={color} type="link" bold="bold" className="button" />

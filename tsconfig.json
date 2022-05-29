@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
-		// "baseUrl": "./src",
-		// "paths": {
-		// 	"jquery": ["node_modules/jquery/dist/jquery"] // this mapping is relative to "baseUrl"
-		// },
+		"baseUrl": "./src",
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
