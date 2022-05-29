@@ -1,5 +1,5 @@
-import { Action } from './../actions/action-interfaces/connectionActionInterface';
-import { account_type, networkId_type } from '../constants/connectionConstant';
+import { Action } from 'redux/actions/action-interfaces/connectionActionInterface';
+import { account_type, networkId_type } from 'redux/constants/connectionConstant';
 interface Iinitstate {
 	account: string | null;
 	networkId: string | null;

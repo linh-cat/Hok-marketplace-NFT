@@ -1,4 +1,4 @@
-import { Action } from '../actions/action-interfaces/marketplaceActionInterface';
+import { Action } from 'redux/actions/action-interfaces/marketplaceActionInterface';
 import {
 	addOffer_type,
 	loadContract_type,
@@ -6,8 +6,8 @@ import {
 	loadOffer_type,
 	loading_type,
 	updateOffer_type,
-    loadOfferCount
-} from '../constants/marketplaceConstant';
+	loadOfferCount,
+} from 'redux/constants/marketplaceConstant';
 interface Iinitstate {
 	contract: any | null;
 	offerCount: number | null;

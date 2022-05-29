@@ -1,18 +1,17 @@
-import React from 'react';
 import './index.scss';
 import { Row, Col } from 'antd';
-import image from '../../../assets/images/cardimage.png';
+import image from 'assets/images/cardimage.png';
 import { Typography } from 'antd';
-import ButtonHok from '../../../components/ButtonHok';
-import PropertyHok from '../../../components/PropertyHok';
-import oniicon from '../../../assets/images/oni-homa.jpg';
-import zbbody from '../../../assets/images/zbbody.png';
-import zbicon from '../../../assets/images/zbicon.jpg';
-import zbshell from '../../../assets/images/zbshell.jpg';
-import endo from '../../../assets/images/endo.jpg';
-import city from '../../../assets/images/city.png';
-import krono from '../../../assets/images/krono.png';
-import steller from '../../../assets/images/steller.png';
+import ButtonHok from 'components/ButtonHok';
+import PropertyHok from 'components/PropertyHok';
+import oniicon from 'assets/images/oni-homa.jpg';
+import zbbody from 'assets/images/zbbody.png';
+import zbicon from 'assets/images/zbicon.jpg';
+import zbshell from 'assets/images/zbshell.jpg';
+import endo from 'assets/images/endo.jpg';
+import city from 'assets/images/city.png';
+import krono from 'assets/images/krono.png';
+import steller from 'assets/images/steller.png';
 
 const { Title, Text } = Typography;
 

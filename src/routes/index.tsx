@@ -1,5 +1,5 @@
 import React from 'react';
-import MainContainer from '../pages/MainContainer';
+import MainContainer from 'pages/MainContainer';
 
 const appRoutes = [
 	{
@@ -10,22 +10,22 @@ const appRoutes = [
 			{
 				exact: true,
 				path: '/',
-				component: React.lazy(() => import('../components/MainContent')),
+				component: React.lazy(() => import('components/MainContent')),
 			},
 			{
 				exact: true,
 				path: '/new',
-				component: React.lazy(() => import('../pages/MainContainer/New')),
+				component: React.lazy(() => import('pages/MainContainer/New')),
 			},
 			{
 				exact: true,
 				path: '/mynft',
-				component: React.lazy(() => import('../pages/MainContainer/MyNFT')),
+				component: React.lazy(() => import('pages/MainContainer/MyNFT')),
 			},
 			{
 				exact: true,
 				path: '/description',
-				component: React.lazy(() => import('../pages/MainContainer/Description')),
+				component: React.lazy(() => import('pages/MainContainer/Description')),
 			},
 		],
 	},
