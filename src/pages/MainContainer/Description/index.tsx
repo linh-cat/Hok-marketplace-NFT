@@ -13,56 +13,65 @@ import city from 'assets/images/city.png';
 import krono from 'assets/images/krono.png';
 import steller from 'assets/images/steller.png';
 import { useSelector } from 'react-redux';
-import { collection, collectionGenx } from 'redux/selector/selector';
+import { collection, collectionOffers } from 'redux/selector/selector';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const { Title, Text } = Typography;
 
 type QuizParams = {
-	id: string;
+	idParams: string;
 };
 
 const Index = () => {
 	let params = useParams<QuizParams>();
 
-	let id = Number(params.id);
+	let idParams = Number(params.idParams);
+	console.log(typeof idParams);
 
-	const [data, setData] = useState<{
-		accessories: string;
-		arms: string;
-		back: string;
-		body: string;
-		brain: string;
-		deltoid: string;
-		endo: string;
-		energy: string;
-		id: number;
-		img: string;
-		owner: string;
-		type: string;
-	}>();
-	const allCollection = useSelector(collection);
-	console.log(allCollection);
+	const [data, setData] = useState<
+		{
+			accessories?: string;
+			arms?: string;
+			back?: string;
+			body?: string;
+			brain?: string;
+			deltoid?: string;
+			endo?: string;
+			energy?: string;
+			id?: number;
+			img?: string;
+			owner?: string;
+			type?: string;
+		}[]
+	>([]);
+	const collections = useSelector(collection);
+
+	console.log('des', data);
 
 	useEffect(() => {
 		function getData() {
-			if (allCollection.length > 0) {
-				const destinationData = allCollection.filter((item) => (item.id = id));
-				console.log('des', destinationData);
+			if (idParams) {
+				console.log('load data', collections);
+				const destinationData = collections.filter((item) => item.id === idParams);
+				setData(destinationData);
 			}
 		}
+
 		getData();
-	}, [allCollection, id]);
+	}, [collections, idParams]);
 
 	return (
 		<div className="description__page">
-			<Title level={2}>GenX #4406</Title>
+			<Title level={2}>{data[0]?.type}</Title>
 			<Row className="gutter-row">
 				<Col span={7}>
 					<div className="left__side">
 						<figure>
-							<img src={image} alt="Foo eating a sandwich." />
+							<img
+								src={`https://ipfs.infura.io/ipfs/${data[0]?.img}`}
+								alt="Foo eating a sandwich."
+							/>
 						</figure>
 						<div className="description">
 							<Title level={4}>Description</Title>
@@ -108,19 +117,39 @@ const Index = () => {
 										text="Accessories"
 										color="primary"
 										icon={oniicon}
-										values="BM Oni Homa"
+										values={data[0]?.accessories}
 									/>
-									<PropertyHok text="Body" color="primary" icon={zbbody} values="ZB Pollu" />
-									<PropertyHok text="Endoskeleto" color="primary" icon={endo} values="ENDO" />
+									<PropertyHok text="Body" color="primary" icon={zbbody} values={data[0]?.body} />
+									<PropertyHok
+										text="Endoskeleto"
+										color="primary"
+										icon={endo}
+										values={data[0]?.endo}
+									/>
 								</Col>
 								<Col span={8}>
-									<PropertyHok text="Arms" color="#E06666" icon={zbshell} values="ZB Pollu" />
-									<PropertyHok text="Brain Shell" color="primary" icon={zbicon} values="ZB Pollu" />
-									<PropertyHok text="Energy" color="primary" icon={steller} values="Steller 0" />
+									<PropertyHok text="Arms" color="#E06666" icon={zbshell} values={data[0]?.arms} />
+									<PropertyHok
+										text="Brain Shell"
+										color="primary"
+										icon={zbicon}
+										values={data[0]?.brain}
+									/>
+									<PropertyHok
+										text="Energy"
+										color="primary"
+										icon={steller}
+										values={data[0]?.energy}
+									/>
 								</Col>
 								<Col span={8}>
-									<PropertyHok text="Back" color="#009E0F" icon={city} values="HA Thrusters" />
-									<PropertyHok text="Deltoid" color="primary" icon={krono} values="OG Krono5" />
+									<PropertyHok text="Back" color="#009E0F" icon={city} values={data[0]?.back} />
+									<PropertyHok
+										text="Deltoid"
+										color="primary"
+										icon={krono}
+										values={data[0]?.deltoid}
+									/>
 								</Col>
 							</Row>
 						</div>
