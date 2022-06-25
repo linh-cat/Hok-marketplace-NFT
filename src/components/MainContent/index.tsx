@@ -154,6 +154,7 @@ const index = () => {
 				radius="5px"
 				bold="bold"
 				onClick={seeMoreHandler}
+				className="see__more"
 			/>
 		</div>
 	);
