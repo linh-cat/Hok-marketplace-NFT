@@ -1,30 +1,30 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter, Route } from "react-router-dom"
-import "./App.scss"
-import routes from "./routes"
-import NFTCollection from './abis/NFTCollection.json'
-import NFTMarketplace from './abis/NFTMarketplace.json'
-import web3 from './connection/web3';
+import { BrowserRouter, Route } from 'react-router-dom';
+import 'App.scss';
+import routes from 'routes';
+import NFTCollection from 'abis/NFTCollection.json';
+import NFTMarketplace from 'abis/NFTMarketplace.json';
+import web3 from 'connection/web3';
 import {
-  loadMarketplaceContractHandler,
-  loadOfferCountHandler,
-  loadOffersHandler,
-  updateOfferHandler,
-  addOfferHandler,
-  loadUserFundsHandler,
-  setMktIsLoading,
-} from './redux/actions/action-creators/marketplaceAction';
-import { loadAccount, loadNetworkId } from './redux/actions/action-creators/connectionAction'
+	loadMarketplaceContractHandler,
+	loadOfferCountHandler,
+	loadOffersHandler,
+	updateOfferHandler,
+	addOfferHandler,
+	loadUserFundsHandler,
+	setMktIsLoading,
+} from 'redux/actions/action-creators/marketplaceAction';
+import { loadAccount, loadNetworkId } from 'redux/actions/action-creators/connectionAction';
 import {
-  loadCollectionContractHandler,
-  loadTotalSupplyHandler,
-  loadCollectionHandler,
-  updateCollectionHandler,
-  setNftIsLoading,
-  updateOwnerHandler
-} from './redux/actions/action-creators/collectionAction'
-import { useDispatch } from 'react-redux'
-import { ToastContainer } from "react-toastify"
+	loadCollectionContractHandler,
+	loadTotalSupplyHandler,
+	loadCollectionHandler,
+	updateCollectionHandler,
+	setNftIsLoading,
+	updateOwnerHandler,
+} from 'redux/actions/action-creators/collectionAction';
+import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch()
@@ -183,6 +183,5 @@ function App() {
 
   );
 }
-
 
 export default App;

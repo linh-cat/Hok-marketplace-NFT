@@ -1,7 +1,7 @@
 import React , {useState}from 'react'
 import "./index.scss"
 
-import CardHok from "../../../components/CardHok"
+import CardHok from 'components/CardHok';
 import { Row, Col } from 'antd';
 import CardImage from "../../../assets/images/cardimage.png"
 import web3 from '../../../connection/web3';
@@ -38,11 +38,12 @@ const Index = () => {
             if (!web3) {
                 return
             }
+            console.log('price:', price)
             const enteredPrice = web3.utils.toWei(price, 'ether');
-            console.log("enteredPrice: ", enteredPrice)
-            console.log('id:', id)
-            console.log('Account:', Account)
-            console.log('MarketContract.options.address:', MarketContract.options.address)
+            // console.log("enteredPrice: ", enteredPrice)
+            // console.log('id:', id)
+            // console.log('Account:', Account)
+            // console.log('MarketContract.options.address:', MarketContract.options.address)
             await CollectionContract.methods.approve(MarketContract.options.address, id).send({ from: Account })
                 .on('transactionHash', (hash: any) => {
                     toast.success('🦄 offers successfully!', {

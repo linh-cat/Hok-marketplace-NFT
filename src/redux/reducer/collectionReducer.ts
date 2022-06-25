@@ -1,34 +1,41 @@
-import { Action } from './../actions/action-interfaces/collectionActionInterface';
-import {loadProduct_type, loadCollection_type, loadSuplly_type, loading_type, updateCollection_type, updateOwner_type} from "../constants/collectionConstant"
+import { Action } from 'redux/actions/action-interfaces/collectionActionInterface';
+import {
+	loadProduct_type,
+	loadCollection_type,
+	loadSuplly_type,
+	loading_type,
+	updateCollection_type,
+	updateOwner_type,
+} from 'redux/constants/collectionConstant';
 interface Iinitstate {
-    contract : any , 
-    totalSupply : number | null ,
-    collection :{
-        id?: number;
-        type?: string;
-        img?: string;
-        arms?: string;
-        accessories?: string;
-        back?: string;
-        body?: string;
-        brain?: string;
-        endo?: string;
-        energy?: string;
-        deltoid?: string;
-        owner?: string;
-        //
-        vid ? : string ;
-        attribute ?: string
-    } [],
-    nftIsLoading : boolean
+	contract: any;
+	totalSupply: number | null;
+	collection: {
+		id?: number;
+		type?: string;
+		img?: string;
+		arms?: string;
+		accessories?: string;
+		back?: string;
+		body?: string;
+		brain?: string;
+		endo?: string;
+		energy?: string;
+		deltoid?: string;
+		owner?: string;
+		//
+		vid?: string;
+		attribute?: string;
+	}[];
+	nftIsLoading: boolean;
 }
 
 const initstate = {
-    contract: null,
-    totalSupply: 0,
-    collection: [],
-    nftIsLoading: true
-}
+	contract: null,
+	totalSupply: 0,
+	collection: [],
+	nftIsLoading: true,
+};
 
 const collectionReducer = (state:Iinitstate = initstate , action: Action ) => {
     switch ( action.type ) {
@@ -102,4 +109,4 @@ const collectionReducer = (state:Iinitstate = initstate , action: Action ) => {
     }
 }
 
-export default collectionReducer
+export default collectionReducer;

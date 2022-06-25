@@ -1,36 +1,31 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState, useEffect } from 'react'
-import "./index.scss"
+import { useState } from 'react';
+import './index.scss';
 
-// ant design 
+// ant design
 import { SearchOutlined } from '@ant-design/icons';
 import { Row, Col } from 'antd';
-import InfiniteScroll from "react-infinite-scroll-component";
-
 
 // component
-import SpinHok from "../SpinHok"
-import ButtonHok from "../ButtonHok"
-import CardHok from "../CardHok"
+import ButtonHok from 'components/ButtonHok';
+import CardHok from 'components/CardHok';
 
-// 
-import { useDispatch, useSelector } from 'react-redux'
+//
+import { useDispatch, useSelector } from 'react-redux';
 import { account, 
-        collection,
-        collectionContract, 
-        marketplaceContract, 
-        collectionGenx, 
-        pageGenx,
-        offer ,
-        collectionOffers } from '../../redux/selector/selector';
-import { loadSortHandler, loadPaginate } from '../../redux/actions/action-creators/filterAction'
-import web3 from '../../connection/web3';
-import { formatPrice } from '../../connection/formatPrice';
+    collection,
+    collectionContract, 
+    marketplaceContract, 
+    collectionGenx, 
+    pageGenx,
+    offer ,
+    collectionOffers } from '../../redux/selector/selector';
+import { loadPaginate } from 'redux/actions/action-creators/filterAction';
+import web3 from 'connection/web3';
 import { toast } from "react-toastify"
-
+import { formatPrice } from '../../connection/formatPrice';
 const index = () => {
-    
-    const [seearchValue, setSearchValue] = useState("")
+	const [seearchValue, setSearchValue] = useState("")
     const [sort, setSort] = useState('')
     const [reload, setReload] = useState('')
     const [loadingBtn, setLoadingBtn] = useState(false)
@@ -50,20 +45,20 @@ const index = () => {
 		fulfilled?: boolean;
 		cancelled?: boolean;
 	}[] = useSelector(offer)
-    const ChangeSortHandler = () => {
-        // console.log('xxx')
-        // setSort(value)
-        // dispatch(loadSortHandler(value))
-    }
-    const seeMoreHandler = () => {
-        setTimeout(() => {
-            dispatch(loadPaginate(1))
-            setLoadingBtn(false)
-        }, 1000)
-        setLoadingBtn(true)
-    }
-    
-    const buyHandler = ( index : any) => {    
+
+	const ChangeSortHandler = () => {
+		// console.log('xxx')
+		// setSort(value)
+		// dispatch(loadSortHandler(value))
+	};
+	const seeMoreHandler = () => {
+		setTimeout(() => {
+			dispatch(loadPaginate(1));
+			setLoadingBtn(false);
+		}, 1000);
+		setLoadingBtn(true);
+	};
+	const buyHandler = ( index : any) => {    
         const buyIndex = parseInt(index);   
         
         MarketContract.methods.fillOffer(Offers[buyIndex].offerId).send({ from:Account, value: Offers[buyIndex].price })
@@ -79,136 +74,112 @@ const index = () => {
             })
         })
         .on('error', (error:any) => {
-         
-          toast.warn('🦄 Something went wrong when pushing to the blockchain', {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-        });   
-                
-      };
-    //MODAL
+            toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            });   
+                    
+          };
+
     const commonModal: {
-		title: string,
-		modalText: string,
-		btnOk: string,
-		btnCancel: string,
-		handleOk: () => void,
-		handleCancel: () => void
-	} = {
-		title: "Confirm",
-		modalText: "this is modal",
-		btnOk: "OK",
-		btnCancel: "Cancel",
-		handleCancel: () => {
-		},
-		handleOk: () => { }
-	}
-	const [modalVisible, setModalVisible] = useState<{ visible: boolean, modal: any }>({
-		visible: false,
-		modal: commonModal
-	})
+            title: string,
+            modalText: string,
+            btnOk: string,
+            btnCancel: string,
+            handleOk: () => void,
+            handleCancel: () => void
+        } = {
+            title: "Confirm",
+            modalText: "this is modal",
+            btnOk: "OK",
+            btnCancel: "Cancel",
+            handleCancel: () => {
+            },
+            handleOk: () => { }
+        }
+        const [modalVisible, setModalVisible] = useState<{ visible: boolean, modal: any }>({
+            visible: false,
+            modal: commonModal
+        })
 
+	return (
+		<div className="main__content">
+			<div className="search">
+				<ul className="search_menu">
+					<li className="search_menu--item">
+						<ButtonHok
+							type="default"
+							text="Newest"
+							backgroundColor="#999999"
+							color="#fff"
+							radius="5px"
+							bold="bold"
+							onClick={ChangeSortHandler}
+						/>
+					</li>
+					<li className="search_menu--item">
+						<ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
+					</li>
+					<li className="search_menu--item">
+						<ButtonHok type="default" text="Lowest price" radius="5px" bold="bold" />
+					</li>
+					<li className="search_menu--item">
+						<ButtonHok type="default" text="Highest price" radius="5px" bold="bold" />
+					</li>
+				</ul>
 
-    return (
-        <div className="main__content">
-
-            <div className="search">
-                <ul className="search_menu">
-                    <li className="search_menu--item">
-                        <ButtonHok type="default" text="Newest" backgroundColor="#999999" color="#fff" radius="5px" bold="bold" onClick={ChangeSortHandler} />
-                    </li>
-                    <li className="search_menu--item">
-                        <ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
-                    </li>
-                    <li className="search_menu--item">
-                        <ButtonHok type="default" text="Lowest price" radius="5px" bold="bold" />
-                    </li>
-                    <li className="search_menu--item">
-                        <ButtonHok type="default" text="Highest price" radius="5px" bold="bold" />
-                    </li>
-                </ul>
-
-                <div className="search__form">
-                    <div className="search__form--label">
-                        Type your keyword
-                    </div>
-                    <div className="search__form--input">
-                        <SearchOutlined />
-                        <input onChange={(e) => setSearchValue(e.target.value)} />
-                    </div>
-                </div>
-            </div>
-            {Collection.length} Items
-            {/* <Row gutter={[16, 16]}>
-                {Collection
-                    .slice(0, Page)
-                    .map((NFT: any, key) => {
-                        const index = Offers ? Offers.findIndex((offer ) => offer.id === NFT.id) : -1; //turn back indexOfOffers or -1
-                        const owner = index === -1 ? NFT.owner : Offers[index].user; //turn back address or -1
-                        const price = index !== -1 ? formatPrice(Offers[index].price).toFixed(2) : null; //turn back price or null
-                        return (
-                            <>
-                                {
-                                    index !== -1 ? owner !== Account ?
-                                    <Col span={4}  key={key} >          
-                                            <CardHok 
-                                                name='Genx' 
-                                                id={NFT.id} 
-                                                cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} 
-                                                isMain={true} 
-                                                onClick={()=>{buyHandler(index)}}
-                                                price= {price}
-                                            />
-                                        </Col>
-                                    :  
-                                    <p></p> 
-                                    :<p></p>
-                                }
-                            
-
-                            </>
-                        )
-                    })}
-            </Row> */}
+				<div className="search__form">
+					<div className="search__form--label">Type your keyword</div>
+					<div className="search__form--input">
+						<SearchOutlined />
+						<input onChange={(e) => setSearchValue(e.target.value)} />
+					</div>
+				</div>
+			</div>
+			{Collection.length} Items
             <Row gutter={[16, 16]}>
                 {CollectionOffers
                     .slice(0, Page)
-                    .map((NFT: any, key) => {  
+                    .map((NFT: any, key:any) => {  
                         const index = Offers ? Offers.findIndex((offer ) => offer.id === NFT.id) : -1;
                            
                         return (
                             <>
-                                {
-                                    NFT.owner !== Account ?
-                                    <Col span={4}  key={NFT.id} >          
-                                            <CardHok 
-                                                name='Genx' 
-                                                id={NFT.id} 
-                                                cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} 
-                                                isMain={true} 
-                                                onClick={()=>{buyHandler(index)}}
-                                                price= {formatPrice(NFT.price).toFixed(2)}
-                                            />
-                                    </Col> : <p></p>
-                                   
-                                }
-                            
-
+                            {
+                                NFT.owner !== Account ?
+                                <Col span={4}  key={NFT.id} >          
+                                        <CardHok 
+                                            name='Genx' 
+                                            id={NFT.id} 
+                                            cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} 
+                                            isMain={true} 
+                                            onClick={()=>{buyHandler(index)}}
+                                            price= {formatPrice(NFT.price).toFixed(2)}
+                                        />
+                                </Col> : <p></p>
+                               
+                            }
+                        
                             </>
-                        )
-                    })}
-            </Row>
+                          )
+                        })}
+                </Row>
+			<ButtonHok
+				loading={loadingBtn}
+				type="default"
+				text="See more"
+				radius="5px"
+				bold="bold"
+				onClick={seeMoreHandler}
+			/>
+		</div>
+	);
+};
 
-            <ButtonHok loading={loadingBtn} type="default" text="See more" radius="5px" bold="bold" onClick={seeMoreHandler} />
-
-        </div>
-    )
-}
-
-export default index
+export default index;
