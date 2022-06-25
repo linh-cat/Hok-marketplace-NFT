@@ -28,7 +28,7 @@ import { ToastContainer } from "react-toastify"
 
 function App() {
   const dispatch = useDispatch()
-  useEffect(() => {
+  useEffect( () => {
     // Check if the user has Metamask active
     const loadBlockchainData = async () => {
       try {
@@ -41,9 +41,11 @@ function App() {
       if (web3) {
         //load ID network
         networkID = await web3.eth.net.getId()
-
         dispatch(loadNetworkId(networkID))
-
+        // load Account
+        let accounts = await web3.eth.getAccounts();
+        const account = accounts[0];
+        dispatch(loadAccount(account))
         //load collection Contract
         const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
         const nftContract = nftDeployedNetwork ? new web3.eth.Contract((NFTCollection.abi as any), nftDeployedNetwork.address) : '';
@@ -94,8 +96,13 @@ function App() {
 
           // Event OfferFilled subscription , khi click mua nft se doi owner moi
           mktcontract.events.OfferFilled()
-            .on('data', (event: any) => {
+            .on('data', async (event: any) => {
+              console.log('OfferFilled:')
               setMktIsLoading(false);
+              console.log('offerId:', event.returnValues.offerId)
+              console.log('id:', event.returnValues.id)
+              console.log('newOwner:',  event.returnValues.newOwner)
+              console.log('make offerts')
               dispatch(updateOfferHandler(event.returnValues.offerId))
               dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner))
               dispatch(setMktIsLoading(false))
@@ -107,8 +114,13 @@ function App() {
           // Event Offer subscription  , su kien dang ban NFT
           mktcontract.events.Offer()
             .on('data', (event: any) => {
+              console.log('offers')
               dispatch(addOfferHandler(event.returnValues))
-              console.log('event:  ', event.returnValues)
+              console.log('old onwer :' ,event.returnValues.owner)
+              console.log('new onwer :' ,mktcontract.options.address)
+              console.log('id  :' ,event.returnValues.id)
+              dispatch(updateOwnerHandler(event.returnValues.id, mktcontract.options.address))
+              // window.location.reload()
               dispatch(setMktIsLoading(false))
             })
             .on('error', (error: any) => {
@@ -118,6 +130,7 @@ function App() {
           // Event offerCancelled subscription 
           mktcontract.events.OfferCancelled()
             .on('data', (event: any) => {
+              console.log('cancel')
               dispatch(updateOfferHandler(event.returnValues.offerId))
               dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.owner))
               dispatch(setMktIsLoading(false))

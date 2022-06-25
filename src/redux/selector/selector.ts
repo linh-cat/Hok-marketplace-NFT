@@ -1,5 +1,8 @@
+
+
 import { State } from './../reducer/index';
 import { createSelector } from "reselect";
+import { off } from 'process';
 export const account = (state:State) =>state.connection.account
 export const collectionContract = (state:State) =>state.collection.contract
 export const collection = (state : State) => state.collection.collection
@@ -17,6 +20,66 @@ export const energy = (state : State) => state.filter.Genx.energy
 export const deltoid = (state:State) => state.filter.Genx.deltoid
 export const pageGenx = (state:State) => state.filter.Genx.page
 
+export const collectionOffers = createSelector (
+    offer ,
+    collection , 
+    account ,
+    (offers ,collections , account) =>{
+       
+            let collectionOffers: any[] = []
+            offers.forEach( (offer:any) =>{
+                collections.forEach((collection : any)=>{
+                    if( offer.id === collection.id && offer.user !== account){
+                        collection.price = offer.price
+                        collectionOffers.push(collection)
+                    }
+                 
+                })
+            })    
+        console.log('collections: ' , collectionOffers)        
+        return collectionOffers
+    }
+)
+
+export const myCollection = createSelector (
+    collection , 
+    account ,
+    (collections , account) =>{
+        let MyCollections: any[] = []
+        collections.forEach( (collection:any) =>{
+            if(collection.owner === account ){
+                MyCollections.push(collection)
+            }
+        })
+        return MyCollections
+    }
+)
+export const myOffered = createSelector (
+    collection ,
+    account ,
+    marketplaceContract,
+    offer,
+    (collections ,account ,marketplaceContract ,offers) =>{
+        let MyCollections: any[] = []
+        let listIds: any[] = []
+        offers.forEach((offer:any)=>{
+            if( account === offer.user) {
+                listIds.push(parseInt(offer.id))
+            }
+        })
+        listIds.forEach(id =>{
+            collections.forEach( (collection:any) =>{
+                if( collection.owner === marketplaceContract.options.address && collection.id === id){
+                    MyCollections.push(collection)
+                }
+            })
+        })
+            
+        
+        console.log('list offered: ', listIds)
+        return MyCollections
+    }
+)
 
 
 export const collectionGenx = createSelector (
@@ -45,3 +108,5 @@ export const collectionGenx = createSelector (
                 })
     }
 )
+
+

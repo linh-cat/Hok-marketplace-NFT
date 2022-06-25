@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { Action } from '../actions/action-interfaces/marketplaceActionInterface';
 import {
 	addOffer_type,
@@ -42,21 +43,28 @@ const marketplaceReducer = (state: Iinitstate = initstate, action: Action) => {
 				offerCount: action.payload,
 			};
 		case loadOffer_type:
-			return {
-				...state,
-				offers: action.payload,
-			};
+			{
+				
+				return {
+					...state,
+					offers: action.payload,
+				};
+			}
+			
 		case updateOffer_type: {
-			let destinationOffers = state.offers.filter((offer) => offer.offerId !== action.payload);
+			console.log('type of: ' , typeof action.payload)
+			let destinationOffers = state.offers.filter((offer) => offer.offerId !== parseInt(action.payload as any));
+			console.log('updateOffer_type:', destinationOffers)
 			return {
 				...state,
 				offers: destinationOffers,
 			};
 		}
 		case addOffer_type: {
-			const index = state.offers.findIndex((offer) => offer.offerId === action.payload.offerId);
+			console.log('addOffer_type:', addOffer_type)
+			const index = state.offers.findIndex((offer) => offer.offerId ===parseInt(action.payload.offerId as any ));
 			let destinationOffers = [];
-
+			console.log('index:', index)
 			if (index === -1) {
 				destinationOffers = [
 					...state.offers,

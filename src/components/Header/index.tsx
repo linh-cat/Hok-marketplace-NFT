@@ -74,7 +74,10 @@ const Index = () => {
 		const modalHeader = commonModal;
 
 		modalHeader.handleOk = () => {
-			setModalVisible({ visible: false, modal: modalHeader });
+			// console.log('xxxx')
+			toast.info('wow')
+			setModalVisible({ visible: false, modal: modalHeader })
+			test()
 		}
 		modalHeader.handleCancel = () => {
 			setModalVisible({ visible: false, modal: modalHeader });
@@ -82,7 +85,9 @@ const Index = () => {
 		}
 		setModalVisible({ visible: true, modal: modalHeader })
 	}
-
+	const test = () =>{
+		console.log('xxx')
+	}
 	const showToast = () => {
 		toast.success('🦄 Wow so easy!', {
 			position: "top-center",
@@ -127,7 +132,7 @@ const Index = () => {
 						/>
 					</li>
 
-					{accountWeb3 && <li><ButtonHok type="link" text={accountWeb3?.toString()} /></li>}
+					{accountWeb3 && <li><ButtonHok type="link" text={accountWeb3?.toString()} onClick={()=>history.push("/mynft")}/></li>}
 
 					<li className="header__nav--item">
 						<ButtonHok
