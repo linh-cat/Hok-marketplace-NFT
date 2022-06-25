@@ -151,7 +151,7 @@ const Index = () => {
 
 					{accountWeb3 && (
 						<li>
-							<ButtonHok type="link" text={accountWeb3?.toString()} />
+							<ButtonHok type="link" text={accountWeb3?.toString()} href="/mynft"/>
 						</li>
 					)}
 

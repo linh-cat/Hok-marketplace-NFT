@@ -71,10 +71,12 @@ const collectionReducer = (state: Iinitstate = initstate, action: Action) => {
 				collection: collectionFromAction,
 			};
 		case updateCollection_type: {
-			const index = state.collection.findIndex((NFT) => NFT.id === action.payload.id);
+			const index = state.collection.findIndex(
+				(NFT) => NFT.id === parseInt(action.payload.id as any)
+			);
 			let collection = [];
 			if (index === -1) {
-				collection = [action.payload, ...state.collection];
+				collection = [...state.collection, action.payload];
 			} else {
 				collection = [...state.collection];
 			}
@@ -84,7 +86,9 @@ const collectionReducer = (state: Iinitstate = initstate, action: Action) => {
 			};
 		}
 		case updateOwner_type: {
-			const index = state.collection.findIndex((NFT) => NFT.id === action.payload.id);
+			const index = state.collection.findIndex(
+				(NFT) => NFT.id === parseInt(action.payload.id as any)
+			);
 			let collection = [...state.collection];
 			collection[index].owner = action.payload.newOwner;
 			return {

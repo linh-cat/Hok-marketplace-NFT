@@ -18,20 +18,31 @@ import {
 	marketplaceContract,
 	collectionGenx,
 	pageGenx,
-} from 'redux/selector/selector';
+	offer,
+	collectionOffers,
+} from '../../redux/selector/selector';
 import { loadPaginate } from 'redux/actions/action-creators/filterAction';
-import web3 from 'connection/web3';
-
+import { toast } from 'react-toastify';
+import { formatPrice } from '../../connection/formatPrice';
 const index = () => {
 	const [seearchValue, setSearchValue] = useState('');
+	const [sort, setSort] = useState('');
 	const [reload, setReload] = useState('');
 	const [loadingBtn, setLoadingBtn] = useState(false);
 	const dispatch = useDispatch();
 	const Collection = useSelector(collectionGenx);
 	const Account = useSelector(account);
-	const CollectionContract = useSelector(collectionContract);
 	const MarketContract = useSelector(marketplaceContract);
 	const Page = useSelector(pageGenx);
+	const CollectionOffers = useSelector(collectionOffers);
+	const Offers: {
+		offerId?: number;
+		id?: number;
+		user?: string;
+		price?: number;
+		fulfilled?: boolean;
+		cancelled?: boolean;
+	}[] = useSelector(offer);
 
 	const ChangeSortHandler = () => {
 		// console.log('xxx')
@@ -45,31 +56,36 @@ const index = () => {
 		}, 1000);
 		setLoadingBtn(true);
 	};
-	const makeOfferHandler = (event: any, id: any, key: any) => {
-		event.preventDefault();
-		console.log('id in func:  ', id);
-		console.log('key in func:  ', key);
-		if (!web3) {
-			return;
-		}
-		const enteredPrice = web3.utils.toWei('0.0001', 'ether');
-		console.log('enteredPrice: ', enteredPrice);
-		CollectionContract.methods
-			.approve(MarketContract.options.address, id)
-			.send({ from: Account })
+	const buyHandler = (index: any) => {
+		const buyIndex = parseInt(index);
+
+		MarketContract.methods
+			.fillOffer(Offers[buyIndex].offerId)
+			.send({ from: Account, value: Offers[buyIndex].price })
 			.on('transactionHash', (hash: any) => {
-				window.alert('dang ban thanh cong');
+				toast.success('🦄 Buy successfully!', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			})
-			.on('receipt', (receipt: any) => {
-				MarketContract.methods
-					.makeOffer(id, enteredPrice)
-					.send({ from: Account })
-					.on('error', (error: any) => {
-						window.alert('Something went wrong when pushing to the blockchain');
-					});
+			.on('error', (error: any) => {
+				toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			});
-		setReload('');
 	};
+
 	return (
 		<div className="main__content">
 			<div className="search">
@@ -106,19 +122,27 @@ const index = () => {
 			</div>
 			{Collection.length} Items
 			<Row gutter={[16, 16]}>
-				{Collection.slice(0, Page).map((NFT: any, key) => {
+				{CollectionOffers.slice(0, Page).map((NFT: any, key: any) => {
+					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
+
 					return (
 						<>
-							<Col span={4} key={key}>
-								{/* <button onClick={(e)=>makeOfferHandler(e,NFT.id, key)}>xxx</button> */}
-								<CardHok
-									name="GenX"
-									id={NFT.id}
-									price={2}
-									cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-									isMain={true}
-								/>
-							</Col>
+							{NFT.owner !== Account ? (
+								<Col span={4} key={NFT.id}>
+									<CardHok
+										name="Genx"
+										id={NFT.id}
+										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+										isMain={true}
+										onClick={() => {
+											buyHandler(index);
+										}}
+										price={formatPrice(NFT.price).toFixed(2)}
+									/>
+								</Col>
+							) : (
+								<p></p>
+							)}
 						</>
 					);
 				})}
@@ -130,6 +154,7 @@ const index = () => {
 				radius="5px"
 				bold="bold"
 				onClick={seeMoreHandler}
+				className="see__more"
 			/>
 		</div>
 	);

@@ -41,9 +41,11 @@ function App() {
 			if (web3) {
 				//load ID network
 				networkID = await web3.eth.net.getId();
-
 				dispatch(loadNetworkId(networkID));
-
+				// load Account
+				let accounts = await web3.eth.getAccounts();
+				const account = accounts[0];
+				dispatch(loadAccount(account));
 				//load collection Contract
 				const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
 				const nftContract = nftDeployedNetwork
@@ -68,7 +70,6 @@ function App() {
 					//load Collection
 					const totalSupply = loadTotalSupply.payload;
 					const loadCollection = await loadCollectionHandler(nftContract, totalSupply);
-					console.log('loadCollection:  ', loadCollection);
 					dispatch(loadCollection);
 					dispatch(setNftIsLoading(false));
 					nftContract.events
@@ -80,7 +81,6 @@ function App() {
 								event.returnValues.tokenId,
 								event.returnValues.to
 							);
-							console.log('updateCollectionHandler', updateCollection);
 							dispatch(updateCollection);
 							//set nft is loading
 							dispatch(setNftIsLoading(false));
@@ -103,7 +103,7 @@ function App() {
 					// Event OfferFilled subscription , khi click mua nft se doi owner moi
 					mktcontract.events
 						.OfferFilled()
-						.on('data', (event: any) => {
+						.on('data', async (event: any) => {
 							setMktIsLoading(false);
 							dispatch(updateOfferHandler(event.returnValues.offerId));
 							dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner));
@@ -118,7 +118,8 @@ function App() {
 						.Offer()
 						.on('data', (event: any) => {
 							dispatch(addOfferHandler(event.returnValues));
-							console.log('event:  ', event.returnValues);
+							dispatch(updateOwnerHandler(event.returnValues.id, mktcontract.options.address));
+							// window.location.reload()
 							dispatch(setMktIsLoading(false));
 						})
 						.on('error', (error: any) => {

@@ -1,4 +1,6 @@
 import './index.scss';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // component
 import ButtonHok from 'components/ButtonHok';
@@ -11,11 +13,30 @@ type CardHokProp = {
 	isMyNFT?: boolean;
 	isMain?: boolean;
 	isCancel?: boolean;
+	onClick?: () => void;
+	offerPrice?: any;
 };
 
-const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHokProp) => {
+const Index = ({
+	id,
+	price,
+	cardImage,
+	name,
+	isMyNFT,
+	isMain,
+	isCancel,
+	onClick,
+	offerPrice,
+}: CardHokProp) => {
+	const [priceOffer, setPriceOffer] = useState(0);
+	const EnterPrice = (event: any) => {
+		setPriceOffer(event.target.value);
+		offerPrice(event.target.value);
+	};
+	const history = useHistory();
+
 	return (
-		<div className="cardhok">
+		<div className="cardhok" onClick={() => history.push(`/description/${id}`)}>
 			<div className="cardhok__head">
 				<img src={cardImage} alt="cardhok_image" />
 			</div>
@@ -33,23 +54,30 @@ const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHo
 				</div>
 				{isMain === true && (
 					<div className="cardhok__body--button">
-						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold" />
+						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold" onClick={onClick} />
 					</div>
 				)}
 				{isMyNFT === true && (
 					<div className="cardhok__body--button">
 						{isCancel === true && (
-							<ButtonHok type="link" text="Cancel" color="#E06666" bold="bold" />
+							<ButtonHok type="link" text="Cancel" color="#E06666" bold="bold" onClick={onClick} />
 						)}
 						{isCancel === false && (
 							<form>
-								<input type="number" className="offer__input" placeholder="Offer price" />
+								<input
+									type="number"
+									className="offer__input"
+									placeholder="Offer price"
+									value={priceOffer}
+									onChange={EnterPrice}
+								/>
 								<ButtonHok
 									type="link"
 									text="Offer"
 									color="#009E0F"
 									bold="bold"
 									className="offer__btn"
+									onClick={onClick}
 								/>
 							</form>
 						)}
@@ -60,4 +88,4 @@ const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHo
 	);
 };
 
-export default index;
+export default Index;

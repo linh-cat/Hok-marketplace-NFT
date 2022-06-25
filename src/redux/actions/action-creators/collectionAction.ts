@@ -45,7 +45,6 @@ export const loadCollectionHandler = async (contract: any, totalSupply: number) 
 			}
 			const metadata = await response.json();
 			const owner = await contract.methods.ownerOf(i + 1).call();
-			console.log('metadata:  ', metadata);
 			if (metadata.properties.type.description === 'Genx') {
 				collection = [
 					{
