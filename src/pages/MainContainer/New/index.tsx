@@ -33,35 +33,34 @@ const Index = () => {
 	const [capturedFileBuffer, setCapturedFileBuffer] = useState<any>(null);
 	const enteredAccessories = (value: any) => {
 		setAccessories(value);
-		console.log(value);
 	};
 	const enteredArms = (value: any) => {
 		setArms(value);
-		console.log(value);
+		
 	};
 	const enteredBack = (value: any) => {
 		setBack(value);
-		console.log(value);
+		
 	};
 	const enteredBody = (value: any) => {
 		setBody(value);
-		console.log(value);
+		
 	};
 	const enteredBrain = (value: any) => {
 		setBrain(value);
-		console.log(value);
+		
 	};
 	const enteredDeltoid = (value: any) => {
 		setDeltoid(value);
-		console.log(value);
+		
 	};
 	const enteredEndo = (value: any) => {
 		setEndo(value);
-		console.log(value);
+		
 	};
 	const enteredEnergy = (value: any) => {
 		setEnergy(value);
-		console.log(value);
+		
 	};
 	const enteredFile = (event: any) => {
 		event.preventDefault();

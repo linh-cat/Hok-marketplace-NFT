@@ -41,29 +41,27 @@ const marketplaceReducer = (state: Iinitstate = initstate, action: Action) => {
 				...state,
 				offerCount: action.payload,
 			};
-		case loadOffer_type:
-			{
-				
-				return {
-					...state,
-					offers: action.payload,
-				};
-			}
-			
+		case loadOffer_type: {
+			return {
+				...state,
+				offers: action.payload,
+			};
+		}
+
 		case updateOffer_type: {
-			console.log('type of: ' , typeof action.payload)
-			let destinationOffers = state.offers.filter((offer) => offer.offerId !== parseInt(action.payload as any));
-			console.log('updateOffer_type:', destinationOffers)
+			let destinationOffers = state.offers.filter(
+				(offer) => offer.offerId !== parseInt(action.payload as any)
+			);
 			return {
 				...state,
 				offers: destinationOffers,
 			};
 		}
 		case addOffer_type: {
-			console.log('addOffer_type:', addOffer_type)
-			const index = state.offers.findIndex((offer) => offer.offerId ===parseInt(action.payload.offerId as any ));
+			const index = state.offers.findIndex(
+				(offer) => offer.offerId === parseInt(action.payload.offerId as any)
+			);
 			let destinationOffers = [];
-			console.log('index:', index)
 			if (index === -1) {
 				destinationOffers = [
 					...state.offers,

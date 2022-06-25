@@ -35,7 +35,6 @@ export const loadOffersHandler = async (contract: any, offerCount: number) => {
 		})
 		.filter((offer) => offer.fulfilled === false && offer.cancelled === false);
 	// dispatchMarketplaceAction({type: 'LOADOFFERS', offers: offers});
-	// console.log("total offer NFT:  " , offers) // tong sl nft đã đăng bán
 	return { type: loadOffer_type, payload: offers };
 };
 export const updateOfferHandler = (offerId: number) => {

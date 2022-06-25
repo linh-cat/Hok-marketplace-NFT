@@ -29,7 +29,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadArmsHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredBack = (value: any) => {
 		if (value === undefined) {
@@ -37,7 +36,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadBackHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredBody = (value: any) => {
 		if (value === undefined) {
@@ -45,7 +43,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadBodyHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredBrain = (value: any) => {
 		if (value === undefined) {
@@ -53,7 +50,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadBrainHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredDeltoid = (value: any) => {
 		if (value === undefined) {
@@ -61,7 +57,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadDeltoidHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredEndo = (value: any) => {
 		if (value === undefined) {
@@ -69,7 +64,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadEndoHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	const enteredEnergy = (value: any) => {
 		if (value === undefined) {
@@ -77,7 +71,6 @@ const Index = () => {
 			dispatch(loadPaginate(-1));
 		} else dispatch(loadEnergyHandler(value));
 		dispatch(loadPaginate(-1));
-		console.log(value);
 	};
 	return (
 		<div className="filter">

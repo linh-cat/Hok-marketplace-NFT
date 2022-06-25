@@ -12,10 +12,49 @@ import endo from 'assets/images/endo.jpg';
 import city from 'assets/images/city.png';
 import krono from 'assets/images/krono.png';
 import steller from 'assets/images/steller.png';
+import { useSelector } from 'react-redux';
+import { collection, collectionGenx } from 'redux/selector/selector';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const { Title, Text } = Typography;
 
-const index = () => {
+type QuizParams = {
+	id: string;
+};
+
+const Index = () => {
+	let params = useParams<QuizParams>();
+
+	let id = Number(params.id);
+
+	const [data, setData] = useState<{
+		accessories: string;
+		arms: string;
+		back: string;
+		body: string;
+		brain: string;
+		deltoid: string;
+		endo: string;
+		energy: string;
+		id: number;
+		img: string;
+		owner: string;
+		type: string;
+	}>();
+	const allCollection = useSelector(collection);
+	console.log(allCollection);
+
+	useEffect(() => {
+		function getData() {
+			if (allCollection.length > 0) {
+				const destinationData = allCollection.filter((item) => (item.id = id));
+				console.log('des', destinationData);
+			}
+		}
+		getData();
+	}, [allCollection, id]);
+
 	return (
 		<div className="description__page">
 			<Title level={2}>GenX #4406</Title>
@@ -92,4 +131,4 @@ const index = () => {
 	);
 };
 
-export default index;
+export default Index;

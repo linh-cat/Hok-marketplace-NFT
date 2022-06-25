@@ -23,8 +23,8 @@ const appRoutes = [
 				component: React.lazy(() => import('pages/MainContainer/MyNFT')),
 			},
 			{
-				exact: true,
-				path: '/description',
+				exact: false,
+				path: '/description/:idNft',
 				component: React.lazy(() => import('pages/MainContainer/Description')),
 			},
 		],

@@ -12,39 +12,37 @@ import CardHok from 'components/CardHok';
 
 //
 import { useDispatch, useSelector } from 'react-redux';
-import { account, 
-    collection,
-    collectionContract, 
-    marketplaceContract, 
-    collectionGenx, 
-    pageGenx,
-    offer ,
-    collectionOffers } from '../../redux/selector/selector';
+import {
+	account,
+	collectionContract,
+	marketplaceContract,
+	collectionGenx,
+	pageGenx,
+	offer,
+	collectionOffers,
+} from '../../redux/selector/selector';
 import { loadPaginate } from 'redux/actions/action-creators/filterAction';
-import web3 from 'connection/web3';
-import { toast } from "react-toastify"
+import { toast } from 'react-toastify';
 import { formatPrice } from '../../connection/formatPrice';
 const index = () => {
-	const [seearchValue, setSearchValue] = useState("")
-    const [sort, setSort] = useState('')
-    const [reload, setReload] = useState('')
-    const [loadingBtn, setLoadingBtn] = useState(false)
-    const dispatch = useDispatch()
-    const Collection = useSelector(collectionGenx)
-    const Account = useSelector(account)
-    const CollectionContract = useSelector(collectionContract)
-    const MarketContract = useSelector(marketplaceContract)
-    const Page = useSelector(pageGenx)
-    const CollectionOffers = useSelector(collectionOffers)
-    console.log('collection: ', CollectionOffers)
-    const Offers: {
+	const [seearchValue, setSearchValue] = useState('');
+	const [sort, setSort] = useState('');
+	const [reload, setReload] = useState('');
+	const [loadingBtn, setLoadingBtn] = useState(false);
+	const dispatch = useDispatch();
+	const Collection = useSelector(collectionGenx);
+	const Account = useSelector(account);
+	const MarketContract = useSelector(marketplaceContract);
+	const Page = useSelector(pageGenx);
+	const CollectionOffers = useSelector(collectionOffers);
+	const Offers: {
 		offerId?: number;
 		id?: number;
 		user?: string;
 		price?: number;
 		fulfilled?: boolean;
 		cancelled?: boolean;
-	}[] = useSelector(offer)
+	}[] = useSelector(offer);
 
 	const ChangeSortHandler = () => {
 		// console.log('xxx')
@@ -58,55 +56,35 @@ const index = () => {
 		}, 1000);
 		setLoadingBtn(true);
 	};
-	const buyHandler = ( index : any) => {    
-        const buyIndex = parseInt(index);   
-        
-        MarketContract.methods.fillOffer(Offers[buyIndex].offerId).send({ from:Account, value: Offers[buyIndex].price })
-        .on('transactionHash', (hash : any) => {
-            toast.success('🦄 Buy successfully!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            })
-        })
-        .on('error', (error:any) => {
-            toast.warn('🦄 Something went wrong when pushing to the blockchain', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
-            });   
-                    
-          };
+	const buyHandler = (index: any) => {
+		const buyIndex = parseInt(index);
 
-    const commonModal: {
-            title: string,
-            modalText: string,
-            btnOk: string,
-            btnCancel: string,
-            handleOk: () => void,
-            handleCancel: () => void
-        } = {
-            title: "Confirm",
-            modalText: "this is modal",
-            btnOk: "OK",
-            btnCancel: "Cancel",
-            handleCancel: () => {
-            },
-            handleOk: () => { }
-        }
-        const [modalVisible, setModalVisible] = useState<{ visible: boolean, modal: any }>({
-            visible: false,
-            modal: commonModal
-        })
+		MarketContract.methods
+			.fillOffer(Offers[buyIndex].offerId)
+			.send({ from: Account, value: Offers[buyIndex].price })
+			.on('transactionHash', (hash: any) => {
+				toast.success('🦄 Buy successfully!', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			})
+			.on('error', (error: any) => {
+				toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			});
+	};
 
 	return (
 		<div className="main__content">
@@ -143,33 +121,32 @@ const index = () => {
 				</div>
 			</div>
 			{Collection.length} Items
-            <Row gutter={[16, 16]}>
-                {CollectionOffers
-                    .slice(0, Page)
-                    .map((NFT: any, key:any) => {  
-                        const index = Offers ? Offers.findIndex((offer ) => offer.id === NFT.id) : -1;
-                           
-                        return (
-                            <>
-                            {
-                                NFT.owner !== Account ?
-                                <Col span={4}  key={NFT.id} >          
-                                        <CardHok 
-                                            name='Genx' 
-                                            id={NFT.id} 
-                                            cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`} 
-                                            isMain={true} 
-                                            onClick={()=>{buyHandler(index)}}
-                                            price= {formatPrice(NFT.price).toFixed(2)}
-                                        />
-                                </Col> : <p></p>
-                               
-                            }
-                        
-                            </>
-                          )
-                        })}
-                </Row>
+			<Row gutter={[16, 16]}>
+				{CollectionOffers.slice(0, Page).map((NFT: any, key: any) => {
+					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
+
+					return (
+						<>
+							{NFT.owner !== Account ? (
+								<Col span={4} key={NFT.id}>
+									<CardHok
+										name="Genx"
+										id={NFT.id}
+										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+										isMain={true}
+										onClick={() => {
+											buyHandler(index);
+										}}
+										price={formatPrice(NFT.price).toFixed(2)}
+									/>
+								</Col>
+							) : (
+								<p></p>
+							)}
+						</>
+					);
+				})}
+			</Row>
 			<ButtonHok
 				loading={loadingBtn}
 				type="default"
