@@ -1,5 +1,5 @@
 import './index.scss';
-
+import React, { useState } from 'react'
 // component
 import ButtonHok from 'components/ButtonHok';
 
@@ -11,11 +11,18 @@ type CardHokProp = {
 	isMyNFT?: boolean;
 	isMain?: boolean;
 	isCancel?: boolean;
+	onClick?: () => void;
+	offerPrice?: any;
 };
 
-const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHokProp) => {
+const Index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel, onClick ,offerPrice}: CardHokProp) => {
+	const [priceOffer , setPriceOffer] = useState(0)
+    const EnterPrice = (event:any) =>{
+        setPriceOffer(event.target.value)
+        offerPrice(event.target.value)
+    }
 	return (
-		<div className="cardhok">
+		<div className="cardhok" onClick={onClick} >
 			<div className="cardhok__head">
 				<img src={cardImage} alt="cardhok_image" />
 			</div>
@@ -33,7 +40,7 @@ const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHo
 				</div>
 				{isMain === true && (
 					<div className="cardhok__body--button">
-						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold" />
+						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold"  />
 					</div>
 				)}
 				{isMyNFT === true && (
@@ -43,13 +50,14 @@ const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHo
 						)}
 						{isCancel === false && (
 							<form>
-								<input type="number" className="offer__input" placeholder="Offer price" />
+								 <input type="number" className='offer__input' placeholder='Offer price' value={priceOffer} onChange={EnterPrice}/>
 								<ButtonHok
 									type="link"
 									text="Offer"
 									color="#009E0F"
 									bold="bold"
 									className="offer__btn"
+									
 								/>
 							</form>
 						)}
@@ -60,4 +68,4 @@ const index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel }: CardHo
 	);
 };
 
-export default index;
+export default Index;
