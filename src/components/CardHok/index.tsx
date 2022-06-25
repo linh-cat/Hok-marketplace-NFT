@@ -22,7 +22,7 @@ const Index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel, onClick 
         offerPrice(event.target.value)
     }
 	return (
-		<div className="cardhok" onClick={onClick} >
+		<div className="cardhok"  >
 			<div className="cardhok__head">
 				<img src={cardImage} alt="cardhok_image" />
 			</div>
@@ -40,13 +40,13 @@ const Index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel, onClick 
 				</div>
 				{isMain === true && (
 					<div className="cardhok__body--button">
-						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold"  />
+						<ButtonHok type="link" text="Buy now" color="#009E0F" bold="bold" onClick={onClick}  />
 					</div>
 				)}
 				{isMyNFT === true && (
 					<div className="cardhok__body--button">
 						{isCancel === true && (
-							<ButtonHok type="link" text="Cancel" color="#E06666" bold="bold" />
+							<ButtonHok type="link" text="Cancel" color="#E06666" bold="bold" onClick={onClick} />
 						)}
 						{isCancel === false && (
 							<form>
@@ -57,7 +57,7 @@ const Index = ({ id, price, cardImage, name, isMyNFT, isMain, isCancel, onClick 
 									color="#009E0F"
 									bold="bold"
 									className="offer__btn"
-									
+									onClick={onClick}
 								/>
 							</form>
 						)}
