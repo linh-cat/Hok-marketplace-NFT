@@ -109,7 +109,7 @@ const Index = () => {
 					/>
 				</div>
 				<ul className="header__nav">
-					<li className="header__nav--item">
+					{/* <li className="header__nav--item">
 						<ButtonHok
 							type="link"
 							text="Show modal"
@@ -135,7 +135,7 @@ const Index = () => {
 							bold="bold"
 							onClick={() => history.push('/new')}
 						/>
-					</li>
+					</li> */}
 					<li className="header__nav--item">
 						<ButtonHok type="link" text="Home" color="#6FA8DC" bold="bold" />
 					</li>

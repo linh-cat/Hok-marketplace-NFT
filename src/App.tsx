@@ -43,9 +43,9 @@ function App() {
 				networkID = await web3.eth.net.getId();
 				dispatch(loadNetworkId(networkID));
 				// load Account
-				let accounts = await web3.eth.getAccounts();
-				const account = accounts[0];
-				dispatch(loadAccount(account));
+				// let accounts = await web3.eth.getAccounts();
+				// const account = accounts[0];
+				// dispatch(loadAccount(account));
 				//load collection Contract
 				const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
 				const nftContract = nftDeployedNetwork
@@ -105,6 +105,7 @@ function App() {
 						.OfferFilled()
 						.on('data', async (event: any) => {
 							setMktIsLoading(false);
+							console.log('newOwner: ', event.returnValues.newOwner)
 							dispatch(updateOfferHandler(event.returnValues.offerId));
 							dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner));
 							dispatch(setMktIsLoading(false));

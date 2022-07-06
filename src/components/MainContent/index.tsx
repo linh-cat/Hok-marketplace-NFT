@@ -9,7 +9,7 @@ import { Row, Col } from 'antd';
 // component
 import ButtonHok from 'components/ButtonHok';
 import CardHok from 'components/CardHok';
-
+import { useHistory } from 'react-router-dom';
 //
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,8 +23,20 @@ import {
 } from '../../redux/selector/selector';
 import { loadPaginate } from 'redux/actions/action-creators/filterAction';
 import { toast } from 'react-toastify';
-import { formatPrice } from '../../connection/formatPrice';
+// import { formatPrice } from '../../connection/formatPrice';
 const index = () => {
+	const DECIMALS = (10**18);
+
+	const ether = (wei: any) => wei / DECIMALS;
+
+	const formatPrice = (price: any) => {
+	const precision = 100; // Use 2 decimal places
+	price = ether(price);
+	price = Math.round(price * precision) / precision;
+	return price;
+	};
+	const history = useHistory();
+	
 	const [seearchValue, setSearchValue] = useState('');
 	const [sort, setSort] = useState('');
 	const [reload, setReload] = useState('');
@@ -34,7 +46,8 @@ const index = () => {
 	const Account = useSelector(account);
 	const MarketContract = useSelector(marketplaceContract);
 	const Page = useSelector(pageGenx);
-	const CollectionOffers = useSelector(collectionOffers);
+	const CollectionOffers = useSelector(collectionGenx);
+	
 	const Offers: {
 		offerId?: number;
 		id?: number;
@@ -44,11 +57,6 @@ const index = () => {
 		cancelled?: boolean;
 	}[] = useSelector(offer);
 
-	const ChangeSortHandler = () => {
-		// console.log('xxx')
-		// setSort(value)
-		// dispatch(loadSortHandler(value))
-	};
 	const seeMoreHandler = () => {
 		setTimeout(() => {
 			dispatch(loadPaginate(1));
@@ -58,7 +66,7 @@ const index = () => {
 	};
 	const buyHandler = (index: any) => {
 		const buyIndex = parseInt(index);
-
+		console.log('buyIndex', buyIndex)
 		MarketContract.methods
 			.fillOffer(Offers[buyIndex].offerId)
 			.send({ from: Account, value: Offers[buyIndex].price })
@@ -91,7 +99,7 @@ const index = () => {
 			<div className="search">
 				<ul className="search_menu">
 					<li className="search_menu--item">
-						<ButtonHok
+						{/* <ButtonHok
 							type="default"
 							text="Newest"
 							backgroundColor="#999999"
@@ -99,7 +107,7 @@ const index = () => {
 							radius="5px"
 							bold="bold"
 							onClick={ChangeSortHandler}
-						/>
+						/> */}
 					</li>
 					<li className="search_menu--item">
 						<ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
@@ -120,22 +128,25 @@ const index = () => {
 					</div>
 				</div>
 			</div>
-			{Collection.length} Items
+			{CollectionOffers.length} Items
+			{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
 			<Row gutter={[16, 16]}>
-				{CollectionOffers.slice(0, Page).map((NFT: any, key: any) => {
+				{CollectionOffers.map((NFT: any, key: any) => {
 					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
-
+					
 					return (
 						<>
 							{NFT.owner !== Account ? (
-								<Col span={4} key={NFT.id}>
+								<Col span={4} key={NFT.id} onClick={()=>history.push(`/description/${NFT.id}`)} >
 									<CardHok
+										// onClick={()=>history.push(`/description/${NFT.id}`)}
 										name="Genx"
 										id={NFT.id}
 										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
 										isMain={true}
 										onClick={() => {
 											buyHandler(index);
+											
 										}}
 										price={formatPrice(NFT.price).toFixed(2)}
 									/>
@@ -147,14 +158,14 @@ const index = () => {
 					);
 				})}
 			</Row>
-			<ButtonHok
+			{/* <ButtonHok
 				loading={loadingBtn}
 				type="default"
 				text="See more"
 				radius="5px"
 				bold="bold"
 				onClick={seeMoreHandler}
-			/>
+			/> */}
 		</div>
 	);
 };
