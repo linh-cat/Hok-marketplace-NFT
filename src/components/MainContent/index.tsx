@@ -130,6 +130,7 @@ const index = () => {
 			</div>
 			{CollectionOffers.length} Items
 			{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
+			{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
 			<Row gutter={[16, 16]}>
 				{CollectionOffers.map((NFT: any, key: any) => {
 					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
@@ -137,7 +138,7 @@ const index = () => {
 					return (
 						<>
 							{NFT.owner !== Account ? (
-								<Col span={4} key={NFT.id} onClick={()=>history.push(`/description/${NFT.id}`)} >
+								<Col span={4} key={NFT.id}  >
 									<CardHok
 										// onClick={()=>history.push(`/description/${NFT.id}`)}
 										name="Genx"

@@ -1,6 +1,5 @@
 import { State } from './../reducer/index';
 import { createSelector } from 'reselect';
-import { off } from 'process';
 export const account = (state: State) => state.connection.account;
 export const collectionContract = (state: State) => state.collection.contract;
 export const collection = (state: State) => state.collection.collection;
@@ -24,6 +23,7 @@ export const collectionOffers = createSelector(
 	account,
 	(offers, collections, account) => {
 		let collectionOffers: any[] = [];
+
 		offers.forEach((offer: any) => {
 			collections.forEach((collection: any) => {
 				if (offer.id === collection.id && offer.user !== account) {
