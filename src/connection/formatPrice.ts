@@ -10,3 +10,6 @@ export const formatPrice = (price: any) => {
    
   return price;
 };
+
+
+console.log('hihihihi',formatPrice(1000000000).toFixed(2))
