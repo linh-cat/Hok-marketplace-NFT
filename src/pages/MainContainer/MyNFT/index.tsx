@@ -16,6 +16,10 @@ import {
 } from '../../../redux/selector/selector';
 import { toast } from 'react-toastify';
 const Index = () => {
+	// const dispatch = useDispatch();
+	// let accounts = await web3.eth.getAccounts();
+	// const Account = accounts[0];
+	// dispatch(loadAccount(account));
 	const [OFFERPRICE, SETOFFERPRICE] = useState();
 	const Account = useSelector(account);
 	const CollectionContract = useSelector(collectionContract);
@@ -30,6 +34,7 @@ const Index = () => {
 		fulfilled?: boolean;
 		cancelled?: boolean;
 	}[] = useSelector(offer);
+	
 	const makeOfferHandler = async (id: any, key: any, price: any) => {
 		try {
 			if (!web3) {
