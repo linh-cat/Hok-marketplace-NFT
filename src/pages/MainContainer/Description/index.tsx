@@ -13,7 +13,7 @@ import city from 'assets/images/city.png';
 import krono from 'assets/images/krono.png';
 import steller from 'assets/images/steller.png';
 import { useSelector } from 'react-redux';
-import { collection, collectionOffers } from 'redux/selector/selector';
+import { collection } from 'redux/selector/selector';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -27,7 +27,6 @@ const Index = () => {
 	let params = useParams<QuizParams>();
 
 	let idParams = Number(params.idParams);
-	console.log(typeof idParams);
 
 	const [data, setData] = useState<
 		{
@@ -47,8 +46,6 @@ const Index = () => {
 	>([]);
 	const collections = useSelector(collection);
 
-	console.log('des', data);
-
 	useEffect(() => {
 		function getData() {
 			if (idParams) {
@@ -57,7 +54,6 @@ const Index = () => {
 				setData(destinationData);
 			}
 		}
-
 		getData();
 	}, [collections, idParams]);
 
