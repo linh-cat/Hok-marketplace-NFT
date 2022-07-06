@@ -34,11 +34,14 @@ const Index = ({
 		offerPrice(event.target.value);
 	};
 	const history = useHistory();
-
 	return (
-		<div className="cardhok" onClick={() => history.push(`/description/${id}`)}>
+		<div className="cardhok">
 			<div className="cardhok__head">
-				<img src={cardImage} alt="cardhok_image" />
+				<img
+					src={cardImage}
+					alt="cardhok_image"
+					onClick={() => history.push(`/description/${id}`)}
+				/>
 			</div>
 			<div className="cardhok__body">
 				<div className="cardhok__body--content">
@@ -49,7 +52,7 @@ const Index = ({
 					<div className="price">
 						<p>Price</p>
 						<p style={{ color: '#009E0F' }}>{price} Hok</p>
-						<p>(~75,24 USD)</p>
+						{/* <p>(~75,24 USD)</p> */}
 					</div>
 				</div>
 				{isMain === true && (

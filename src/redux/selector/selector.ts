@@ -32,6 +32,7 @@ export const collectionOffers = createSelector(
 				}
 			});
 		});
+		console.log('collection in selector: ' ,collectionOffers )
 		return collectionOffers;
 	}
 );
@@ -71,7 +72,7 @@ export const myOffered = createSelector(
 );
 
 export const collectionGenx = createSelector(
-	collection,
+	collectionOffers,
 	accessories,
 	arms,
 	back,

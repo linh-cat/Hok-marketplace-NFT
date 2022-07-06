@@ -138,6 +138,7 @@ const Index = () => {
 					console.error('Something went wrong when updloading the file');
 					return;
 				}
+				console.log('hash: ' ,metadataAdded)
 				CollectionContract.methods
 					.safeMint(metadataAdded.path)
 					.send({ from: Account })
