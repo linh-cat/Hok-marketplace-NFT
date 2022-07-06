@@ -5,15 +5,15 @@ import HokLogo from 'assets/images/HOK-Logo-white.png';
 import { useDispatch, useSelector } from 'react-redux';
 import web3 from 'connection/web3';
 import { loadAccount } from 'redux/actions/action-creators/connectionAction';
-
-import { account } from 'redux/selector/selector';
+import {loadUserFundsHandler} from 'redux/actions/action-creators/marketplaceAction'
+import { account , marketplaceContract } from 'redux/selector/selector';
 import { useHistory } from 'react-router-dom';
 
 const Index = () => {
 	const dispatch = useDispatch();
 	const accountWeb3 = useSelector(account) || localStorage.getItem('wallet');
 	const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
-
+	const mktcontract = useSelector(marketplaceContract)
 	let history = useHistory();
 
 	const connectWalletHandler = async () => {
@@ -32,6 +32,8 @@ const Index = () => {
 			const account = accounts[0];
 			localStorage.setItem('wallet', JSON.stringify(account));
 			dispatch(loadAccount(account));
+			const loadusersFund = await loadUserFundsHandler(mktcontract, account )
+			dispatch(loadusersFund)
 		}
 	};
 

@@ -15,6 +15,7 @@ import {
 	myOffered,
 } from '../../../redux/selector/selector';
 import { toast } from 'react-toastify';
+import ButtonHok from '../../../components/ButtonHok';
 const Index = () => {
 	// const dispatch = useDispatch();
 	// let accounts = await web3.eth.getAccounts();
@@ -114,7 +115,16 @@ const Index = () => {
 	const OfferPrice = (index: any) => {
 		SETOFFERPRICE(index);
 	};
-
+	const claimFundsHandler = () => {
+		MarketContract.methods.claimFunds().send({ from: Account })
+		.on('transactionHash', (hash: any) => {
+			
+		})
+		.on('error', (error: any) => {
+			window.alert('Something went wrong when pushing to the blockchain');
+		
+		});
+	}
 	return (
 		<div className="your__item">
 			<div className="your__item--title">Your NFT Item </div>
@@ -160,7 +170,16 @@ const Index = () => {
 					})}
 				</Row>
 			</div>
+			<ButtonHok
+		
+				type="default"
+				text="Claim Funds"
+				radius="5px"
+				bold="bold"
+				onClick={claimFundsHandler}
+			/>
 		</div>
+		
 	);
 };
 
