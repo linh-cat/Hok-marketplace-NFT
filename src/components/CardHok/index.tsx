@@ -34,11 +34,14 @@ const Index = ({
 		offerPrice(event.target.value);
 	};
 	const history = useHistory();
-	// onClick={() => history.push(`/description/${id}`)}
 	return (
 		<div className="cardhok">
 			<div className="cardhok__head">
-				<img src={cardImage} alt="cardhok_image" />
+				<img
+					src={cardImage}
+					alt="cardhok_image"
+					onClick={() => history.push(`/description/${id}`)}
+				/>
 			</div>
 			<div className="cardhok__body">
 				<div className="cardhok__body--content">
