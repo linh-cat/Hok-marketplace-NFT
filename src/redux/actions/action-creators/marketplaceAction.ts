@@ -44,6 +44,7 @@ export const addOfferHandler = (offer: {}) => {
 	return { type: addOffer_type, payload: offer };
 };
 export const loadUserFundsHandler = async (contract: any, account: string) => {
+
 	const userFunds = await contract.methods.userFunds(account).call();
 	return { type: loadFunds_type, payload: userFunds };
 };

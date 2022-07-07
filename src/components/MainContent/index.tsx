@@ -47,7 +47,7 @@ const index = () => {
 	const MarketContract = useSelector(marketplaceContract);
 	const Page = useSelector(pageGenx);
 	const CollectionOffers = useSelector(collectionGenx);
-
+	console.log('CollectionOffers:', CollectionOffers)
 	const Offers: {
 		offerId?: number;
 		id?: number;
