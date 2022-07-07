@@ -16,6 +16,7 @@ import {
 	deltoid as ListDeltoid,
 	energy as ListEnergy,
 } from 'components/Filter/List';
+import { toast } from 'react-toastify';
 const ipfsClient = require('ipfs-http-client');
 const ipfs = ipfsClient.create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 
@@ -67,7 +68,15 @@ const Index = () => {
 	const mintHandler = async () => {
 		try {
 			if (!Account) {
-				window.alert('connect wallet before mint a new NFT');
+				toast.error(`connect wallet before mint a new NFT`, {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 				return;
 			}
 			const formIsValid =
@@ -135,7 +144,15 @@ const Index = () => {
 					.safeMint(metadataAdded.path)
 					.send({ from: Account })
 					.on('transactionHash', (hash: any) => {
-						window.alert('Mint Successfully');
+						toast.success(` Mint Successfully`, {
+							position: 'top-center',
+							autoClose: 3000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
 						setAccessories('');
 						setArms('');
 						setBack('');
@@ -147,10 +164,26 @@ const Index = () => {
 						setCapturedFileBuffer(null);
 					})
 					.on('error', (e: any) => {
-						window.alert('Something went wrong when pushing to the blockchain');
+						toast.error(`${e}, Something went wrong when pushing to the blockchain`, {
+							position: 'top-center',
+							autoClose: 3000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						});
 					});
 			} else {
-				window.alert('fill all fields');
+				toast.warning(`Fill all field`, {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 		} catch (error) {
 			console.log('error :', error);

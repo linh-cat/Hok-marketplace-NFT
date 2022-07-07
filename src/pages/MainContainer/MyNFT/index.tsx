@@ -59,7 +59,7 @@ const Index = () => {
 						.makeOffer(id, enteredPrice)
 						.send({ from: Account })
 						.on('error', (error: any) => {
-							toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+							toast.warn(`${error}, Something went wrong when pushing to the blockchain`, {
 								position: 'top-center',
 								autoClose: 3000,
 								hideProgressBar: false,
@@ -71,7 +71,15 @@ const Index = () => {
 						});
 				});
 		} catch (error) {
-			console.log('error: ', error);
+			toast.warn(`${error}, Something went wrong when pushing to the blockchain`, {
+				position: 'top-center',
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 	const cancelHandler = async (index: any) => {
@@ -98,7 +106,7 @@ const Index = () => {
 					}, 3000);
 				})
 				.on('error', (error: any) => {
-					toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+					toast.warn(`${error}, Something went wrong when pushing to the blockchain`, {
 						position: 'top-center',
 						autoClose: 3000,
 						hideProgressBar: false,
@@ -124,7 +132,15 @@ const Index = () => {
 			.send({ from: Account })
 			.on('transactionHash', (hash: any) => {})
 			.on('error', (error: any) => {
-				window.alert('Something went wrong when pushing to the blockchain');
+				toast.error(`${error}, Something went wrong when pushing to the blockchain`, {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			});
 	};
 
