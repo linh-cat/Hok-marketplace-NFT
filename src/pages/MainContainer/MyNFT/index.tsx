@@ -18,10 +18,6 @@ import {
 import { toast } from 'react-toastify';
 import ButtonHok from '../../../components/ButtonHok';
 const Index = () => {
-	// const dispatch = useDispatch();
-	// let accounts = await web3.eth.getAccounts();
-	// const Account = accounts[0];
-	// dispatch(loadAccount(account));
 	const [OFFERPRICE, SETOFFERPRICE] = useState();
 	const Account = useSelector(account);
 	const CollectionContract = useSelector(collectionContract);
@@ -181,9 +177,7 @@ const Index = () => {
 					</div>
 				</>
 			) : (
-				<>
-					<SpinHok />
-				</>
+				<div style={{ textAlign: 'center' }}>No your NFT item and loading...</div>
 			)}
 
 			<ButtonHok
