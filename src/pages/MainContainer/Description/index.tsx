@@ -49,7 +49,6 @@ const Index = () => {
 	useEffect(() => {
 		function getData() {
 			if (idParams) {
-				console.log('load data', collections);
 				const destinationData = collections.filter((item) => item.id === idParams);
 				setData(destinationData);
 			}

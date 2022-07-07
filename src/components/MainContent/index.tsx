@@ -25,18 +25,18 @@ import { loadPaginate } from 'redux/actions/action-creators/filterAction';
 import { toast } from 'react-toastify';
 // import { formatPrice } from '../../connection/formatPrice';
 const index = () => {
-	const DECIMALS = (10**18);
+	const DECIMALS = 10 ** 18;
 
 	const ether = (wei: any) => wei / DECIMALS;
 
 	const formatPrice = (price: any) => {
-	const precision = 100; // Use 2 decimal places
-	price = ether(price);
-	price = Math.round(price * precision) / precision;
-	return price;
+		const precision = 100; // Use 2 decimal places
+		price = ether(price);
+		price = Math.round(price * precision) / precision;
+		return price;
 	};
 	const history = useHistory();
-	
+
 	const [seearchValue, setSearchValue] = useState('');
 	const [sort, setSort] = useState('');
 	const [reload, setReload] = useState('');
@@ -47,7 +47,7 @@ const index = () => {
 	const MarketContract = useSelector(marketplaceContract);
 	const Page = useSelector(pageGenx);
 	const CollectionOffers = useSelector(collectionGenx);
-	
+
 	const Offers: {
 		offerId?: number;
 		id?: number;
@@ -66,7 +66,6 @@ const index = () => {
 	};
 	const buyHandler = (index: any) => {
 		const buyIndex = parseInt(index);
-		console.log('buyIndex', buyIndex)
 		MarketContract.methods
 			.fillOffer(Offers[buyIndex].offerId)
 			.send({ from: Account, value: Offers[buyIndex].price })
@@ -134,11 +133,11 @@ const index = () => {
 			<Row gutter={[16, 16]}>
 				{CollectionOffers.map((NFT: any, key: any) => {
 					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
-					
+
 					return (
 						<>
 							{NFT.owner !== Account ? (
-								<Col span={4} key={NFT.id}  >
+								<Col span={4} key={NFT.id}>
 									<CardHok
 										// onClick={()=>history.push(`/description/${NFT.id}`)}
 										name="Genx"
@@ -147,7 +146,6 @@ const index = () => {
 										isMain={true}
 										onClick={() => {
 											buyHandler(index);
-											
 										}}
 										price={formatPrice(NFT.price).toFixed(2)}
 									/>

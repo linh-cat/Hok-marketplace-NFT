@@ -126,7 +126,6 @@ const Index = () => {
 					},
 				};
 				const metadataAdded = await ipfs.add(JSON.stringify(metadata));
-				console.log(metadataAdded);
 				if (!metadataAdded) {
 					console.error('Something went wrong when updloading the file');
 					return;

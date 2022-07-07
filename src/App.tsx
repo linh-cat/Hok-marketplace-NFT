@@ -28,6 +28,24 @@ import { ToastContainer } from 'react-toastify';
 
 function App() {
 	const dispatch = useDispatch();
+
+	const connectWalletHandler = async () => {
+		let accounts: any;
+		console.log('====================================');
+		console.log('run');
+		console.log('====================================');
+
+		if (web3) {
+			accounts = await web3.eth.getAccounts();
+			const account = accounts[0];
+			localStorage.setItem('wallet', JSON.stringify(account));
+			dispatch(loadAccount(account));
+		}
+	};
+	useEffect(() => {
+		connectWalletHandler();
+	}, [web3]);
+
 	useEffect(() => {
 		// Check if the user has Metamask active
 		const loadBlockchainData = async () => {
@@ -99,14 +117,12 @@ function App() {
 					// load offer
 					const loadOffer = await loadOffersHandler(mktcontract, offerCount.payload);
 					dispatch(loadOffer);
-					
 
 					// Event OfferFilled subscription , khi click mua nft se doi owner moi
 					mktcontract.events
 						.OfferFilled()
 						.on('data', async (event: any) => {
 							setMktIsLoading(false);
-							console.log('newOwner: ', event.returnValues.newOwner)
 							dispatch(updateOfferHandler(event.returnValues.offerId));
 							dispatch(updateOwnerHandler(event.returnValues.id, event.returnValues.newOwner));
 							dispatch(setMktIsLoading(false));
