@@ -4,26 +4,26 @@ import './index.scss';
 
 // ant design
 import { SearchOutlined } from '@ant-design/icons';
-import { Row, Col } from 'antd';
+import { Row, Col, Layout } from 'antd';
 
 // component
 import ButtonHok from 'components/ButtonHok';
 import CardHok from 'components/CardHok';
 import { useHistory } from 'react-router-dom';
-//
+import Filter from 'components/Filter';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	account,
-	collectionContract,
 	marketplaceContract,
 	collectionGenx,
 	pageGenx,
 	offer,
-	collectionOffers,
 } from '../../redux/selector/selector';
 import { loadPaginate } from 'redux/actions/action-creators/filterAction';
 import { toast } from 'react-toastify';
 // import { formatPrice } from '../../connection/formatPrice';
+const { Sider, Content } = Layout;
+
 const index = () => {
 	const DECIMALS = 10 ** 18;
 
@@ -47,7 +47,6 @@ const index = () => {
 	const MarketContract = useSelector(marketplaceContract);
 	const Page = useSelector(pageGenx);
 	const CollectionOffers = useSelector(collectionGenx);
-	console.log('CollectionOffers:', CollectionOffers)
 	const Offers: {
 		offerId?: number;
 		id?: number;
@@ -95,78 +94,59 @@ const index = () => {
 
 	return (
 		<div className="main__content">
-			<div className="search">
-				<ul className="search_menu">
-					<li className="search_menu--item">
-						{/* <ButtonHok
-							type="default"
-							text="Newest"
-							backgroundColor="#999999"
-							color="#fff"
-							radius="5px"
-							bold="bold"
-							onClick={ChangeSortHandler}
-						/> */}
-					</li>
-					<li className="search_menu--item">
-						<ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
-					</li>
-					<li className="search_menu--item">
-						<ButtonHok type="default" text="Lowest price" radius="5px" bold="bold" />
-					</li>
-					<li className="search_menu--item">
-						<ButtonHok type="default" text="Highest price" radius="5px" bold="bold" />
-					</li>
-				</ul>
-
-				<div className="search__form">
-					<div className="search__form--label">Type your keyword</div>
-					<div className="search__form--input">
-						<SearchOutlined />
-						<input onChange={(e) => setSearchValue(e.target.value)} />
+			<Layout>
+				<Sider>
+					<Filter />
+				</Sider>
+				<Content>
+					<div className="search">
+						<ul className="search_menu">
+							<li className="search_menu--item"></li>
+							<li className="search_menu--item">
+								<ButtonHok type="default" text="Oldest" radius="5px" bold="bold" />
+							</li>
+							<li className="search_menu--item">
+								<ButtonHok type="default" text="Lowest price" radius="5px" bold="bold" />
+							</li>
+							<li className="search_menu--item">
+								<ButtonHok type="default" text="Highest price" radius="5px" bold="bold" />
+							</li>
+						</ul>
 					</div>
-				</div>
-			</div>
-			{CollectionOffers.length} Items
-			{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
-			{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
-			{CollectionOffers.length === 0 && <div>No collections...</div>}
-			<Row gutter={[16, 16]}>
-				{CollectionOffers.map((NFT: any, key: any) => {
-					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
+					{CollectionOffers.length} Items
+					{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
+					{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
+					{CollectionOffers.length === 0 && <div>No collections...</div>}
+					<Row gutter={[16, 16]}>
+						{CollectionOffers.map((NFT: any, key: any) => {
+							const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
 
-					return (
-						<>
-							{NFT.owner !== Account ? (
-								<Col span={4} key={NFT.id}>
-									<CardHok
-										// onClick={()=>history.push(`/description/${NFT.id}`)}
-										name="Genx"
-										key={key}
-										id={NFT.id}
-										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-										isMain={true}
-										onClick={() => {
-											buyHandler(index);
-										}}
-										price={formatPrice(NFT.price).toFixed(2)}
-									/>
-								</Col>
-							) : (
-								<p></p>
-							)}
-						</>
-					);
-				})}
-			</Row>
-			{/* <ButtonHok
-				loading={loadingBtn}
-				type="default"
-				text="See more"
-				radius="5px"
-				bold="bold"
-				onClick={seeMoreHandler}
-			/> */}
+							return (
+								<>
+									{NFT.owner !== Account ? (
+										<Col span={4} key={NFT.id}>
+											<CardHok
+												// onClick={()=>history.push(`/description/${NFT.id}`)}
+												name="Genx"
+												key={key}
+												id={NFT.id}
+												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+												isMain={true}
+												onClick={() => {
+													buyHandler(index);
+												}}
+												price={formatPrice(NFT.price).toFixed(2)}
+											/>
+										</Col>
+									) : (
+										<p></p>
+									)}
+								</>
+							);
+						})}
+					</Row>
+				</Content>
+			</Layout>
 		</div>
 	);
 };

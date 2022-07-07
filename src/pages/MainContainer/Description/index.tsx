@@ -1,6 +1,5 @@
 import './index.scss';
 import { Row, Col } from 'antd';
-import image from 'assets/images/cardimage.png';
 import { Typography } from 'antd';
 import ButtonHok from 'components/ButtonHok';
 import PropertyHok from 'components/PropertyHok';
@@ -16,6 +15,8 @@ import { useSelector } from 'react-redux';
 import { collection } from 'redux/selector/selector';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { BackwardOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -24,6 +25,7 @@ type QuizParams = {
 };
 
 const Index = () => {
+	let history = useHistory();
 	let params = useParams<QuizParams>();
 
 	let idParams = Number(params.idParams);
@@ -58,9 +60,16 @@ const Index = () => {
 
 	return (
 		<div className="description__page">
+			<ButtonHok
+				type="default"
+				icon={<BackwardOutlined />}
+				text={'back'}
+				onClick={() => history.goBack()}
+			/>
+
 			<Title level={2}>{data[0]?.type}</Title>
 			<Row className="gutter-row">
-				<Col span={7}>
+				<Col span={10}>
 					<div className="left__side">
 						<figure>
 							<img
@@ -83,7 +92,7 @@ const Index = () => {
 						</div>
 					</div>
 				</Col>
-				<Col span={17} className="right__side">
+				<Col span={14} className="right__side">
 					<div className="information">
 						<div className="top">
 							<Row style={{ background: '' }}>

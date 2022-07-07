@@ -12,4 +12,3 @@ export const formatPrice = (price: any) => {
 };
 
 
-console.log('hihihihi',formatPrice(1000000000).toFixed(2))

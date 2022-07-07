@@ -35,7 +35,7 @@ function App() {
 		if (web3) {
 			accounts = await web3.eth.getAccounts();
 			const account = accounts[0];
-			
+
 			dispatch(loadAccount(account));
 		}
 	};
@@ -136,7 +136,7 @@ function App() {
 					const loadOffer = await loadOffersHandler(mktcontract, offerCount.payload);
 					dispatch(loadOffer);
 					//
-		
+
 					// Event OfferFilled subscription , khi click mua nft se doi owner moi
 					mktcontract.events
 						.OfferFilled()
@@ -202,13 +202,16 @@ function App() {
 				}
 
 				// Metamask Event Subscription - Account changed
-				(window as any).ethereum.on('accountsChanged', (accounts: string) => {
-					if (web3) {
-						window.location.reload();
-						console.log('account', accounts[0])
-						dispatch(loadUserFundsHandler(mktcontract, accounts[0]));
-					}
-				});
+				// (window as any).ethereum.on('accountsChanged', (accounts: string) => {
+				// 	console.log('====================================');
+				// 	console.log('run');
+				// 	console.log('====================================');
+				// 	if (web3) {
+				// 		window.location.reload();
+				// 		dispatch(loadUserFundsHandler(mktcontract, accounts[0]));
+				// 	}
+				// });
+
 				// Metamask Event Subscription - Network changed
 				(window as any).ethereum.on('chainChanged', (chainId: string) => {
 					window.location.reload();
@@ -232,6 +235,7 @@ function App() {
 	useEffect(() => {
 		(window as any).ethereum.on('accountsChanged', (accounts: string) => {
 			if (web3) {
+				window.location.reload();
 				dispatch(loadAccount(accounts[0]));
 			}
 		});
