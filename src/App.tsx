@@ -117,7 +117,15 @@ function App() {
 							});
 						});
 				} else {
-					window.alert('NFTCollection contract not deployed to detected network.');
+					toast.error('NFTCollection contract not deployed to detected network.', {
+						position: 'top-center',
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
 				}
 
 				if (mktcontract) {
