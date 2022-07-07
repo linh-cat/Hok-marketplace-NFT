@@ -195,6 +195,7 @@ function App() {
 				// Metamask Event Subscription - Account changed
 				(window as any).ethereum.on('accountsChanged', (accounts: string) => {
 					if (web3) {
+						window.location.reload();
 						accounts[0] && dispatch(loadUserFundsHandler(mktcontract, accounts[0]));
 					}
 				});
