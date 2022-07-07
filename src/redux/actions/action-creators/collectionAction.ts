@@ -118,8 +118,6 @@ export const updateCollectionHandler = async (contract: any, id: number, owner: 
 	};
 };
 export const updateOwnerHandler = (id: number, newOwner: string) => {
-	console.log('id', id)
-	console.log('newOwner:', newOwner)
 	return {
 		type: updateOwner_type,
 		payload: { id: id, newOwner: newOwner },

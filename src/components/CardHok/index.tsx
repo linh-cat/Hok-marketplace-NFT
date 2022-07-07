@@ -30,6 +30,7 @@ const Index = ({
 }: CardHokProp) => {
 	const [priceOffer, setPriceOffer] = useState(0);
 	const EnterPrice = (event: any) => {
+		event.preventDefault();
 		setPriceOffer(event.target.value);
 		offerPrice(event.target.value);
 	};

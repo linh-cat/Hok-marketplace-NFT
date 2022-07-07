@@ -5,15 +5,15 @@ import HokLogo from 'assets/images/HOK-Logo-white.png';
 import { useDispatch, useSelector } from 'react-redux';
 import web3 from 'connection/web3';
 import { loadAccount } from 'redux/actions/action-creators/connectionAction';
-import {loadUserFundsHandler} from 'redux/actions/action-creators/marketplaceAction'
-import { account , marketplaceContract } from 'redux/selector/selector';
+import { loadUserFundsHandler } from 'redux/actions/action-creators/marketplaceAction';
+import { account, marketplaceContract } from 'redux/selector/selector';
 import { useHistory } from 'react-router-dom';
 
 const Index = () => {
 	const dispatch = useDispatch();
-	const accountWeb3 = useSelector(account) || localStorage.getItem('wallet');
+	const accountWeb3 = useSelector(account);
 	const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
-	const mktcontract = useSelector(marketplaceContract)
+	const mktcontract = useSelector(marketplaceContract);
 	let history = useHistory();
 
 	const connectWalletHandler = async () => {
@@ -30,19 +30,9 @@ const Index = () => {
 		if (web3) {
 			accounts = await web3.eth.getAccounts();
 			const account = accounts[0];
-			localStorage.setItem('wallet', JSON.stringify(account));
 			dispatch(loadAccount(account));
-			const loadusersFund = await loadUserFundsHandler(mktcontract, account )
-			dispatch(loadusersFund)
-		}
-	};
-
-	const disconnectWalletHandler = () => {
-		try {
-			dispatch(loadAccount(''));
-			localStorage.removeItem('wallet');
-		} catch (error) {
-			console.log(error);
+			const loadusersFund = await loadUserFundsHandler(mktcontract, account);
+			dispatch(loadusersFund);
 		}
 	};
 
@@ -73,27 +63,23 @@ const Index = () => {
 						<ButtonHok type="link" text="About us" color="#000000" bold="bold" />
 					</li>
 
-					{accountWeb3 && (
+					{accountWeb3 ? (
 						<li>
+							<ButtonHok type="link" text={accountWeb3?.toString()} href={'/mynft'} />
+						</li>
+					) : (
+						<li className="header__nav--item">
 							<ButtonHok
-								type="link"
-								text={accountWeb3?.toString()}
-								onClick={() => history.push('/mynft')}
+								type="default"
+								bold="bold"
+								border="1px solid #000000"
+								radius="5px"
+								loading={loadingBtn}
+								text={'login'}
+								onClick={connectWalletHandler}
 							/>
 						</li>
 					)}
-
-					<li className="header__nav--item">
-						<ButtonHok
-							type="default"
-							bold="bold"
-							border="1px solid #000000"
-							radius="5px"
-							loading={loadingBtn}
-							text={accountWeb3 ? 'Logout' : 'Login'}
-							onClick={accountWeb3 ? disconnectWalletHandler : connectWalletHandler}
-						/>
-					</li>
 				</ul>
 			</div>
 		</>

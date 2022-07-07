@@ -3,9 +3,10 @@ import './index.scss';
 
 import CardHok from 'components/CardHok';
 import { Row, Col } from 'antd';
-import CardImage from '../../../assets/images/cardimage.png';
 import web3 from '../../../connection/web3';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import SpinHok from 'components/SpinHok';
+
 import {
 	account,
 	collectionContract,
@@ -35,7 +36,7 @@ const Index = () => {
 		fulfilled?: boolean;
 		cancelled?: boolean;
 	}[] = useSelector(offer);
-	
+
 	const makeOfferHandler = async (id: any, key: any, price: any) => {
 		try {
 			if (!web3) {
@@ -96,6 +97,9 @@ const Index = () => {
 						draggable: true,
 						progress: undefined,
 					});
+					setTimeout(() => {
+						window.location.reload();
+					}, 3000);
 				})
 				.on('error', (error: any) => {
 					toast.warn('🦄 Something went wrong when pushing to the blockchain', {
@@ -107,6 +111,9 @@ const Index = () => {
 						draggable: true,
 						progress: undefined,
 					});
+					setTimeout(() => {
+						window.location.reload();
+					}, 3000);
 				});
 		} catch (error) {
 			console.log('error:  ', error);
@@ -116,62 +123,70 @@ const Index = () => {
 		SETOFFERPRICE(index);
 	};
 	const claimFundsHandler = () => {
-		MarketContract.methods.claimFunds().send({ from: Account })
-		.on('transactionHash', (hash: any) => {
-			
-		})
-		.on('error', (error: any) => {
-			window.alert('Something went wrong when pushing to the blockchain');
-		
-		});
-	}
+		MarketContract.methods
+			.claimFunds()
+			.send({ from: Account })
+			.on('transactionHash', (hash: any) => {})
+			.on('error', (error: any) => {
+				window.alert('Something went wrong when pushing to the blockchain');
+			});
+	};
+
 	return (
 		<div className="your__item">
 			<div className="your__item--title">Your NFT Item </div>
-			<div className="your__item--body">
-				<Row gutter={[16, 16]}>
-					{MyOffered.map((NFT: any, key) => {
-						const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1; //turn back indexOfOffers or -1
-						return (
-							<>
-								<Col span={4} key={key}>
-									<CardHok
-										name="Genx"
-										id={NFT.id}
-										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-										isMyNFT={true}
-										isCancel={true}
-										onClick={() => {
-											cancelHandler(index);
-										}}
-									/>
-								</Col>
-							</>
-						);
-					})}
-					{MyCollection.map((NFT: any, key) => {
-						return (
-							<>
-								<Col span={4} key={key}>
-									<CardHok
-										name="Genx"
-										id={NFT.id}
-										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-										isMyNFT={true}
-										isCancel={false}
-										offerPrice={OfferPrice}
-										onClick={() => {
-											makeOfferHandler(NFT.id, key, OFFERPRICE);
-										}}
-									/>
-								</Col>
-							</>
-						);
-					})}
-				</Row>
-			</div>
+			{MyOffered.length > 0 ? (
+				<>
+					<div className="your__item--body">
+						<Row gutter={[16, 16]}>
+							{MyOffered.map((NFT: any, key) => {
+								const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1; //turn back indexOfOffers or -1
+								return (
+									<>
+										<Col span={4} key={key}>
+											<CardHok
+												name="Genx"
+												id={NFT.id}
+												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+												isMyNFT={true}
+												isCancel={true}
+												onClick={() => {
+													cancelHandler(index);
+												}}
+											/>
+										</Col>
+									</>
+								);
+							})}
+							{MyCollection.map((NFT: any, key) => {
+								return (
+									<>
+										<Col span={4} key={key}>
+											<CardHok
+												name="Genx"
+												id={NFT.id}
+												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+												isMyNFT={true}
+												isCancel={false}
+												offerPrice={OfferPrice}
+												onClick={() => {
+													makeOfferHandler(NFT.id, key, OFFERPRICE);
+												}}
+											/>
+										</Col>
+									</>
+								);
+							})}
+						</Row>
+					</div>
+				</>
+			) : (
+				<>
+					<SpinHok />
+				</>
+			)}
+
 			<ButtonHok
-		
 				type="default"
 				text="Claim Funds"
 				radius="5px"
@@ -179,7 +194,6 @@ const Index = () => {
 				onClick={claimFundsHandler}
 			/>
 		</div>
-		
 	);
 };
 

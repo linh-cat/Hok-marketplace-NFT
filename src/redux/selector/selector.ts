@@ -32,7 +32,6 @@ export const collectionOffers = createSelector(
 				}
 			});
 		});
-		console.log('collection in selector: ' ,collectionOffers )
 		return collectionOffers;
 	}
 );
