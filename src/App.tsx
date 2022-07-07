@@ -221,8 +221,6 @@ function App() {
 
 	useEffect(() => {
 		(window as any).ethereum.on('accountsChanged', (accounts: string) => {
-			console.log(accounts);
-
 			if (web3) {
 				dispatch(loadAccount(accounts[0]));
 			}
