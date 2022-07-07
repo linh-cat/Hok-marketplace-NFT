@@ -99,6 +99,7 @@ function App() {
 					// load offer
 					const loadOffer = await loadOffersHandler(mktcontract, offerCount.payload);
 					dispatch(loadOffer);
+					
 
 					// Event OfferFilled subscription , khi click mua nft se doi owner moi
 					mktcontract.events
