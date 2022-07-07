@@ -24,16 +24,13 @@ import {
 	updateOwnerHandler,
 } from 'redux/actions/action-creators/collectionAction';
 import { useDispatch } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 function App() {
 	const dispatch = useDispatch();
 
 	const connectWalletHandler = async () => {
 		let accounts: any;
-		console.log('====================================');
-		console.log('run');
-		console.log('====================================');
 
 		if (web3) {
 			accounts = await web3.eth.getAccounts();
@@ -44,6 +41,7 @@ function App() {
 	};
 	useEffect(() => {
 		connectWalletHandler();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [web3]);
 
 	useEffect(() => {
@@ -51,8 +49,16 @@ function App() {
 		const loadBlockchainData = async () => {
 			try {
 				await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				toast.error(error, {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 			let networkID: any;
 
@@ -61,10 +67,6 @@ function App() {
 				networkID = await web3.eth.net.getId();
 				dispatch(loadNetworkId(networkID));
 				// load Account
-				// let accounts = await web3.eth.getAccounts();
-				// const account = accounts[0];
-				// dispatch(loadAccount(account));
-				//load collection Contract
 				const nftDeployedNetwork = (NFTCollection as any).networks[networkID];
 				const nftContract = nftDeployedNetwork
 					? new web3.eth.Contract(NFTCollection.abi as any, nftDeployedNetwork.address)
@@ -104,7 +106,15 @@ function App() {
 							dispatch(setNftIsLoading(false));
 						})
 						.on('error', (error: any) => {
-							console.log(error);
+							toast.error(error, {
+								position: 'top-center',
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
 						});
 				} else {
 					window.alert('NFTCollection contract not deployed to detected network.');
@@ -128,7 +138,15 @@ function App() {
 							dispatch(setMktIsLoading(false));
 						})
 						.on('error', (error: any) => {
-							console.log(error);
+							toast.error(error, {
+								position: 'top-center',
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
 						});
 
 					// Event Offer subscription  , su kien dang ban NFT
@@ -137,11 +155,18 @@ function App() {
 						.on('data', (event: any) => {
 							dispatch(addOfferHandler(event.returnValues));
 							dispatch(updateOwnerHandler(event.returnValues.id, mktcontract.options.address));
-							// window.location.reload()
 							dispatch(setMktIsLoading(false));
 						})
 						.on('error', (error: any) => {
-							console.log(error);
+							toast.error(error, {
+								position: 'top-center',
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
 						});
 
 					// Event offerCancelled subscription
@@ -153,7 +178,15 @@ function App() {
 							dispatch(setMktIsLoading(false));
 						})
 						.on('error', (error: any) => {
-							console.log(error);
+							toast.error(error, {
+								position: 'top-center',
+								autoClose: 3000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+							});
 						});
 				} else {
 					// window.alert('NFTCollection contract not deployed to detected network.')
@@ -162,7 +195,6 @@ function App() {
 				// Metamask Event Subscription - Account changed
 				(window as any).ethereum.on('accountsChanged', (accounts: string) => {
 					if (web3) {
-						dispatch(loadAccount(accounts[0]));
 						accounts[0] && dispatch(loadUserFundsHandler(mktcontract, accounts[0]));
 					}
 				});
@@ -170,10 +202,30 @@ function App() {
 				(window as any).ethereum.on('chainChanged', (chainId: string) => {
 					window.location.reload();
 				});
-			} else console.log('No account');
+			} else {
+				toast.warning('No account', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
 		};
 
 		loadBlockchainData();
+	}, [dispatch]);
+
+	useEffect(() => {
+		(window as any).ethereum.on('accountsChanged', (accounts: string) => {
+			console.log(accounts);
+
+			if (web3) {
+				dispatch(loadAccount(accounts[0]));
+			}
+		});
 	}, [dispatch]);
 
 	function RouteWithSubRoutes(route: any) {

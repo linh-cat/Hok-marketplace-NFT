@@ -130,6 +130,7 @@ const index = () => {
 			{CollectionOffers.length} Items
 			{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
 			{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
+			{CollectionOffers.length === 0 && <div>No collections...</div>}
 			<Row gutter={[16, 16]}>
 				{CollectionOffers.map((NFT: any, key: any) => {
 					const index = Offers ? Offers.findIndex((offer) => offer.id === NFT.id) : -1;
@@ -141,6 +142,7 @@ const index = () => {
 									<CardHok
 										// onClick={()=>history.push(`/description/${NFT.id}`)}
 										name="Genx"
+										key={key}
 										id={NFT.id}
 										cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
 										isMain={true}
