@@ -42,6 +42,7 @@ const Index = ({
 					src={cardImage}
 					alt="cardhok_image"
 					onClick={() => history.push(`/description/${id}`)}
+					loading="lazy"
 				/>
 			</div>
 			<div className="cardhok__body">
