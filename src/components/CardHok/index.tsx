@@ -41,7 +41,7 @@ const Index = ({
 				<img
 					src={cardImage}
 					alt="cardhok_image"
-					onClick={() => history.push(`/description/${id}`)}
+					onClick={() => history.push(`description/${id}`)}
 					loading="lazy"
 				/>
 			</div>

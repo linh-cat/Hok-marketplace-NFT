@@ -75,7 +75,7 @@ const Index = () => {
 	return (
 		<div className="filter">
 			<div className="title">Filter</div>
-			<ComboBoxHok options={accessories} width="180px" title="Collection" defaultValue="ALL" />
+			{/* <ComboBoxHok options={accessories} width="180px" title="Collection" defaultValue="ALL" /> */}
 			<ComboBoxHok
 				options={accessories}
 				width="180px"

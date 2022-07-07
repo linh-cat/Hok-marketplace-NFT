@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 
 import CardHok from 'components/CardHok';
-import { Row, Col } from 'antd';
+import { Row, Col, Layout } from 'antd';
 import web3 from '../../../connection/web3';
 import { useSelector } from 'react-redux';
-import SpinHok from 'components/SpinHok';
-
 import {
 	account,
 	collectionContract,
@@ -14,12 +12,14 @@ import {
 	offer,
 	myCollection,
 	myOffered,
-	
 } from '../../../redux/selector/selector';
 import { loadUserFundsHandler } from '../../../redux/actions/action-creators/marketplaceAction';
 import { toast } from 'react-toastify';
 import ButtonHok from '../../../components/ButtonHok';
 import { useDispatch } from 'react-redux';
+import Filter from 'components/Filter';
+const { Content, Sider } = Layout;
+
 const Index = () => {
 	const dispatch = useDispatch();
 	const [OFFERPRICE, SETOFFERPRICE] = useState();
@@ -36,21 +36,17 @@ const Index = () => {
 		fulfilled?: boolean;
 		cancelled?: boolean;
 	}[] = useSelector(offer);
-	console.log('MyCollection:', MyCollection)
-	console.log('MyOffered:', MyOffered)
 
 	const connectWalletHandler = async () => {
 		let accounts: any;
 		if (web3) {
 			accounts = await web3.eth.getAccounts();
 			const account = accounts[0];
-			console.log('account', account)
-			console.log('MarketContract:', MarketContract)
+
 			if (MarketContract) {
 				const loadusersFund = await loadUserFundsHandler(MarketContract, account);
 				dispatch(loadusersFund);
 			}
-
 		}
 	};
 	useEffect(() => {
@@ -112,7 +108,6 @@ const Index = () => {
 				return;
 			}
 			const cancelIndex = parseInt(index);
-			console.log('cancelIndex:', cancelIndex)
 			await MarketContract.methods
 				.cancelOffer(Offers[cancelIndex].offerId)
 				.send({ from: Account })
@@ -171,64 +166,73 @@ const Index = () => {
 
 	return (
 		<div className="your__item">
-			<div className="your__item--title">Your NFT Item </div>
-			{MyCollection.length > 0 ? (
-				<>
-					<div className="your__item--body">
-						<Row gutter={[16, 16]}>
-							{MyOffered.map((NFT: any, key) => {
-								
-								const index = Offers ? Offers.findIndex((offer) => Number(offer.id)  ===  Number(NFT.id)) : -1; //turn back indexOfOffers or -1
-								return (
-									<>
-										<Col span={4} key={key}>
-											<CardHok
-												name="Genx"
-												id={NFT.id}
-												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-												isMyNFT={true}
-												isCancel={true}
-												onClick={() => {
-													cancelHandler(index);
-												}}
-											/>
-										</Col>
-									</>
-								);
-							})}
-							{MyCollection.map((NFT: any, key) => {
-								return (
-									<>
-										<Col span={4} key={key}>
-											<CardHok
-												name="Genx"
-												id={NFT.id}
-												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
-												isMyNFT={true}
-												isCancel={false}
-												offerPrice={OfferPrice}
-												onClick={() => {
-													makeOfferHandler(NFT.id, key, OFFERPRICE);
-												}}
-											/>
-										</Col>
-									</>
-								);
-							})}
-						</Row>
-					</div>
-				</>
-			) : (
-				<div style={{ textAlign: 'center' }}>No your NFT item and loading...</div>
-			)}
-
-			<ButtonHok
-				type="default"
-				text="Claim Funds"
-				radius="5px"
-				bold="bold"
-				onClick={claimFundsHandler}
-			/>
+			<div className="your__item--title">
+				Your NFT Item{' '}
+				<ButtonHok
+					type="default"
+					text="Claim Funds"
+					radius="5px"
+					bold="bold"
+					onClick={claimFundsHandler}
+				/>{' '}
+			</div>
+			<Layout>
+				<Sider>
+					<Filter />
+				</Sider>
+				<Content>
+					{MyCollection.length > 0 ? (
+						<>
+							<div className="your__item--body">
+								<Row gutter={[16, 16]}>
+									{MyOffered.map((NFT: any, key) => {
+										const index = Offers
+											? Offers.findIndex((offer) => Number(offer.id) === Number(NFT.id))
+											: -1; //turn back indexOfOffers or -1
+										return (
+											<>
+												<Col span={4} key={key}>
+													<CardHok
+														name="Genx"
+														id={NFT.id}
+														cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+														isMyNFT={true}
+														isCancel={true}
+														onClick={() => {
+															cancelHandler(index);
+														}}
+													/>
+												</Col>
+											</>
+										);
+									})}
+									{MyCollection.map((NFT: any, key) => {
+										return (
+											<>
+												<Col span={4} key={key}>
+													<CardHok
+														name="Genx"
+														id={NFT.id}
+														cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
+														isMyNFT={true}
+														isCancel={false}
+														offerPrice={OfferPrice}
+														onClick={() => {
+															makeOfferHandler(NFT.id, key, OFFERPRICE);
+														}}
+													/>
+												</Col>
+											</>
+										);
+									})}
+								</Row>
+							</div>
+						</>
+					) : (
+						<div style={{ textAlign: 'center' }}>No your NFT item and loading...</div>
+					)}
+				</Content>
+			</Layout>
 		</div>
 	);
 };
