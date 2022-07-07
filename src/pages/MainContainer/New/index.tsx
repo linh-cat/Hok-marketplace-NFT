@@ -36,31 +36,24 @@ const Index = () => {
 	};
 	const enteredArms = (value: any) => {
 		setArms(value);
-		
 	};
 	const enteredBack = (value: any) => {
 		setBack(value);
-		
 	};
 	const enteredBody = (value: any) => {
 		setBody(value);
-		
 	};
 	const enteredBrain = (value: any) => {
 		setBrain(value);
-		
 	};
 	const enteredDeltoid = (value: any) => {
 		setDeltoid(value);
-		
 	};
 	const enteredEndo = (value: any) => {
 		setEndo(value);
-		
 	};
 	const enteredEnergy = (value: any) => {
 		setEnergy(value);
-		
 	};
 	const enteredFile = (event: any) => {
 		event.preventDefault();
@@ -138,7 +131,7 @@ const Index = () => {
 					console.error('Something went wrong when updloading the file');
 					return;
 				}
-				console.log('hash: ' ,metadataAdded)
+				console.log('hash: ', metadataAdded);
 				CollectionContract.methods
 					.safeMint(metadataAdded.path)
 					.send({ from: Account })
@@ -282,7 +275,7 @@ const Index = () => {
 			</Row>
 			<ButtonHok text="Create" type="primary" onClick={mintHandler} />
 
-			<Form.Item
+			{/* <Form.Item
 				label="Password"
 				name="password"
 				rules={[{ required: true, message: 'Please input your password!' }]}
@@ -293,7 +286,7 @@ const Index = () => {
 				<Button type="primary" htmlType="submit">
 					Submit
 				</Button>
-			</Form.Item>
+			</Form.Item> */}
 		</div>
 	);
 };
