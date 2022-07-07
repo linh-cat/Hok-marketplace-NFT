@@ -30,6 +30,7 @@ const Index = () => {
 		if (web3) {
 			accounts = await web3.eth.getAccounts();
 			const account = accounts[0];
+			console.log('account:', account)
 			dispatch(loadAccount(account));
 			const loadusersFund = await loadUserFundsHandler(mktcontract, account);
 			dispatch(loadusersFund);
