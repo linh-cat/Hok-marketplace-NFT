@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './index.scss';
 import ButtonHok from 'components/ButtonHok';
 import HokLogo from 'assets/images/HOK-Logo-white.png';
@@ -8,6 +8,7 @@ import { loadAccount } from 'redux/actions/action-creators/connectionAction';
 import { loadUserFundsHandler } from 'redux/actions/action-creators/marketplaceAction';
 import { account, marketplaceContract } from 'redux/selector/selector';
 import { useHistory } from 'react-router-dom';
+import { formatAddress } from 'utils/FormatAddress';
 
 const Index = () => {
 	const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const Index = () => {
 
 					{accountWeb3 ? (
 						<li>
-							<ButtonHok type="link" text={accountWeb3?.toString()} href={'/mynft'} />
+							<ButtonHok type="link" text={formatAddress(accountWeb3)} href={'/mynft'} />
 						</li>
 					) : (
 						<li className="header__nav--item">

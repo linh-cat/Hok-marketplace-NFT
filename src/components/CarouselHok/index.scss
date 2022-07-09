@@ -1,0 +1,54 @@
+.carousel_component {
+	margin: 20px 0px;
+	border-radius: 5px;
+	overflow: hidden;
+	.carousel__main {
+		position: relative;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+		.item_1 {
+			.content {
+				position: absolute;
+				bottom: 0;
+				right: 100;
+				width: 500px;
+				color: #fff;
+				padding: 10px;
+				background-color: rgba(0, 0, 0, 0.45);
+			}
+		}
+		.item_2 {
+			.content {
+				position: absolute;
+				top: 0;
+				width: 500px;
+				color: #fff;
+				padding: 10px;
+				background-color: rgba(0, 0, 0, 0.45);
+			}
+		}
+		.item_3 {
+			.content {
+				.title {
+					font-size: 30px;
+				}
+				.top {
+					margin-bottom: 10px;
+				}
+
+				position: absolute;
+				top: 100px !important;
+				margin-left: 100px;
+				color: #fff;
+				width: 500px;
+			}
+		}
+	}
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+
+		height: 700px;
+		width: 100%;
+	}
+}

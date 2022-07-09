@@ -59,8 +59,7 @@ const Index = ({
 					</div>
 					<div className="price">
 						<p>Price</p>
-						<p style={{ color: '#009E0F' }}>{price} Hok</p>
-						{/* <p>(~75,24 USD)</p> */}
+						<p style={{ color: '#009E0F' }}>{price} ETH</p>
 					</div>
 				</div>
 				{isMain === true && (

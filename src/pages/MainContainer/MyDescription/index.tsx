@@ -19,6 +19,7 @@ import { BackwardOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { formatPrice } from 'connection/formatPrice';
 import { toast } from 'react-toastify';
+import { formatAddress } from 'utils/FormatAddress';
 
 const { Title, Text } = Typography;
 
@@ -117,8 +118,8 @@ const Index = () => {
 					<div className="information">
 						<div className="top">
 							<Row style={{ background: '' }}>
-								<Col span={12}>
-									{offerList[0]?.price && (
+								{offerList[0]?.price && (
+									<Col span={12}>
 										<Title level={5}>
 											Price:
 											<Text style={{ color: '	#009E0F', fontWeight: 'bold' }}>
@@ -138,11 +139,12 @@ const Index = () => {
 												)}
 											</Text>
 										</Title>
-									)}
-								</Col>
+									</Col>
+								)}
+
 								<Col span={12}>
 									<Title level={5}>
-										Owner: {data[0]?.owner ? data[0]?.owner : <>Loading...</>}
+										Owner: {data[0]?.owner ? formatAddress(data[0]?.owner) : <>Loading...</>}
 									</Title>
 								</Col>
 							</Row>

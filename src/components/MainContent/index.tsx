@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react';
 import './index.scss';
 
 // ant design
@@ -8,19 +7,12 @@ import { Row, Col, Layout } from 'antd';
 // component
 import ButtonHok from 'components/ButtonHok';
 import CardHok from 'components/CardHok';
-import { useHistory } from 'react-router-dom';
+import CarouselHok from 'components/CarouselHok';
 import Filter from 'components/Filter';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	account,
-	marketplaceContract,
-	collectionGenx,
-	pageGenx,
-	offer,
-} from '../../redux/selector/selector';
-import { loadPaginate } from 'redux/actions/action-creators/filterAction';
+import { useSelector } from 'react-redux';
+import { account, marketplaceContract, collectionGenx, offer } from '../../redux/selector/selector';
 import { toast } from 'react-toastify';
-// import { formatPrice } from '../../connection/formatPrice';
+import NewsHok from 'components/NewsHok';
 const { Sider, Content } = Layout;
 
 const index = () => {
@@ -34,17 +26,10 @@ const index = () => {
 		price = Math.round(price * precision) / precision;
 		return price;
 	};
-	const history = useHistory();
 
-	const [seearchValue, setSearchValue] = useState('');
-	const [sort, setSort] = useState('');
-	const [reload, setReload] = useState('');
-	const [loadingBtn, setLoadingBtn] = useState(false);
-	const dispatch = useDispatch();
-	const Collection = useSelector(collectionGenx);
 	const Account = useSelector(account);
 	const MarketContract = useSelector(marketplaceContract);
-	const Page = useSelector(pageGenx);
+
 	const CollectionOffers = useSelector(collectionGenx);
 	const Offers: {
 		offerId?: number;
@@ -106,6 +91,9 @@ const index = () => {
 							</li>
 						</ul>
 					</div>
+					<div className="carousel">
+						<CarouselHok />
+					</div>
 					{CollectionOffers.length} Items
 					{CollectionOffers.length === 0 && <div>No collections...</div>}
 					<Row gutter={[16, 16]}>
@@ -136,6 +124,9 @@ const index = () => {
 							);
 						})}
 					</Row>
+					<div className="news">
+						<NewsHok />
+					</div>
 				</Content>
 			</Layout>
 		</div>
