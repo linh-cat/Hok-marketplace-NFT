@@ -11,6 +11,7 @@ type CardHokProp = {
 	cardImage?: string;
 	name?: string;
 	isMyNFT?: boolean;
+	path?: string;
 	isMain?: boolean;
 	isCancel?: boolean;
 	onClick?: () => void;
@@ -23,17 +24,22 @@ const Index = ({
 	cardImage,
 	name,
 	isMyNFT,
+	path,
 	isMain,
 	isCancel,
 	onClick,
 	offerPrice,
 }: CardHokProp) => {
 	const [priceOffer, setPriceOffer] = useState(0);
-	const EnterPrice = (event: any) => {
+
+	const EnterPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
-		setPriceOffer(event.target.value);
-		offerPrice(event.target.value);
+		const { value } = event.target;
+
+		offerPrice(value);
+		setPriceOffer(Number(value));
 	};
+
 	const history = useHistory();
 	return (
 		<div className="cardhok">
@@ -41,7 +47,7 @@ const Index = ({
 				<img
 					src={cardImage}
 					alt="cardhok_image"
-					onClick={() => history.push(`description/${id}`)}
+					onClick={() => history.push(`${path}/${id}`)}
 					loading="lazy"
 				/>
 			</div>
@@ -53,8 +59,7 @@ const Index = ({
 					</div>
 					<div className="price">
 						<p>Price</p>
-						<p style={{ color: '#009E0F' }}>{price} Hok</p>
-						{/* <p>(~75,24 USD)</p> */}
+						<p style={{ color: '#009E0F' }}>{price} ETH</p>
 					</div>
 				</div>
 				{isMain === true && (

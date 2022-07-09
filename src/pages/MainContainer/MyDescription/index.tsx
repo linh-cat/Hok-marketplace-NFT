@@ -76,34 +76,6 @@ const Index = () => {
 		getOffer();
 	}, [idParams, offers]);
 
-	const buyHandler = (offerId: any, price: any) => {
-		MarketContract.methods
-			.fillOffer(offerId)
-			.send({ from: Account, value: price })
-			.on('transactionHash', (hash: any) => {
-				toast.success('🦄 Buy successfully!', {
-					position: 'top-center',
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
-			})
-			.on('error', (error: any) => {
-				toast.warn('🦄 Something went wrong when pushing to the blockchain', {
-					position: 'top-center',
-					autoClose: 3000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
-			});
-	};
-
 	return (
 		<div className="description__page">
 			<ButtonHok
@@ -113,18 +85,19 @@ const Index = () => {
 				onClick={() => history.goBack()}
 			/>
 
-			<Title level={2}>
-				{data[0]?.type ? data[0]?.type : <>Loading...</>} #
-				{offerList[0]?.id ? offerList[0]?.id : <>Loading...</>}
-			</Title>
+			<Title level={2}>{data[0]?.type ? data[0]?.type : <>Loading...</>}</Title>
 			<Row className="gutter-row">
 				<Col span={10}>
 					<div className="left__side">
 						<figure>
-							<img
-								src={`https://ipfs.infura.io/ipfs/${data[0]?.img}`}
-								alt="Foo eating a sandwich."
-							/>
+							{data[0]?.img ? (
+								<img
+									src={`https://ipfs.infura.io/ipfs/${data[0]?.img}`}
+									alt="Foo eating a sandwich."
+								/>
+							) : (
+								<>Loading...</>
+							)}
 						</figure>
 						<div className="description">
 							<Title level={4}>Description</Title>
@@ -145,8 +118,8 @@ const Index = () => {
 					<div className="information">
 						<div className="top">
 							<Row style={{ background: '' }}>
-								<Col span={12}>
-									{offerList[0]?.price && (
+								{offerList[0]?.price && (
+									<Col span={12}>
 										<Title level={5}>
 											Price:
 											<Text style={{ color: '	#009E0F', fontWeight: 'bold' }}>
@@ -166,20 +139,11 @@ const Index = () => {
 												)}
 											</Text>
 										</Title>
-									)}
-									{offerList[0]?.price && (
-										<ButtonHok
-											type="default"
-											text="BUY"
-											color="#009E0F"
-											bold="bold"
-											radius="5px"
-											onClick={() => buyHandler(offerList[0]?.offerId, offerList[0]?.price)}
-										/>
-									)}
-								</Col>
+									</Col>
+								)}
+
 								<Col span={12}>
-									<Title level={5} style={{ textAlign: 'right' }}>
+									<Title level={5}>
 										Owner: {data[0]?.owner ? formatAddress(data[0]?.owner) : <>Loading...</>}
 									</Title>
 								</Col>

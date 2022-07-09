@@ -27,6 +27,11 @@ const appRoutes = [
 				path: '/description/:idParams',
 				component: React.lazy(() => import('pages/MainContainer/Description')),
 			},
+			{
+				exact: true,
+				path: '/mydescription/:idParams',
+				component: React.lazy(() => import('pages/MainContainer/MyDescription')),
+			},
 		],
 	},
 ];

@@ -1,27 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react';
 import './index.scss';
 
 // ant design
-import { SearchOutlined } from '@ant-design/icons';
 import { Row, Col, Layout } from 'antd';
 
 // component
 import ButtonHok from 'components/ButtonHok';
 import CardHok from 'components/CardHok';
-import { useHistory } from 'react-router-dom';
+import CarouselHok from 'components/CarouselHok';
 import Filter from 'components/Filter';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	account,
-	marketplaceContract,
-	collectionGenx,
-	pageGenx,
-	offer,
-} from '../../redux/selector/selector';
-import { loadPaginate } from 'redux/actions/action-creators/filterAction';
+import { useSelector } from 'react-redux';
+import { account, marketplaceContract, collectionGenx, offer } from '../../redux/selector/selector';
 import { toast } from 'react-toastify';
-// import { formatPrice } from '../../connection/formatPrice';
+import NewsHok from 'components/NewsHok';
 const { Sider, Content } = Layout;
 
 const index = () => {
@@ -35,17 +26,10 @@ const index = () => {
 		price = Math.round(price * precision) / precision;
 		return price;
 	};
-	const history = useHistory();
 
-	const [seearchValue, setSearchValue] = useState('');
-	const [sort, setSort] = useState('');
-	const [reload, setReload] = useState('');
-	const [loadingBtn, setLoadingBtn] = useState(false);
-	const dispatch = useDispatch();
-	const Collection = useSelector(collectionGenx);
 	const Account = useSelector(account);
 	const MarketContract = useSelector(marketplaceContract);
-	const Page = useSelector(pageGenx);
+
 	const CollectionOffers = useSelector(collectionGenx);
 	const Offers: {
 		offerId?: number;
@@ -56,15 +40,9 @@ const index = () => {
 		cancelled?: boolean;
 	}[] = useSelector(offer);
 
-	const seeMoreHandler = () => {
-		setTimeout(() => {
-			dispatch(loadPaginate(1));
-			setLoadingBtn(false);
-		}, 1000);
-		setLoadingBtn(true);
-	};
 	const buyHandler = (index: any) => {
 		const buyIndex = parseInt(index);
+
 		MarketContract.methods
 			.fillOffer(Offers[buyIndex].offerId)
 			.send({ from: Account, value: Offers[buyIndex].price })
@@ -113,9 +91,10 @@ const index = () => {
 							</li>
 						</ul>
 					</div>
+					<div className="carousel">
+						<CarouselHok />
+					</div>
 					{CollectionOffers.length} Items
-					{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
-					{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
 					{CollectionOffers.length === 0 && <div>No collections...</div>}
 					<Row gutter={[16, 16]}>
 						{CollectionOffers.map((NFT: any, key: any) => {
@@ -126,12 +105,12 @@ const index = () => {
 									{NFT.owner !== Account ? (
 										<Col span={4} key={NFT.id}>
 											<CardHok
-												// onClick={()=>history.push(`/description/${NFT.id}`)}
 												name="Genx"
 												key={key}
 												id={NFT.id}
 												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
 												isMain={true}
+												path={'/description'}
 												onClick={() => {
 													buyHandler(index);
 												}}
@@ -145,6 +124,9 @@ const index = () => {
 							);
 						})}
 					</Row>
+					<div className="news">
+						<NewsHok />
+					</div>
 				</Content>
 			</Layout>
 		</div>
