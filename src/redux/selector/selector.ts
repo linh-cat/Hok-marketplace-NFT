@@ -5,6 +5,7 @@ export const collectionContract = (state: State) => state.collection.contract;
 export const collection = (state: State) => state.collection.collection;
 export const totalSupply = (state: State) => state.collection.totalSupply;
 export const marketplaceContract = (state: State) => state.marketplace.contract;
+export const marketplaceUserFunds = (state: State) => state.marketplace.userFunds;
 export const offer = (state: State) => state.marketplace.offers;
 export const offerCount = (state: State) => state.marketplace.offerCount;
 export const accessories = (state: State) => state.filter.Genx.accessories;

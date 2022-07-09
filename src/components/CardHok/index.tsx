@@ -29,11 +29,15 @@ const Index = ({
 	offerPrice,
 }: CardHokProp) => {
 	const [priceOffer, setPriceOffer] = useState(0);
-	const EnterPrice = (event: any) => {
+
+	const EnterPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
-		setPriceOffer(event.target.value);
-		offerPrice(event.target.value);
+		const { value } = event.target;
+
+		offerPrice(value);
+		setPriceOffer(Number(value));
 	};
+
 	const history = useHistory();
 	return (
 		<div className="cardhok">
