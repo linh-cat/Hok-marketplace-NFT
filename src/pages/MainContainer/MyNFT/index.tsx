@@ -45,8 +45,6 @@ const Index = () => {
 		cancelled?: boolean;
 	}[] = useSelector(offer);
 
-	console.log(OFFERPRICE);
-
 	const connectWalletHandler = async () => {
 		let accounts: any;
 		if (web3) {

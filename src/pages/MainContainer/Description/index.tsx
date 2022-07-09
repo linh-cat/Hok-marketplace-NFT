@@ -12,11 +12,13 @@ import city from 'assets/images/city.png';
 import krono from 'assets/images/krono.png';
 import steller from 'assets/images/steller.png';
 import { useSelector } from 'react-redux';
-import { collection } from 'redux/selector/selector';
+import { account, collection, marketplaceContract, offer } from 'redux/selector/selector';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { BackwardOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { formatPrice } from 'connection/formatPrice';
+import { toast } from 'react-toastify';
 
 const { Title, Text } = Typography;
 
@@ -26,10 +28,14 @@ type QuizParams = {
 
 const Index = () => {
 	let history = useHistory();
+	const MarketContract = useSelector(marketplaceContract);
+	const Account = useSelector(account);
+
 	let params = useParams<QuizParams>();
 
 	let idParams = Number(params.idParams);
 
+	const [offerList, setOfferList] = useState<any>([]);
 	const [data, setData] = useState<
 		{
 			accessories?: string;
@@ -47,6 +53,7 @@ const Index = () => {
 		}[]
 	>([]);
 	const collections = useSelector(collection);
+	const offers: any[] = useSelector(offer);
 
 	useEffect(() => {
 		function getData() {
@@ -58,6 +65,44 @@ const Index = () => {
 		getData();
 	}, [collections, idParams]);
 
+	useEffect(() => {
+		function getOffer() {
+			if (idParams) {
+				const destinationData = offers.filter((item) => item.id === idParams);
+				setOfferList(destinationData);
+			}
+		}
+		getOffer();
+	}, [idParams, offers]);
+
+	const buyHandler = (offerId: any, price: any) => {
+		MarketContract.methods
+			.fillOffer(offerId)
+			.send({ from: Account, value: price })
+			.on('transactionHash', (hash: any) => {
+				toast.success('🦄 Buy successfully!', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			})
+			.on('error', (error: any) => {
+				toast.warn('🦄 Something went wrong when pushing to the blockchain', {
+					position: 'top-center',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			});
+	};
+
 	return (
 		<div className="description__page">
 			<ButtonHok
@@ -67,7 +112,10 @@ const Index = () => {
 				onClick={() => history.goBack()}
 			/>
 
-			<Title level={2}>{data[0]?.type}</Title>
+			<Title level={2}>
+				{data[0]?.type ? data[0]?.type : <>Loading...</>} #
+				{offerList[0]?.id ? offerList[0]?.id : <>Loading...</>}
+			</Title>
 			<Row className="gutter-row">
 				<Col span={10}>
 					<div className="left__side">
@@ -97,20 +145,43 @@ const Index = () => {
 						<div className="top">
 							<Row style={{ background: '' }}>
 								<Col span={12}>
-									<Title level={5}>Price</Title>
+									{offerList[0]?.price && (
+										<Title level={5}>
+											Price:
+											<Text style={{ color: '	#009E0F', fontWeight: 'bold' }}>
+												{offerList[0]?.price ? (
+													formatPrice(Number(offerList[0]?.price))
+												) : (
+													<>Loading...</>
+												)}
+												ETH
+											</Text>
+											<Text style={{ fontWeight: 'bold' }}>
+												~
+												{offerList[0]?.price ? (
+													formatPrice(Number(offerList[0]?.price)) * 1236
+												) : (
+													<>loading...</>
+												)}
+											</Text>
+										</Title>
+									)}
+									{offerList[0]?.price && (
+										<ButtonHok
+											type="default"
+											text="BUY"
+											color="#009E0F"
+											bold="bold"
+											radius="5px"
+											onClick={() => buyHandler(offerList[0]?.offerId, offerList[0]?.price)}
+										/>
+									)}
 								</Col>
 								<Col span={12}>
-									<Title level={5} style={{ textAlign: 'right' }}>
-										Mint: 31/12/2022
+									<Title level={5}>
+										Owner: {data[0]?.owner ? data[0]?.owner : <>Loading...</>}
 									</Title>
 								</Col>
-							</Row>
-							<Row>
-								<Text style={{ color: '	#009E0F', fontWeight: 'bold' }}>0.04 HOK</Text>
-								<Text style={{ fontWeight: 'bold' }}>~ $ 70.50</Text>
-							</Row>
-							<Row>
-								<ButtonHok type="default" text="BUY" color="#009E0F" bold="bold" radius="5px" />
 							</Row>
 						</div>
 						<div className="property">

@@ -7,7 +7,6 @@ export const formatPrice = (price: any) => {
 
 	price = ether(price);
 	price = Math.round(price * precision) / precision;
-	console.log(price);
 
 	return price;
 };

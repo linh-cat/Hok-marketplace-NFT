@@ -56,15 +56,9 @@ const index = () => {
 		cancelled?: boolean;
 	}[] = useSelector(offer);
 
-	const seeMoreHandler = () => {
-		setTimeout(() => {
-			dispatch(loadPaginate(1));
-			setLoadingBtn(false);
-		}, 1000);
-		setLoadingBtn(true);
-	};
 	const buyHandler = (index: any) => {
 		const buyIndex = parseInt(index);
+
 		MarketContract.methods
 			.fillOffer(Offers[buyIndex].offerId)
 			.send({ from: Account, value: Offers[buyIndex].price })
@@ -114,8 +108,6 @@ const index = () => {
 						</ul>
 					</div>
 					{CollectionOffers.length} Items
-					{/* CollectionOffers.slice(0, Page).map((NFT: any, key: any) */}
-					{/* onClick={()=>history.push(`/description/${NFT.id}`)} */}
 					{CollectionOffers.length === 0 && <div>No collections...</div>}
 					<Row gutter={[16, 16]}>
 						{CollectionOffers.map((NFT: any, key: any) => {
@@ -126,7 +118,6 @@ const index = () => {
 									{NFT.owner !== Account ? (
 										<Col span={4} key={NFT.id}>
 											<CardHok
-												// onClick={()=>history.push(`/description/${NFT.id}`)}
 												name="Genx"
 												key={key}
 												id={NFT.id}
