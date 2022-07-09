@@ -1,0 +1,31 @@
+.description__page {
+	padding: 20px 200px;
+	.left__side {
+		figure {
+			img {
+				width: 100%;
+				display: block;
+				margin: 0 auto;
+			}
+		}
+		.description {
+			border: 1px solid #b5b2b2;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	}
+	.right__side {
+		padding-left: 10px;
+
+		.information {
+			.top {
+				margin-bottom: 15px;
+			}
+			.property {
+				border: 1px solid #b5b2b2;
+				border-radius: 5px;
+				padding: 10px;
+			}
+		}
+	}
+}

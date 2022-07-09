@@ -11,6 +11,7 @@ type CardHokProp = {
 	cardImage?: string;
 	name?: string;
 	isMyNFT?: boolean;
+	path?: string;
 	isMain?: boolean;
 	isCancel?: boolean;
 	onClick?: () => void;
@@ -23,6 +24,7 @@ const Index = ({
 	cardImage,
 	name,
 	isMyNFT,
+	path,
 	isMain,
 	isCancel,
 	onClick,
@@ -45,7 +47,7 @@ const Index = ({
 				<img
 					src={cardImage}
 					alt="cardhok_image"
-					onClick={() => history.push(`description/${id}`)}
+					onClick={() => history.push(`${path}/${id}`)}
 					loading="lazy"
 				/>
 			</div>

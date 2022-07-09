@@ -243,6 +243,7 @@ const Index = () => {
 														cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
 														isMyNFT={true}
 														isCancel={true}
+														path={'/mydescription'}
 														onClick={() => {
 															cancelHandler(index);
 														}}
@@ -262,6 +263,7 @@ const Index = () => {
 														isMyNFT={true}
 														isCancel={false}
 														offerPrice={OfferPrice}
+														path={'/mydescription'}
 														onClick={() => {
 															makeOfferHandler(NFT.id, key, OFFERPRICE);
 														}}

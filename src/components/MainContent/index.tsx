@@ -3,7 +3,6 @@ import { useState } from 'react';
 import './index.scss';
 
 // ant design
-import { SearchOutlined } from '@ant-design/icons';
 import { Row, Col, Layout } from 'antd';
 
 // component
@@ -123,6 +122,7 @@ const index = () => {
 												id={NFT.id}
 												cardImage={`https://ipfs.infura.io/ipfs/${NFT.img}`}
 												isMain={true}
+												path={'/description'}
 												onClick={() => {
 													buyHandler(index);
 												}}
