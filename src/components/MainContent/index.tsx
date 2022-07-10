@@ -72,6 +72,9 @@ const index = () => {
 
 	return (
 		<div className="main__content">
+			<div className="carousel">
+				<CarouselHok />
+			</div>
 			<Layout>
 				<Sider>
 					<Filter />
@@ -90,9 +93,6 @@ const index = () => {
 								<ButtonHok type="default" text="Highest price" radius="5px" bold="bold" />
 							</li>
 						</ul>
-					</div>
-					<div className="carousel">
-						<CarouselHok />
 					</div>
 					{CollectionOffers.length} Items
 					{CollectionOffers.length === 0 && <div>No collections...</div>}
@@ -124,11 +124,11 @@ const index = () => {
 							);
 						})}
 					</Row>
-					<div className="news">
-						<NewsHok />
-					</div>
 				</Content>
 			</Layout>
+			<div className="news">
+				<NewsHok />
+			</div>
 		</div>
 	);
 };
